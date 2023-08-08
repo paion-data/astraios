@@ -59,7 +59,6 @@ IntelliJ settings. If IntelliJ is used for IDE, we may import these code style s
 [Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
 project will appear as a new Scheme named Astraios-Project under IDE's `Editor -> Code Style` section.
 
-
 Modifying Templates
 -------------------
 
