@@ -6,15 +6,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Jersey Webservice Template',
+  title: 'Astraios',
   tagline: 'Avoiding boilerplate code',
   favicon: 'img/favicon.ico',
 
-  url: 'https://qubitpi.github.io',
-  baseUrl: '/jersey-ws-template/',
+  url: 'https://paion-data.github.io',
+  baseUrl: '/astraios/',
 
-  organizationName: 'QubitPi',
-  projectName: 'jersey-ws-template',
+  organizationName: 'paion-data',
+  projectName: 'astraios',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -59,9 +59,9 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Jersey Webservice Template',
+        title: 'Astraios',
         logo: {
-          alt: 'Jersey Webservice Template Logo',
+          alt: 'Astraios Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -73,12 +73,12 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: "https://QubitPi.github.io/jersey-ws-template/apidocs",
+            href: "https://paion-data.github.io/astraios/apidocs",
             label: "API",
             position: "left",
           },
           {
-            href: 'https://github.com/QubitPi/jersey-ws-template',
+            href: 'https://github.com/paion-data/astraios',
             label: 'GitHub',
             position: 'right',
           },
@@ -114,12 +114,12 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/QubitPi/jersey-ws-template',
+                href: 'https://github.com/paion-data/astraios',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Jersey Webservice Template. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Paion Data. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

@@ -4,19 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.qubitpi</groupId>
-    <artifactId>jersey-ws-template</artifactId>
+    <groupId>com.paiondata</groupId>
+    <artifactId>astraios</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>Jersey Webservice Template</name>
+    <name>Astraios</name>
     <description>Template project for building Jersey webservice running in Jetty</description>
-    <url>https://github.com/QubitPi/jersey-ws-template</url>
+    <url>https://github.com/paion-data/astraios</url>
 
     <developers>
         <developer>
-            <name>Jiaqi Liu</name>
-            <url>https://github.com/QubitPi</url>
+            <name>Paion Data Team</name>
+            <url>https://github.com/paion-data</url>
         </developer>
     </developers>
 
@@ -29,7 +29,7 @@
     </licenses>
 
     <properties>
-        <sonar.organization>qubitpi</sonar.organization>
+        <sonar.organization>paion-data</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qubitpi.ws.jersey.template.application;
+package com.paiondata.astraios.application;
 
-import com.qubitpi.ws.jersey.template.web.filters.CorsFilter;
+import com.paiondata.astraios.web.filters.CorsFilter;
 
 import org.glassfish.hk2.utilities.Binder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -33,7 +33,7 @@ import net.jcip.annotations.ThreadSafe;
 @ApplicationPath("v1")
 public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 
-    private static final String ENDPOINT_PACKAGE = "com.qubitpi.ws.jersey.template.web.endpoints";
+    private static final String ENDPOINT_PACKAGE = "com.paiondata.astraios.web.endpoints";
 
     /**
      * DI Constructor.

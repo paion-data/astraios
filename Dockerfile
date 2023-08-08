@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,4 +20,4 @@ ARG WS_VERSION=1.0-SNAPSHOT
 
 ENV JETTY_WEBAPPS_DIR /var/lib/jetty/webapps
 
-COPY ./target/jersey-ws-template-$WS_VERSION.war $JETTY_WEBAPPS_DIR/ROOT.war
+COPY ./target/astraios-$WS_VERSION.war $JETTY_WEBAPPS_DIR/ROOT.war
