@@ -17,19 +17,19 @@ Packaging
 mvn clean package
 ```
 
-A [**WAR** file](https://en.wikipedia.org/wiki/WAR_(file_format)) named `jersey-ws-template-1.0-SNAPSHOT.war` will
-beJersey Webservice Template generated under _target_ directory for [running in Jetty](#running-in-standalone-jetty)
+A [**WAR** file](https://en.wikipedia.org/wiki/WAR_(file_format)) named `astraios-1.0-SNAPSHOT.war` will
+be generated under _target_ directory for [running in Jetty](#running-in-standalone-jetty)
 
 Running Webservice in Docker (Development)
 ------------------------------------------
 
 :::caution
 
-Support [running this template webservice in Docker][jersey-ws-template Dockerfile] is NOT for production deployment.
+Support [running this template webservice in Docker][astraios Dockerfile] is NOT for production deployment.
 It's intended usage is for **development** where developer can easily stand up a webservice instance for dev and
 testing purpose.
 
-Production deployment for [jersey-ws-template][jersey-ws-template] assumes
+Production deployment for [astraios][astraios] assumes
 [Jetty-based scheme](#running-webservice-in-standalone-jetty-production)
 
 :::
@@ -41,17 +41,17 @@ Production deployment for [jersey-ws-template][jersey-ws-template] assumes
 We can pull the image from [its docker hub][docker hub]:
 
 ```bash
-docker pull jack20191124/jersey-ws-template
+docker pull jack20191124/astraios
 ```
 
 #### GitHub
 
-We could also build the image from [source][jersey-ws-template Dockerfile]:
+We could also build the image from [source][astraios Dockerfile]:
 
 ```bash
-https://github.com/QubitPi/jersey-ws-template.git
-cd jersey-ws-template
-docker build -t qubitpi/jersey-ws-template
+https://github.com/paion-data/astraios.git
+cd astraios
+docker build -t paiondata/astraios
 ```
 
 :::tip
@@ -62,7 +62,7 @@ If we need to pass one or more runtime environment variables into docker image, 
 export MY_ENV_VARIABLE=foo
 export MY_OTHER_ENV_VARIABLE=bar
 
-docker build -t qubitpi/jersey-ws-template \
+docker build -t paiondata/astraios \
   --build-arg MY_ENV_VARIABLE=$MY_ENV_VARIABLE \
   --build-arg MY_OTHER_ENV_VARIABLE=$MY_OTHER_ENV_VARIABLE \
   .
@@ -85,7 +85,7 @@ ENV MY_OTHER_ENV_VARIABLE $MY_OTHER_ENV_VARIABLE
 When image is on our machine (either by pulling or building), we can spin up an instance using
 
 ```bash
-docker run -d --name=jersey-ws-template -p 8080:8080 qubitpi/jersey-ws-template
+docker run -d --name=astraios -p 8080:8080 paiondata/astraios
 ```
 
 At this moment, the healthcheck endpoint `GET localhost:8080/v1/data/healthcheck` should return 200 status code
@@ -142,7 +142,7 @@ java -jar $JETTY_HOME/start.jar
 
 The webservice will run on port **8080**
 
-[docker hub]: https://hub.docker.com/r/jack20191124/jersey-ws-template/
+[docker hub]: https://hub.docker.com/r/jack20191124/astraios/
 
-[jersey-ws-template]: https://github.com/QubitPi/jersey-ws-template
-[jersey-ws-template Dockerfile]: https://github.com/QubitPi/jersey-ws-template/blob/master/Dockerfile
+[astraios]: https://github.com/paion-data/astraios
+[astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile

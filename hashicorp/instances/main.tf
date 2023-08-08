@@ -1,4 +1,4 @@
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,13 +43,13 @@ provider "aws" {
   region = var.aws_deploy_region
 }
 
-data "aws_ami" "latest-jersey-ws-template" {
+data "aws_ami" "latest-astraios" {
   most_recent = true
   owners = ["899075777617"]
 
   filter {
     name   = "name"
-    values = ["jersey-ws-template"]
+    values = ["astraios"]
   }
 
   filter {
@@ -58,8 +58,8 @@ data "aws_ami" "latest-jersey-ws-template" {
   }
 }
 
-resource "aws_instance" "jersey-ws-template" {
-  ami = "${data.aws_ami.latest-jersey-ws-template.id}"
+resource "aws_instance" "astraios" {
+  ami = "${data.aws_ami.latest-astraios.id}"
   instance_type = "t2.micro"
   tags = {
     Name = "ES2 Instance Name"
@@ -74,13 +74,4 @@ resource "aws_instance" "jersey-ws-template" {
     cd /home/ubuntu/jetty-base
     java -jar $JETTY_HOME/start.jar
   EOF
-}
-
-resource "aws_route53_record" "jersey-ws-template" {
-  zone_id         = var.zone_id
-  name            = "ws-domain.com"
-  type            = "A"
-  ttl             = 300
-  records         = [aws_instance.jersey-ws-template.public_ip]
-  allow_overwrite = true
 }

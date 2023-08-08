@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qubitpi.ws.jersey.template.resource;
+package com.paiondata.astraios.resource;
+
+import com.paiondata.astraios.JettyServerFactory;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -25,9 +27,9 @@ import net.jcip.annotations.Immutable;
 import net.jcip.annotations.ThreadSafe;
 
 /**
- * A JAX-RS resource class used for testing {@link com.qubitpi.ws.jersey.template.JettyServerFactory}.
+ * A JAX-RS resource class used for testing {@link JettyServerFactory}.
  *
- * see {@link com.qubitpi.ws.jersey.template.JettyServerFactory#newInstance(int, String, ResourceConfig)} for why we
+ * see {@link JettyServerFactory#newInstance(int, String, ResourceConfig)} for why we
  * need to prefix @Path with "/v1"
  */
 @Singleton

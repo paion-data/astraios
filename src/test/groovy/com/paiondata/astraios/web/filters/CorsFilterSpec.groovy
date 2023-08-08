@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qubitpi.ws.jersey.template.web.filters
+package com.paiondata.astraios.web.filters
 
 import jakarta.ws.rs.container.ContainerRequestContext
 import jakarta.ws.rs.container.ContainerResponseContext

@@ -375,7 +375,7 @@
     </module>
     <!-- Headers -->
     <module name="Header">
-        <property name="header" value="/*\n * Copyright Jiaqi Liu"/>
+        <property name="header" value="/*\n * Copyright Paion Data"/>
         <property name="fileExtensions" value="java,groovy,g4" />
         <property name="severity" value="error"/>
     </module>

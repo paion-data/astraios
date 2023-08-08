@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 
-# Copyright Jiaqi Liu
+# Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,9 +42,3 @@ cd jetty-base
 java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy
 mv /home/ubuntu/REPO/target/REPO-1.0-SNAPSHOT.war webapps/ROOT.war
 cd ../
-
-# Install Nginx and load SSL config
-sudo apt install -y nginx
-sudo mv /home/ubuntu/nginx-ssl.conf /etc/nginx/sites-enabled/default
-sudo mv /home/ubuntu/server.crt /etc/ssl/certs/server.crt
-sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key

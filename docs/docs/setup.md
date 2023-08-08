@@ -40,46 +40,35 @@ OpenJDK 64-Bit Server VM (build 11.0.10+9, mixed mode)
 
 ### Installing Docker Engine
 
-[Jersey Webservice Template][jersey-ws-template] has [Docker-based integration tests][Docker-based integration tests];
-it also supports [running template webserivce in Docker][jersey-ws-template Dockerfile]. Docker can be installed by
+[Astraios][astraios] has [Docker-based integration tests][Docker-based integration tests];
+it also supports [running template webserivce in Docker][astraios Dockerfile]. Docker can be installed by
 following its [official instructions](https://docs.docker.com/desktop/install/mac-install/)
 
 Getting Source Code
 -------------------
 
 ```bash
-https://github.com/QubitPi/jersey-ws-template.git
-cd jersey-ws-template
+https://github.com/paiondata/astraios.git
+cd astraios
 ```
 
-### Syncing up with jersey-ws-template's Code Styles with IntelliJ
+### Syncing up with astraios's Code Styles with IntelliJ
 
-For the moment, we have distilled the most important code style conventions with respect to jersey-ws-template's code as
+For the moment, we have distilled the most important code style conventions with respect to astraios's code as
 IntelliJ settings. If IntelliJ is used for IDE, we may import these code style settings by importing the
-[Jersey-WS-Template-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
-project will appear as a new Scheme named Jersey-WS-Template-Project under IDE's `Editor -> Code Style` section.
-
-Removing Unneeded Classes
--------------------------
-
-[Jersey Webservice Template][jersey-ws-template] comes with common classes many webservices need, such as those
-implementing caching feature. _Remove them if not needed_:
-
-- [Caching][Caching] and [its tests][Caching tests]
+[Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
+project will appear as a new Scheme named Astraios-Project under IDE's `Editor -> Code Style` section.
 
 Modifying Templates
 -------------------
 
 - Update [endpoint package] accordingly
 
-[Caching]: https://github.com/QubitPi/jersey-ws-template/tree/master/src/main/java/com/qubitpi/ws/jersey/template/cache
-[Caching tests]: https://github.com/QubitPi/jersey-ws-template/tree/master/src/test/groovy/com/qubitpi/ws/jersey/template/cache
+[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/ws/jersey/template/DataServletITSpec.groovy
 
-[Docker-based integration tests]: https://github.com/QubitPi/jersey-ws-template/blob/master/src/test/groovy/com/qubitpi/ws/jersey/template/DataServletITSpec.groovy
+[endpoint package]: https://github.com/paion-data/astraios/blob/master/src/main/java/com/paiondata/ws/jersey/template/application/ResourceConfig.java
 
-[endpoint package]: https://github.com/QubitPi/jersey-ws-template/blob/master/src/main/java/com/qubitpi/ws/jersey/template/application/ResourceConfig.java
+[astraios]: https://github.com/paion-data/astraios
+[astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
 
-[jersey-ws-template]: https://github.com/QubitPi/jersey-ws-template
-[jersey-ws-template Dockerfile]: https://github.com/QubitPi/jersey-ws-template/blob/master/Dockerfile
-
-[style config]: https://github.com/QubitPi/jersey-ws-template/blob/master/Jersey-WS-Template-Project-intellij-code-style.xml
+[style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml

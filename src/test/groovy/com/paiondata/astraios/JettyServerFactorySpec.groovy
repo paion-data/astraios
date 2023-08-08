@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qubitpi.ws.jersey.template
+package com.paiondata.astraios
 
 import org.eclipse.jetty.server.Server
 import org.glassfish.jersey.server.ResourceConfig
@@ -26,7 +26,7 @@ import spock.lang.Specification
 class JettyServerFactorySpec extends Specification {
 
     static final int PORT = 8235
-    static final String ENDPOINT_RESOURCE_PACKAGE = "com.qubitpi.ws.jersey.template.resource"
+    static final String ENDPOINT_RESOURCE_PACKAGE = "com.paiondata.astraios.resource"
 
     /**
      * DI constructor.
