@@ -21,7 +21,7 @@ name: Template CI/CD
       - master
 
 env:
-  JDK_VERSION: 11
+  JDK_VERSION: 17
   JDK_DISTRIBUTION: 'adopt'
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
@@ -39,18 +39,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actionshub/markdownlint@main
-#  markdown-link-check:
-#    name: Markdown Link Check
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-#        with:
-#          use-verbose-mode: "yes"
+  markdown-link-check:
+    name: Markdown Link Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: "yes"
 
   tests:
     name: Unit & Integration Tests
-    needs: [yaml-lint, markdown-lint]
+    needs: [yaml-lint, markdown-lint, markdown-link-check]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -77,10 +77,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run unit & integration tests
         run: mvn -B clean verify
-      - name: Set up JDK 17 for Sonar Scan
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
       - name: Sonar Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,6 +124,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up JDK ${{ env.JDK_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JDK_VERSION }}
+          distribution: ${{ env.JDK_DISTRIBUTION }}
       - name: Build App WAR file so that Docker can pickup during image build
         run: mvn clean package
       - name: Set up QEMU
@@ -155,7 +156,6 @@ jobs:
 
   hashicorp:
     name: Publish Jersey WS AMI Image and Deploy it to EC2 through HashiCorp
-    if: ${{ github.event.repository.name != 'astraios' }}
     needs: tests
     runs-on: ubuntu-latest
     defaults:

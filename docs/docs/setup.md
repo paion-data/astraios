@@ -10,21 +10,37 @@ Prepare for Local Development
 
 ```bash
 brew update
-brew install java11
-sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
-brew install maven
+brew install openjdk@17
 ```
+
+At the end of the last command prompt, something like the below will show up:
+
+```bash
+For the system Java wrappers to find this JDK, symlink it with
+  sudo ln -sfn ...openjdk@17/libexec/openjdk.jdk .../JavaVirtualMachines/openjdk-17.jdk
+
+openjdk@17 is keg-only, which means it was not symlinked into /usr/local,
+because this is an alternate version of another formula.
+
+If you need to have openjdk@17 first in your PATH, run:
+  echo 'export PATH=".../openjdk@17/bin:$PATH"' >> .../.bash_profile
+
+For compilers to find openjdk@17 you may need to set:
+  export CPPFLAGS="-I.../openjdk@17/include"
+```
+
+Make sure to execute the `sudo ln -sfn`, `echo 'export PATH=...`, and the `export CPPFLAGS=` commands above
 
 :::tip
 
-Maven uses a separate JDK version, which can be seen via `mvn -v`. If it's not JDK 11, we should have Maven point
-to our JDK 11 using [JAVA_HOME](https://stackoverflow.com/a/2503679):
+Maven uses a separate JDK version, which can be seen via `mvn -v`. If it's not JDK 17, we should have Maven point
+to our JDK 17 using [JAVA_HOME](https://stackoverflow.com/a/2503679):
 
 ```bash
 $ /usr/libexec/java_home
-/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
+/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
 
-$ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home
+$ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
 ```
 
 :::
@@ -33,9 +49,9 @@ If we see something similar after typing the command with the version flag below
 
 ```bash
 $ java --version
-openjdk 11.0.10 2021-01-19
-OpenJDK Runtime Environment (build 11.0.10+9)
-OpenJDK 64-Bit Server VM (build 11.0.10+9, mixed mode)
+openjdk 17.0.10 2021-01-19
+OpenJDK Runtime Environment (build 17.0.10+9)
+OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 ```
 
 ### Installing Docker Engine

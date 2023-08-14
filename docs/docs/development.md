@@ -96,8 +96,16 @@ Running Webservice in Standalone Jetty (Production)
 
 ### Download Jetty
 
-At [download page](https://www.eclipse.org/jetty/download.php), pick up a `.tgz` distribution. Since this template
-requires Java 11+, we will use "11.0.15" release as an example:
+At [download page](https://www.eclipse.org/jetty/download.php), pick up a `.tgz` distribution. **It is very important
+to pick up Jetty server version that matches JDK version**. For JDK **17**, it's been tested that Jetty _11.0.15_ works
+
+:::note
+
+During testing, the embedded Jetty version is also 11.0.15
+
+:::
+
+Hence, we will use "11.0.15" release as an example:
 
 ![Error loading download-jetty.png](./img/download-jetty.png)
 
@@ -134,7 +142,7 @@ Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** dir
 mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 ```
 
-### Running Jersey Template Webservice
+### Running Astraios
 
 ```bash
 java -jar $JETTY_HOME/start.jar

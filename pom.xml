@@ -33,8 +33,8 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
         <version.validation.api>3.0.1</version.validation.api>
         <version.jcip.annotations>1.0</version.jcip.annotations>
@@ -45,7 +45,7 @@
         <version.servlet>6.0.0</version.servlet>
         <version.jersey>3.1.1</version.jersey>
         <version.groovy>4.0.6</version.groovy>
-        <version.jetty>11.0.14</version.jetty>
+        <version.jetty>11.0.15</version.jetty>
 
         <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
         <version.maven.javadoc.plugin>3.5.0</version.maven.javadoc.plugin>
@@ -79,6 +79,13 @@
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-bom</artifactId>
                 <version>2.4-M1-groovy-4.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-bom</artifactId>
+                <version>${version.jetty}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -193,6 +200,11 @@
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
         </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>6.25.2</version>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
@@ -221,13 +233,16 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>${version.jetty}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>${version.jetty}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -259,7 +274,7 @@
         </resources>
 
         <plugins>
-            <!-- Use Java 11 -->
+            <!-- Use Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -337,27 +352,6 @@
                 </executions>
             </plugin>
 
-            <!-- Groovy checkstyle -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>codenarc-maven-plugin</artifactId>
-                <version>0.22-1</version>
-                <configuration>
-                    <sourceDirectory>${project.basedir}</sourceDirectory>
-                    <maxPriority1Violations>0</maxPriority1Violations>
-                    <maxPriority2Violations>0</maxPriority2Violations>
-                    <maxPriority3Violations>0</maxPriority3Violations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>codenarc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Unite Test -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -425,7 +419,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.6</version>
+                <version>0.8.8</version>
             </plugin>
         </plugins>
     </build>
