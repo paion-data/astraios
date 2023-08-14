@@ -80,9 +80,9 @@ Modifying Templates
 
 - Update [endpoint package] accordingly
 
-[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/ws/jersey/template/DataServletITSpec.groovy
+[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/DataServletITSpec.groovy
 
-[endpoint package]: https://github.com/paion-data/astraios/blob/master/src/main/java/com/paiondata/ws/jersey/template/application/ResourceConfig.java
+[endpoint package]: https://github.com/paion-data/astraios/blob/master/src/main/java/com/paiondata/astraios/application/ResourceConfig.java
 
 [astraios]: https://github.com/paion-data/astraios
 [astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
