@@ -18,10 +18,9 @@ set -x
 sudo apt update && sudo apt upgrade -y
 sudo apt install software-properties-common -y
 
-# Install JDK 11 - https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-on-ubuntu-20-04#installing-the-default-jre-jdk
+# Install JDK 17 - https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
 sudo apt update
-sudo apt install default-jre -y
-sudo apt install default-jdk -y
+sudo apt install openjdk-17-jdk openjdk-17-jre
 
 # Install Maven
 sudo apt install maven -y
@@ -32,11 +31,12 @@ cd REPO
 mvn clean package -Dmaven.test.skip
 cd ../
 
-# Install and configure Jetty (version 11) container
-wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.15/jetty-home-11.0.15.tar.gz
-tar -xzvf jetty-home-11.0.15.tar.gz
-rm jetty-home-11.0.15.tar.gz
-export JETTY_HOME=/home/ubuntu/jetty-home-11.0.15
+# Install and configure Jetty (version 17) container
+JETTY_VERSION=11.0.15
+wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/$JETTY_VERSION/jetty-home-$JETTY_VERSION.tar.gz
+tar -xzvf jetty-home-$JETTY_VERSION.tar.gz
+rm jetty-home-$JETTY_VERSION.tar.gz
+export JETTY_HOME=/home/ubuntu/jetty-home-$JETTY_VERSION
 mkdir jetty-base
 cd jetty-base
 java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy
