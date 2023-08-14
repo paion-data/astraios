@@ -64,7 +64,7 @@ resource "aws_instance" "astraios" {
   tags = {
     Name = "ES2 Instance Name"
   }
-  security_groups = ["Security Group Name"]
+  security_groups = ["Paion Data Astraios"]
 
   user_data = <<-EOF
     #!/bin/bash
