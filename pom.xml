@@ -206,6 +206,35 @@
             <version>6.25.2</version>
         </dependency>
 
+        <!-- Elide -->
+        <dependency>
+            <groupId>com.yahoo.elide</groupId>
+            <artifactId>elide-core</artifactId>
+            <version>7.0.0-pr6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yahoo.elide</groupId>
+                    <artifactId>elide-graphql</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.elide</groupId>
+            <artifactId>elide-standalone</artifactId>
+            <version>7.0.0-pr6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.yahoo.elide</groupId>
+                    <artifactId>elide-graphql</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.49</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.spockframework</groupId>
@@ -233,18 +262,20 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-slf4j-impl</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>

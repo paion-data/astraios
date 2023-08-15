@@ -44,6 +44,6 @@ import net.jcip.annotations.ThreadSafe;
 @Config.Sources({"system:env", "system:properties"})
 public interface ApplicationConfig extends Config {
 
-    @Key("EXAMPLE_CONFIG_KEY_NAME")
-    String exampleConfigKey();
+    @Key("MODEL_PACKAGE_NAME")
+    String modelPackageName();
 }
