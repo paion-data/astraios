@@ -128,7 +128,7 @@ configs. In short, the Standalone Jetty container will be setup with
 export JETTY_HOME=/path/to/jetty-home-11.0.15
 mkdir -p /path/to/jetty-base
 cd /path/to/jetty-base
-java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy
+java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp,websocket
 ```
 
 where `/path/to/` is the _absolute_ path to the directory containing the `jetty-home-11.0.15` directory
@@ -141,6 +141,10 @@ Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** dir
 ```bash
 mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 ```
+
+### Setting Environment Variables
+
+- **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
 
 ### Running Astraios
 
