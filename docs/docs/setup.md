@@ -56,7 +56,7 @@ OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 
 ### Installing Docker Engine
 
-[Astraios][astraios] supports [running itself in Docker][astraios Dockerfile]. Docker can be installed by following its 
+[Astraios][astraios] supports [running itself in Docker][astraios Dockerfile]. Docker can be installed by following its
 [official instructions](https://docs.docker.com/desktop/install/mac-install/)
 
 Getting Source Code
