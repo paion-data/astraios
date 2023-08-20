@@ -62,7 +62,7 @@ resource "aws_instance" "astraios" {
   ami = "${data.aws_ami.latest-astraios.id}"
   instance_type = "t2.micro"
   tags = {
-    Name = "ES2 Instance Name"
+    Name = "Paion Data Astraios"
   }
   security_groups = ["Paion Data Astraios"]
 

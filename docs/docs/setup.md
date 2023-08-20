@@ -56,9 +56,8 @@ OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 
 ### Installing Docker Engine
 
-[Astraios][astraios] has [Docker-based integration tests][Docker-based integration tests];
-it also supports [running template webserivce in Docker][astraios Dockerfile]. Docker can be installed by
-following its [official instructions](https://docs.docker.com/desktop/install/mac-install/)
+[Astraios][astraios] supports [running itself in Docker][astraios Dockerfile]. Docker can be installed by following its
+[official instructions](https://docs.docker.com/desktop/install/mac-install/)
 
 Getting Source Code
 -------------------
@@ -74,15 +73,6 @@ For the moment, we have distilled the most important code style conventions with
 IntelliJ settings. If IntelliJ is used for IDE, we may import these code style settings by importing the
 [Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
 project will appear as a new Scheme named Astraios-Project under IDE's `Editor -> Code Style` section.
-
-Modifying Templates
--------------------
-
-- Update [endpoint package] accordingly
-
-[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/DataServletITSpec.groovy
-
-[endpoint package]: https://github.com/paion-data/astraios/blob/master/src/main/java/com/paiondata/astraios/application/ResourceConfig.java
 
 [astraios]: https://github.com/paion-data/astraios
 [astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
