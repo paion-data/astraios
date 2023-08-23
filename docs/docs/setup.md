@@ -78,3 +78,15 @@ project will appear as a new Scheme named Astraios-Project under IDE's `Editor -
 [astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
 
 [style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml
+
+
+### Loading Up Model Package
+
+For example:
+
+```bash
+export ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID=com.mycompnay
+export ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID=astraios-model-package
+export ASTRAIOS_MODEL_PACKAGE_JAR_VERSION=1.0.7
+```
+

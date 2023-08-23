@@ -94,6 +94,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
+            <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
+            <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>4.0.2</version>
@@ -546,6 +552,11 @@
             <id>paion</id>
             <name>Paion Data Official Release Repository</name>
             <url>https://nexus.paion-data.dev/repository/maven-oss</url>
+        </repository>
+        <repository>
+            <id>${env.ASTRAIOS_MODEL_PACKAGE_REPO_ID}</id>
+            <name>Astraios model pacakge JAR repository</name>
+            <url>${env.ASTRAIOS_MODEL_PACKAGE_REPO_URL}</url>
         </repository>
     </repositories>
 </project>
