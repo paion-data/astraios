@@ -91,6 +91,58 @@ docker run -d --name=astraios -p 8080:8080 paiondata/astraios
 At this moment, the healthcheck endpoint `GET localhost:8080/v1/data/healthcheck` should return 200 status code
 properly.
 
+### Importing the JPA model
+
+Importing the JPA model requires installing the dependencies associated with the JAR
+
+Add them to your **pom.xml** file:
+
+```bash
+<dependency>
+     <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
+     <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
+     <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
+</dependency>
+```
+
+And specify the URL of your repository
+
+```bash
+<dependency>
+     <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
+     <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
+     <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
+</dependency>
+```
+
+Configure environment variables in the project:
+
+- **ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID**: The groupId of the group in which the JAR is stored in your repository
+- **ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID**: The artifactId of the JAR you want to use
+- **ASTRAIOS_MODEL_PACKAGE_JAR_VERSION**: JAR version
+- **ASTRAIOS_MODEL_PACKAGE_REPO_ID**: The repository id that contains the JAR
+- **ASTRAIOS_MODEL_PACKAGE_REPO_URL**: The URL of your repository resource
+
+Execute `mvn clean package` in your project to package.
+
+### Start the local database
+
+This project depend on **MySQL@5.7**, if you don't have it, please install it first:
+
+```bash
+brew install mysql@5.7
+brew install mysql-client@5.7
+```
+
+Set the password of the root account based on the log information:
+
+```bash
+mysql_secure_installation
+mysql -h localhost -u root -p
+```
+
+Next, enter the password you want to set, and then we will complete the configuration of the database.
+
 Running Webservice in Standalone Jetty (Production)
 ---------------------------------------------------
 
@@ -145,6 +197,8 @@ mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 ### Setting Environment Variables
 
 - **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
+- **DB_USER**: Username of the local database
+- **DB_PASSWORD** The password of the local database
 
 ### Running Astraios
 
@@ -152,7 +206,16 @@ mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 java -jar $JETTY_HOME/start.jar
 ```
 
-The webservice will run on port **8080**
+You can insert some data by following the template below
+
+```bash
+curl -X POST http://localhost:8080/v1/data/book \
+  -H "Content-Type: application/vnd.api+json" \
+  -H "Accept: application/vnd.api+json" \
+  -d '{"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride & Prejudice"}}}'
+```
+
+The webservice will run on port **8080**, and you will see the data you inserted
 
 [docker hub]: https://hub.docker.com/r/jack20191124/astraios/
 

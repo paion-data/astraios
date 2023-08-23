@@ -1,0 +1,26 @@
+name: 'settings.xml'
+description: 'Generate settings.xml for authenticating internal model package download'
+inputs:
+  nexus-server-id:
+    description: 'Nexus server ID'
+    required: true
+  nexus-user:
+    description: 'Nexus user'
+    required: true
+  nexus-token:
+    description: 'Nexus token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Authenticating internal model package download
+      uses: whelk-io/maven-settings-xml-action@v20
+      with:
+        servers: >
+          [
+            {
+              "id": "${{ inputs.nexus-server-id }}",
+              "username": "${{ inputs.nexus-user }}",
+              "password": "${{ inputs.nexus-token }}"
+            }
+          ]

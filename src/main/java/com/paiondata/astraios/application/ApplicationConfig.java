@@ -46,4 +46,10 @@ public interface ApplicationConfig extends Config {
 
     @Key("MODEL_PACKAGE_NAME")
     String modelPackageName();
+
+    @Key("DB_USER")
+    String dbUser();
+
+    @Key("DB_PASSWORD")
+    String dbPassword();
 }

@@ -84,8 +84,9 @@ public class BinderFactory {
             @Override
             protected void configure() {
                 final ElideSettings elideSettings = buildElideSettings();
-
-                bind(buildElide(elideSettings)).to(Elide.class).named("elide");
+                final Elide elide = buildElide(elideSettings);
+                elide.doScans();
+                bind(elide).to(Elide.class).named("elide");
                 bind(elideSettings).to(ElideSettings.class);
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
                 bind(elideSettings.getDataStore()).to(DataStore.class).named("elideDataStore");
@@ -115,6 +116,7 @@ public class BinderFactory {
 
             private EntityManagerFactory buildEntityManagerFactory() {
                 final String modelPackageName = CONFIG.modelPackageName();
+
                 final ClassLoader classLoader = null;
 
                 final PersistenceUnitInfo persistenceUnitInfo = new PersistenceUnitInfoImpl(
@@ -155,8 +157,8 @@ public class BinderFactory {
 
                 dbProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
                 dbProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost/elide?serverTimezone=UTC");
-                dbProperties.put("jakarta.persistence.jdbc.user", "root");
-                dbProperties.put("jakarta.persistence.jdbc.password", "root");
+                dbProperties.put("jakarta.persistence.jdbc.user", CONFIG.dbUser());
+                dbProperties.put("jakarta.persistence.jdbc.password", CONFIG.dbPassword());
 
                 return dbProperties;
             }

@@ -15,8 +15,6 @@
  */
 package com.paiondata.astraios.application;
 
-import com.yahoo.elide.Elide;
-
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.Binder;
 
@@ -48,14 +46,6 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
         final Binder binder = new BinderFactory().buildBinder(injector);
 
         register(binder);
-
-        register(new org.glassfish.hk2.utilities.binding.AbstractBinder() {
-            @Override
-            protected void configure() {
-                final Elide elide = injector.getService(Elide.class, "elide");
-                elide.doScans();
-            }
-        });
 
         packages(ENDPOINT_PACKAGE);
     }
