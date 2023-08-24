@@ -156,7 +156,7 @@ public class BinderFactory {
                 dbProperties.putIfAbsent("hibernate.hikari.idleTimeout", "30000");
 
                 dbProperties.put("jakarta.persistence.jdbc.driver", "com.mysql.jdbc.Driver");
-                dbProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://localhost/elide?serverTimezone=UTC");
+                dbProperties.put("jakarta.persistence.jdbc.url", "jdbc:mysql://db/elide?serverTimezone=UTC");
                 dbProperties.put("jakarta.persistence.jdbc.user", CONFIG.dbUser());
                 dbProperties.put("jakarta.persistence.jdbc.password", CONFIG.dbPassword());
 
