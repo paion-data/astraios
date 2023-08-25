@@ -3,6 +3,39 @@ sidebar_position: 3
 title: Development
 ---
 
+- **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
+- **DB_USER**: Username of the local database
+- **DB_PASSWORD** The password of the local database
+
+
+
+Running Astraios in Docker Compose
+----------------------------------
+
+### Defining Data Models
+
+This page is a description on how to create CRUD data models (create, read, update, and delete) in Astraios.
+
+Astraios can run in [Docker Compose] for the following purposes
+
+1. Decoupling frontend and backend development
+2. Easily integrating Astraios-backed application testing in CI/CD
+
+![Error Loading docker-compose.png](./img/docker-compose.png)
+
+```bash
+cd astraios
+mvn clean package
+MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+```
+
+where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
+[elide models](https://elide.io/pages/guide/v7/02-data-model.html)
+
+#### Static Configuration 
+
+
+
 Running Tests
 -------------
 
@@ -217,7 +250,7 @@ curl -X POST http://localhost:8080/v1/data/book \
 
 The webservice will run on port **8080**, and you will see the data you inserted
 
-[docker hub]: https://hub.docker.com/r/jack20191124/astraios/
+[Docker Compose]: https://docs.docker.com/compose/
 
 [astraios]: https://github.com/paion-data/astraios
 [astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile

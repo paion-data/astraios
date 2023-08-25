@@ -56,15 +56,21 @@ OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 
 ### Installing Docker Engine
 
-[Astraios][astraios] supports [running itself in Docker][astraios Dockerfile]. Docker can be installed by following its
-[official instructions](https://docs.docker.com/desktop/install/mac-install/)
+[Astraios] supports [running itself in Docker Compose](development#running-astraios-in-docker-compose). Docker can be 
+installed by following its [official instructions](https://docs.docker.com/desktop/install/mac-install/)
+
+:::caution
+
+[Astraios's Docker Compose](development#running-astraios-in-docker-compose) is intended for **local dev** and
+**testing** purposes only! _It is strongly discouraged to run Docker Compose in production_!
+
+:::
 
 Getting Source Code
 -------------------
 
 ```bash
 https://github.com/paiondata/astraios.git
-cd astraios
 ```
 
 ### Syncing up with astraios's Code Styles with IntelliJ
@@ -74,7 +80,10 @@ IntelliJ settings. If IntelliJ is used for IDE, we may import these code style s
 [Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
 project will appear as a new Scheme named Astraios-Project under IDE's `Editor -> Code Style` section.
 
-[astraios]: https://github.com/paion-data/astraios
-[astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
+### What's Next
+
+Please head over to our [development guide](development) next.
+
+[Astraios]: https://github.com/paion-data/astraios
 
 [style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml
