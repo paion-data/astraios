@@ -15,6 +15,8 @@
  */
 package com.paiondata.astraios.application;
 
+import com.paiondata.astraios.web.filters.CorsFilter;
+
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.Binder;
 
@@ -43,8 +45,9 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      */
     @Inject
     public ResourceConfig(final ServiceLocator injector, @Context final ServletContext servletContext) {
-        final Binder binder = new BinderFactory().buildBinder(injector);
+        register(new CorsFilter());
 
+        final Binder binder = new BinderFactory().buildBinder(injector);
         register(binder);
 
         packages(ENDPOINT_PACKAGE);
