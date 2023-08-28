@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.paiondata.astraios.application"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.paiondata.astraios.application"},{"l":"com.paiondata.astraios.config"},{"l":"com.paiondata.astraios.web.filters"}];updateSearchResults();
