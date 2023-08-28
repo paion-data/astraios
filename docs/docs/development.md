@@ -30,9 +30,17 @@ MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --forc
 ```
 
 where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
-[elide models](https://elide.io/pages/guide/v7/02-data-model.html)
+[elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
 
-#### Static Configuration 
+```bash
+export ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.astraios.models
+```
+
+The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file. 
+
+### Troubleshooting
+
+DB does not have my bean table: if tests is running in IDE, make sure it is in IDE's **External Libraries**
 
 
 
@@ -42,6 +50,9 @@ Running Tests
 ```bash
 mvn clean verify
 ```
+
+For IT, tests, we use testcontainers instead of jcabi-mysql because it's hard to debug and testcontainers support more
+types of db, such as mongo
 
 Packaging
 ---------
