@@ -68,18 +68,6 @@ jobs:
           distribution: ${{ env.JDK_DISTRIBUTION }}
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - uses: ./.github/actions/create-mvn-settings
         with:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
