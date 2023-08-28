@@ -17,8 +17,9 @@ package com.paiondata.astraios.application;
 
 import com.yahoo.elide.Elide;
 
+import com.paiondata.astraios.web.filters.CorsFilter;
+
 import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.hk2.utilities.Binder;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
@@ -45,18 +46,22 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      */
     @Inject
     public ResourceConfig(final ServiceLocator injector, @Context final ServletContext servletContext) {
-        final Binder binder = new BinderFactory().buildBinder(injector);
+        packages(ENDPOINT_PACKAGE);
 
-        register(binder);
+        register(new CorsFilter());
+        register(new BinderFactory().buildBinder(injector));
 
+        // Bind api docs to given endpoint
+        // This looks strange, but Jersey binds its Abstract binders first, and then later it binds 'external'
+        // binders (like this HK2 version).  This allows breaking dependency injection into two phases.
+        // Everything bound in the first phase can be accessed in the second phase.
         register(new org.glassfish.hk2.utilities.binding.AbstractBinder() {
             @Override
             protected void configure() {
                 final Elide elide = injector.getService(Elide.class, "elide");
+
                 elide.doScans();
             }
         });
-
-        packages(ENDPOINT_PACKAGE);
     }
 }

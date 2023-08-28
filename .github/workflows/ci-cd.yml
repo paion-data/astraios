@@ -25,6 +25,11 @@ env:
   JDK_DISTRIBUTION: 'adopt'
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
+  ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID }}
+  ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID }}
+  ASTRAIOS_MODEL_PACKAGE_JAR_VERSION: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION }}
+  ASTRAIOS_MODEL_PACKAGE_REPO_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_ID }}
+  ASTRAIOS_MODEL_PACKAGE_REPO_URL: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
 
 jobs:
   yaml-lint:
@@ -75,6 +80,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - uses: ./.github/actions/create-mvn-settings
+        with:
+          nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
+          nexus-user: ${{ secrets.NEXUS_USER }}
+          nexus-token: ${{ secrets.NEXUS_TOKEN }}
       - name: Run unit & integration tests
         run: mvn -B clean verify
       - name: Sonar Scan
@@ -102,6 +112,11 @@ jobs:
       - name: Build documentations
         working-directory: docs
         run: yarn build
+      - uses: ./.github/actions/create-mvn-settings
+        with:
+          nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
+          nexus-user: ${{ secrets.NEXUS_USER }}
+          nexus-token: ${{ secrets.NEXUS_TOKEN }}
       - name: Generate Javadoc
         run: mvn -B clean javadoc:javadoc
       - name: Move Javadoc into documentation directory
@@ -129,6 +144,11 @@ jobs:
         with:
           java-version: ${{ env.JDK_VERSION }}
           distribution: ${{ env.JDK_DISTRIBUTION }}
+      - uses: ./.github/actions/create-mvn-settings
+        with:
+          nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
+          nexus-user: ${{ secrets.NEXUS_USER }}
+          nexus-token: ${{ secrets.NEXUS_TOKEN }}
       - name: Build App WAR file so that Docker can pickup during image build
         run: mvn clean package
       - name: Set up QEMU
@@ -175,7 +195,7 @@ jobs:
           echo '${{ secrets.SSL_CERTIFICATE }}' > server.crt
           echo '${{ secrets.SSL_CERTIFICATE_KEY }}' > server.key
       - name: Publish Jersey WS AMI image and deploy it to EC2 through HashiCorp
-        uses: QubitPi/hashicorp-aws@master
+        uses: QubitPi/aergia@master
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

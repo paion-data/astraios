@@ -3,12 +3,48 @@ sidebar_position: 3
 title: Development
 ---
 
+Running Astraios in Docker Compose
+----------------------------------
+
+### Defining Data Models
+
+Astraios can run in [Docker Compose] for the following purposes
+
+1. Decoupling frontend and backend development
+2. Easily integrating Astraios-backed application testing in CI/CD
+
+![Error Loading docker-compose.png](./img/docker-compose.png)
+
+```bash
+cd astraios
+mvn clean package
+MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+```
+
+where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
+[elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
+
+```bash
+export ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.astraios.models
+```
+
+The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
+
+### Troubleshooting
+
+#### Database Does Not Contain Model Packages's Bean Table
+
+_If tests is running in IDE_, make sure the model package JAR it is in IDE's **External Libraries**
+
 Running Tests
 -------------
 
 ```bash
 mvn clean verify
 ```
+
+For IT tests, we use [Testcontainers] instead of [jcabi-mysql] because the latter is hard to configure and debug and
+[Testcontainers] support more types of db, such as mongo
 
 Packaging
 ---------
@@ -19,77 +55,6 @@ mvn clean package
 
 A [**WAR** file](https://en.wikipedia.org/wiki/WAR_(file_format)) named `astraios-1.0-SNAPSHOT.war` will
 be generated under _target_ directory for [running in Jetty](#running-in-standalone-jetty)
-
-Running Webservice in Docker (Development)
-------------------------------------------
-
-:::caution
-
-Support [running this template webservice in Docker][astraios Dockerfile] is NOT for production deployment.
-It's intended usage is for **development** where developer can easily stand up a webservice instance for dev and
-testing purpose.
-
-Production deployment for [astraios][astraios] assumes
-[Jetty-based scheme](#running-webservice-in-standalone-jetty-production)
-
-:::
-
-### Getting Image
-
-#### Docker Hub
-
-We can pull the image from [its docker hub][docker hub]:
-
-```bash
-docker pull jack20191124/astraios
-```
-
-#### GitHub
-
-We could also build the image from [source][astraios Dockerfile]:
-
-```bash
-https://github.com/paion-data/astraios.git
-cd astraios
-docker build -t paiondata/astraios
-```
-
-:::tip
-
-If we need to pass one or more runtime environment variables into docker image, we can do
-
-```bash
-export MY_ENV_VARIABLE=foo
-export MY_OTHER_ENV_VARIABLE=bar
-
-docker build -t paiondata/astraios \
-  --build-arg MY_ENV_VARIABLE=$MY_ENV_VARIABLE \
-  --build-arg MY_OTHER_ENV_VARIABLE=$MY_OTHER_ENV_VARIABLE \
-  .
-```
-
-where the _Dockerfile_ contains
-
-```dockerfile
-ARG MY_ENV_VARIABLE
-ARG MY_OTHER_ENV_VARIABLE
-
-ENV MY_ENV_VARIABLE $MY_ENV_VARIABLE
-ENV MY_OTHER_ENV_VARIABLE $MY_OTHER_ENV_VARIABLE
-```
-
-:::
-
-### Standup a Container
-
-When image is on our machine (either by pulling or building), we can spin up an instance using
-
-```bash
-docker run -d --name=astraios -p 8080:8080 paiondata/astraios
-```
-
-At this moment, the healthcheck endpoint `GET localhost:8080/v1/data/healthcheck` should return 200 status code
-properly.
 
 Running Webservice in Standalone Jetty (Production)
 ---------------------------------------------------
@@ -142,9 +107,11 @@ Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** dir
 mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 ```
 
-### Setting Environment Variables
+### Configuring Astraios
 
-- **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
+#### Define Model Package
+
+#### Set Application Properties
 
 ### Running Astraios
 
@@ -152,9 +119,12 @@ mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 java -jar $JETTY_HOME/start.jar
 ```
 
-The webservice will run on port **8080**
-
-[docker hub]: https://hub.docker.com/r/jack20191124/astraios/
+The webservice will run on port **8080**, and you will see the data you inserted
 
 [astraios]: https://github.com/paion-data/astraios
-[astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
+
+[Docker Compose]: https://docs.docker.com/compose/
+
+[jcabi-mysql]: https://mysql.jcabi.com/
+
+[Testcontainers]: https://qubitpi.github.io/testcontainers-java/

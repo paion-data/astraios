@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.paiondata.astraios.application;
+package com.paiondata.astraios.config;
 
 import org.aeonbits.owner.Config;
 
@@ -21,10 +21,10 @@ import net.jcip.annotations.Immutable;
 import net.jcip.annotations.ThreadSafe;
 
 /**
- * {@link ApplicationConfig} provides an interface for retrieving configuration values, allowing for implicit type
+ * {@link JpaDatastoreConfig} provides an interface for retrieving configuration values, allowing for implicit type
  * conversion, defaulting, and use of a runtime properties interface to override configured settings.
  * <p>
- * {@link ApplicationConfig} supports overriding between properties:
+ * {@link JpaDatastoreConfig} supports overriding between properties:
  * <ol>
  *     <li> It will try to load the given property from the
  *          <a href="https://docs.oracle.com/javase/tutorial/essential/environment/env.html">operating system's
@@ -41,9 +41,21 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"system:env", "system:properties"})
-public interface ApplicationConfig extends Config {
+@Config.Sources({"classpath:jpadatastore.properties", "system:env", "system:properties"})
+public interface JpaDatastoreConfig extends Config {
 
-    @Key("MODEL_PACKAGE_NAME")
-    String modelPackageName();
+    @Key("DB_USER")
+    String dbUser();
+
+    @Key("DB_PASSWORD")
+    String dbPassword();
+
+    @Key("DB_URL")
+    String dbUrl();
+
+    @Key("DB_DRIVER")
+    String dbDriver();
+
+    @Key("DB_DIALECT")
+    String dbDialect();
 }
