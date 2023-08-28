@@ -91,7 +91,7 @@ public class BinderFactory {
             protected void configure() {
                 final ElideSettings elideSettings = buildElideSettings();
                 final Elide elide = buildElide(elideSettings);
-                elide.doScans();
+
                 bind(elide).to(Elide.class).named("elide");
                 bind(elideSettings).to(ElideSettings.class);
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
