@@ -20,7 +20,6 @@ import com.yahoo.elide.Elide;
 import com.paiondata.astraios.web.filters.CorsFilter;
 
 import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.hk2.utilities.Binder;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;

@@ -56,13 +56,17 @@ OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 
 ### Installing Docker Engine
 
-[Astraios] supports [running itself in Docker Compose](development#running-astraios-in-docker-compose). Docker can be 
+<!-- markdown-link-check-disable -->
+[Astraios] supports [running itself in Docker Compose](development#running-astraios-in-docker-compose). Docker can be
 installed by following its [official instructions](https://docs.docker.com/desktop/install/mac-install/)
+<!-- markdown-link-check-enable -->
 
 :::caution
 
+<!-- markdown-link-check-disable -->
 [Astraios's Docker Compose](development#running-astraios-in-docker-compose) is intended for **local dev** and
 **testing** purposes only! _It is strongly discouraged to run Docker Compose in production_!
+<!-- markdown-link-check-enable -->
 
 :::
 
@@ -82,7 +86,9 @@ project will appear as a new Scheme named Astraios-Project under IDE's `Editor -
 
 ### What's Next
 
+<!-- markdown-link-check-disable -->
 Please head over to our [development guide](development) next.
+<!-- markdown-link-check-enable -->
 
 [Astraios]: https://github.com/paion-data/astraios
 

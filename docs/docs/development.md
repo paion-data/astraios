@@ -3,18 +3,10 @@ sidebar_position: 3
 title: Development
 ---
 
-- **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
-- **DB_USER**: Username of the local database
-- **DB_PASSWORD** The password of the local database
-
-
-
 Running Astraios in Docker Compose
 ----------------------------------
 
 ### Defining Data Models
-
-This page is a description on how to create CRUD data models (create, read, update, and delete) in Astraios.
 
 Astraios can run in [Docker Compose] for the following purposes
 
@@ -36,13 +28,11 @@ where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains 
 export ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.astraios.models
 ```
 
-The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file. 
+The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
 
 ### Troubleshooting
 
 DB does not have my bean table: if tests is running in IDE, make sure it is in IDE's **External Libraries**
-
-
 
 Running Tests
 -------------
