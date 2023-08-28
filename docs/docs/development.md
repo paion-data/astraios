@@ -32,7 +32,9 @@ The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker 
 
 ### Troubleshooting
 
-DB does not have my bean table: if tests is running in IDE, make sure it is in IDE's **External Libraries**
+#### Database Does Not Contain Model Packages's Bean Table
+
+_If tests is running in IDE_, make sure the model package JAR it is in IDE's **External Libraries**
 
 Running Tests
 -------------
@@ -41,8 +43,8 @@ Running Tests
 mvn clean verify
 ```
 
-For IT, tests, we use testcontainers instead of jcabi-mysql because it's hard to debug and testcontainers support more
-types of db, such as mongo
+For IT tests, we use [Testcontainers] instead of [jcabi-mysql] because the latter is hard to configure and debug and
+[Testcontainers] support more types of db, such as mongo
 
 Packaging
 ---------
@@ -53,129 +55,6 @@ mvn clean package
 
 A [**WAR** file](https://en.wikipedia.org/wiki/WAR_(file_format)) named `astraios-1.0-SNAPSHOT.war` will
 be generated under _target_ directory for [running in Jetty](#running-in-standalone-jetty)
-
-Running Webservice in Docker (Development)
-------------------------------------------
-
-:::caution
-
-Support [running this template webservice in Docker][astraios Dockerfile] is NOT for production deployment.
-It's intended usage is for **development** where developer can easily stand up a webservice instance for dev and
-testing purpose.
-
-Production deployment for [astraios][astraios] assumes
-[Jetty-based scheme](#running-webservice-in-standalone-jetty-production)
-
-:::
-
-### Getting Image
-
-#### Docker Hub
-
-We can pull the image from [its docker hub][docker hub]:
-
-```bash
-docker pull jack20191124/astraios
-```
-
-#### GitHub
-
-We could also build the image from [source][astraios Dockerfile]:
-
-```bash
-https://github.com/paion-data/astraios.git
-cd astraios
-docker build -t paiondata/astraios
-```
-
-:::tip
-
-If we need to pass one or more runtime environment variables into docker image, we can do
-
-```bash
-export MY_ENV_VARIABLE=foo
-export MY_OTHER_ENV_VARIABLE=bar
-
-docker build -t paiondata/astraios \
-  --build-arg MY_ENV_VARIABLE=$MY_ENV_VARIABLE \
-  --build-arg MY_OTHER_ENV_VARIABLE=$MY_OTHER_ENV_VARIABLE \
-  .
-```
-
-where the _Dockerfile_ contains
-
-```dockerfile
-ARG MY_ENV_VARIABLE
-ARG MY_OTHER_ENV_VARIABLE
-
-ENV MY_ENV_VARIABLE $MY_ENV_VARIABLE
-ENV MY_OTHER_ENV_VARIABLE $MY_OTHER_ENV_VARIABLE
-```
-
-:::
-
-### Standup a Container
-
-When image is on our machine (either by pulling or building), we can spin up an instance using
-
-```bash
-docker run -d --name=astraios -p 8080:8080 paiondata/astraios
-```
-
-At this moment, the healthcheck endpoint `GET localhost:8080/v1/data/healthcheck` should return 200 status code
-properly.
-
-### Importing the JPA model
-
-Importing the JPA model requires installing the dependencies associated with the JAR
-
-Add them to your **pom.xml** file:
-
-```bash
-<dependency>
-     <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
-     <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
-     <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
-</dependency>
-```
-
-And specify the URL of your repository
-
-```bash
-<dependency>
-     <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
-     <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
-     <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
-</dependency>
-```
-
-Configure environment variables in the project:
-
-- **ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID**: The groupId of the group in which the JAR is stored in your repository
-- **ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID**: The artifactId of the JAR you want to use
-- **ASTRAIOS_MODEL_PACKAGE_JAR_VERSION**: JAR version
-- **ASTRAIOS_MODEL_PACKAGE_REPO_ID**: The repository id that contains the JAR
-- **ASTRAIOS_MODEL_PACKAGE_REPO_URL**: The URL of your repository resource
-
-Execute `mvn clean package` in your project to package.
-
-### Start the local database
-
-This project depend on **MySQL@5.7**, if you don't have it, please install it first:
-
-```bash
-brew install mysql@5.7
-brew install mysql-client@5.7
-```
-
-Set the password of the root account based on the log information:
-
-```bash
-mysql_secure_installation
-mysql -h localhost -u root -p
-```
-
-Next, enter the password you want to set, and then we will complete the configuration of the database.
 
 Running Webservice in Standalone Jetty (Production)
 ---------------------------------------------------
@@ -228,11 +107,11 @@ Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** dir
 mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 ```
 
-### Setting Environment Variables
+### Configuring Astraios
 
-- **MODEL_PACKAGE_NAME**: Model package in CLASSPATH
-- **DB_USER**: Username of the local database
-- **DB_PASSWORD** The password of the local database
+#### Define Model Package
+
+#### Set Application Properties
 
 ### Running Astraios
 
@@ -240,18 +119,12 @@ mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
 java -jar $JETTY_HOME/start.jar
 ```
 
-You can insert some data by following the template below
-
-```bash
-curl -X POST http://localhost:8080/v1/data/book \
-  -H "Content-Type: application/vnd.api+json" \
-  -H "Accept: application/vnd.api+json" \
-  -d '{"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride & Prejudice"}}}'
-```
-
 The webservice will run on port **8080**, and you will see the data you inserted
+
+[astraios]: https://github.com/paion-data/astraios
 
 [Docker Compose]: https://docs.docker.com/compose/
 
-[astraios]: https://github.com/paion-data/astraios
-[astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
+[jcabi-mysql]: https://mysql.jcabi.com/
+
+[Testcontainers]: https://qubitpi.github.io/testcontainers-java/

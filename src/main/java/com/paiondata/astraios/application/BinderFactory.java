@@ -90,9 +90,8 @@ public class BinderFactory {
             @Override
             protected void configure() {
                 final ElideSettings elideSettings = buildElideSettings();
-                final Elide elide = buildElide(elideSettings);
 
-                bind(elide).to(Elide.class).named("elide");
+                bind(buildElide(elideSettings)).to(Elide.class).named("elide");
                 bind(elideSettings).to(ElideSettings.class);
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
                 bind(elideSettings.getDataStore()).to(DataStore.class).named("elideDataStore");
