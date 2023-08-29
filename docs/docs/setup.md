@@ -3,6 +3,8 @@ sidebar_position: 2
 title: Setup
 ---
 
+This section discusses the one-time setup in order to develop [Astraios].
+
 Prepare for Local Development
 -----------------------------
 
@@ -57,39 +59,28 @@ OpenJDK 64-Bit Server VM (build 17.0.10+9, mixed mode)
 ### Installing Docker Engine
 
 <!-- markdown-link-check-disable -->
-[Astraios] supports [running itself in Docker Compose](development#running-astraios-in-docker-compose). Docker can be
-installed by following its [official instructions](https://docs.docker.com/desktop/install/mac-install/)
+[Astraios] has [Docker-based integration tests]; it also supports
+[running in Docker Compose](development#running-astraios-in-docker-compose). Docker can be installed by following its
+[official instructions](https://docs.docker.com/desktop/install/mac-install/)
 <!-- markdown-link-check-enable -->
-
-:::caution
-
-<!-- markdown-link-check-disable -->
-[Astraios's Docker Compose](development#running-astraios-in-docker-compose) is intended for **local dev** and
-**testing** purposes only! _It is strongly discouraged to run Docker Compose in production_!
-<!-- markdown-link-check-enable -->
-
-:::
 
 Getting Source Code
 -------------------
 
 ```bash
-https://github.com/paiondata/astraios.git
+git clone git@github.com:paion-data/astraios.git
+cd astraios
 ```
 
-### Syncing up with astraios's Code Styles with IntelliJ
+### Syncing up with Astraios's Code Styles with IntelliJ
 
-For the moment, we have distilled the most important code style conventions with respect to astraios's code as
+For the moment, we have distilled the most important code style conventions with respect to Astraios' code as
 IntelliJ settings. If IntelliJ is used for IDE, we may import these code style settings by importing the
 [Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
-project will appear as a new Scheme named Astraios-Project under IDE's `Editor -> Code Style` section.
+project will appear as a new Scheme named "Astraios-Project" under IDE's `Editor -> Code Style` section.
 
-### What's Next
+[Astraios]: https://paion-data.github.io/astraios/
 
-<!-- markdown-link-check-disable -->
-Please head over to our [development guide](development) next.
-<!-- markdown-link-check-enable -->
-
-[Astraios]: https://github.com/paion-data/astraios
+[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/application/ResourceConfigITSpec.groovy
 
 [style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml
