@@ -53,7 +53,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 
         // Bind api docs to given endpoint
         // This looks strange, but Jersey binds its Abstract binders first, and then later it binds 'external'
-        // binders (like this HK2 version).  This allows breaking dependency injection into two phases.
+        // binders (like this HK2 version). This allows breaking dependency injection into two phases.
         // Everything bound in the first phase can be accessed in the second phase.
         register(new org.glassfish.hk2.utilities.binding.AbstractBinder() {
             @Override

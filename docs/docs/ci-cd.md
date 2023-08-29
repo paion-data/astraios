@@ -26,3 +26,5 @@ The following [GitHub Secrets][How to set up GitHub Action Secrets] needs to be 
 
 [astraios CI/CD]: https://github.com/paion-data/astraios/blob/master/.github/workflows/ci-cd.yml
 [astraios Dockerfile]: https://github.com/paion-data/astraios/blob/master/Dockerfile
+
+[How to set up GitHub Action Secrets]: https://docs.github.com/en/actions/security-guides/encrypted-secrets

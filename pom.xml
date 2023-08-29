@@ -36,16 +36,11 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
-        <version.validation.api>3.0.1</version.validation.api>
         <version.jcip.annotations>1.0</version.jcip.annotations>
-        <version.slf4j>1.7.25</version.slf4j>
-        <version.logback>1.2.3</version.logback>
-        <version.jackson>2.13.3</version.jackson>
+        <version.slf4j>2.0.7</version.slf4j>
+        <version.logback>1.4.7</version.logback>
         <version.owner>1.1.2</version.owner>
-        <version.servlet>6.0.0</version.servlet>
-        <version.jersey>3.1.1</version.jersey>
         <version.groovy>4.0.6</version.groovy>
-        <version.jetty>11.0.15</version.jetty>
 
         <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
         <version.maven.javadoc.plugin>3.5.0</version.maven.javadoc.plugin>
@@ -65,27 +60,11 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- JSON Parsing -->
-            <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${version.jackson}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
             <!-- Testing -->
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-bom</artifactId>
                 <version>2.4-M1-groovy-4.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-bom</artifactId>
-                <version>${version.jetty}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -97,102 +76,6 @@
             <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
             <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
             <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>${version.validation.api}</version>
-        </dependency>
-
-        <!-- Servlet API -->
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>${version.servlet}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-
-        <!-- Jersey -->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${version.jersey}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet</artifactId>
-            <version>${version.jersey}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>${version.jersey}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>${version.jersey}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.test-framework</groupId>
-            <artifactId>jersey-test-framework-core</artifactId>
-            <version>${version.jersey}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency> <!-- Jersey Test 'grizzly' container -->
-            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-            <version>${version.jersey}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Injection -->
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>hk2-locator</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <!-- JSON Parsing -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.asynchttpclient</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>3.0.0.Beta2</version>
-        </dependency>
-
-        <!-- Concurrency -->
-        <dependency>
-            <groupId>net.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
-            <version>${version.jcip.annotations}</version>
-        </dependency>
-
-        <!-- Configurations -->
-        <dependency>
-            <groupId>org.aeonbits.owner</groupId>
-            <artifactId>owner</artifactId>
-            <version>${version.owner}</version>
         </dependency>
 
         <!-- Logging -->
@@ -241,6 +124,20 @@
             <version>5.1.49</version>
         </dependency>
 
+        <!-- Concurrency -->
+        <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>${version.jcip.annotations}</version>
+        </dependency>
+
+        <!-- Configurations -->
+        <dependency>
+            <groupId>org.aeonbits.owner</groupId>
+            <artifactId>owner</artifactId>
+            <version>${version.owner}</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.spockframework</groupId>
@@ -251,35 +148,19 @@
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
             <version>${version.groovy}</version>
+            <scope>test</scope>
         </dependency>
         <dependency> <!-- Enable mocking of non-interface types -->
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>3.3.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
             <version>3.0.1</version>
             <scope>test</scope>
-        </dependency>
-
-        <!--Jetty-->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-slf4j-impl</artifactId>
         </dependency>
 
         <dependency>
