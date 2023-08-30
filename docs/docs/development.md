@@ -181,7 +181,7 @@ For JDK **17**, which is Astraios' Java version, it's been tested that Jetty _11
 ["11.0.15" release](https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.15/jetty-home-11.0.15.tar.gz) as
 an example:
 
-![Error loading download-jetty.png](./img/download-jetty.png)
+![Error loading download-jetty.png](../i18n/zh-cn/docusaurus-plugin-content-docs/current/img/download-jetty.png)
 
 Put the `tar.gz` file into a location of your choice as the installation path and extract the Jetty binary using
 
