@@ -26,7 +26,7 @@ binding 通过以下方式引用 [Elide Standalone]：
 使用 Docker Compose 运行 Webservice
 ----------------------------------
 
-### 第一步: 定义数据模型
+### 第一步：定义数据模型
 
 要注入 [Elide 模型包](https://github.com/yahoo/elide/tree/master/elide-standalone#create-models)，只需将模型放入单独的 JAR 中，
 并将其作为依赖项包含在 POM 中。如果模型包是内部的并且无法公开可见，请使用环境变量掩码将 Webservice 项目设为私有或公开，例如：
@@ -84,7 +84,8 @@ mvn clean package
 MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
 ```
 
-其中 `$ASTRAIOS_MODEL_PACKAGE_NAME` 包是用来配置 JAR 中包含的所有 [elide models](https://elide.io/pages/guide/v7/02-data-model.html)，它是可以设置的 。
+其中 `$ASTRAIOS_MODEL_PACKAGE_NAME` 包是用来配置 JAR 中包含的所有
+[elide models](https://elide.io/pages/guide/v7/02-data-model.html)，它是可以设置的。
 例如，可以在命令行中使用以下命令进行设置：
 
 ```bash
@@ -97,9 +98,9 @@ export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.jwt.models
 
 #### 数据库中没有我的模型包的 Bean 表
 
-_如果测试在 IntelliJ IDE 中运行，请确保模型包 JAR 位于 IDE 的**外部库**中_
+如果测试在 IntelliJ IDE 中运行，请确保模型包 JAR 位于 IDE 的**外部库**中。
 
-否则，依赖注入无法在 [$ASTRAIOS_MODEL_PACKAGE_NAME](#step-1-defining-data-models) 指定的包下找到 bean 类
+否则，依赖注入无法在 [$ASTRAIOS_MODEL_PACKAGE_NAME](#第一步：定义数据模型) 指定的包下找到 bean 类
 
 ### 实体缺少默认的构造函数
 
