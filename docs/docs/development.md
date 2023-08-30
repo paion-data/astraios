@@ -35,7 +35,7 @@ to pick up Jetty server version that matches JDK version**. For JDK **17**, it's
 
 Hence, we will use "11.0.15" release as an example:
 
-![Error loading download-jetty.png](../i18n/zh-cn/docusaurus-plugin-content-docs/current/img/download-jetty.png)
+![Error loading download-jetty.png](./img/download-jetty.png)
 
 Put the `tar.gz` file into a location of your choice as the installation path and extract the Jetty binary using
 

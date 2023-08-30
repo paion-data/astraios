@@ -76,7 +76,7 @@ to run this Docker Compose in production!_
 
 :::
 
-![Error Loading docker-compose.png](../i18n/zh-cn/docusaurus-plugin-content-docs/current/img/docker-compose.png)
+![Error Loading docker-compose.png](./img/docker-compose.png)
 
 Simply run:
 
