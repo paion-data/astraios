@@ -1,3 +1,5 @@
+<img align="center" width="20%" alt="Astraios Logo" src="./docs/static/img/logo.png">
+
 Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
 ===============================================================================
 
@@ -39,15 +41,14 @@ Documentation
 License
 -------
 
-The use and distribution terms for [astraios][astraios] are covered by the
+The use and distribution terms for [Astraios] are covered by the
 [Apache License, Version 2.0][Apache License, Version 2.0].
 
 [Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
+[Astraios]: https://paion-data.github.io/astraios/
 
 [Documentation]: https://paion-data.github.io/astraios/
-
-[How to set up GitHub Action Secrets]: https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
 [GitHub Actions Badge]: https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white
 [GitHub Workflow Status]: https://img.shields.io/github/actions/workflow/status/paion-data/astraios/ci-cd.yml?branch=master&logo=github&style=for-the-badge

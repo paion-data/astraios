@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Astraios',
-  tagline: 'Avoiding boilerplate code',
+  tagline: 'Instant Model driven {json:api} & GraphQL Web Services for CRUD in 1 Simple Step',
   favicon: 'img/favicon.ico',
 
   url: 'https://paion-data.github.io',
@@ -39,13 +39,6 @@ const config = {
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -69,9 +62,8 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Documentation',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
             href: "https://paion-data.github.io/astraios/apidocs",
             label: "API",
@@ -91,7 +83,7 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Documentation',
                 to: '/docs/intro',
               },
             ],
@@ -100,24 +92,11 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/jersey',
-              }
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/paion-data/astraios',
-              },
+              }
             ],
-          },
+          }
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Paion Data. Built with Docusaurus.`,
       },

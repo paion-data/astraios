@@ -3,7 +3,7 @@ sidebar_position: 4
 title: JPA through Elide Middleware
 ---
 
-[Astraios] delegates JPA capabilities to [Elide]. JWT configures Elide through 2  required Elide
+[Astraios] delegates JPA capabilities to [Elide] and configures Elide through 2 required Elide
 [bindings][what is binding]:
 
 1. **[Elide][Elide instance class]**
@@ -62,7 +62,7 @@ export MODEL_PACKAGE_REPO_ID=my-repo-id
 export MODEL_PACKAGE_REPO_URL=https://private.mvnrepository.com/artifact/com.company/my-model-package
 ```
 
-### Step 1: Spinning Up Docker Compose
+### Step 2: Spinning Up Docker Compose
 
 Astraios can run in [Docker Compose] for the following purposes
 
@@ -91,7 +91,7 @@ where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains 
 [elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
 
 ```bash
-export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.jwt.models
+export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.models
 ```
 
 The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.

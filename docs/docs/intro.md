@@ -4,4 +4,4 @@ title: Astraios Documentation
 ---
 
 Welcome to Astraios's documentation hub! We're still building out documentation on many aspects of
-JWT, but here one'll find what documentation we do have.
+Astraios, but here one'll find what documentation we do have.

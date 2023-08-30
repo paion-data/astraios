@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/hashicorp-logo.svg').default,
     description: (
       <>
-        JWT has first-class support for HashiCorp as CI/CD deployment and was designed to be easily deployed and
+        Astraios has first-class support for HashiCorp as CI/CD deployment and was designed to be easily deployed and
         maintained to get our webservice up and running quickly.
       </>
     ),
@@ -24,7 +24,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/business.svg').default,
     description: (
       <>
-        JWT lets us focus on our business logics, and the template will do the chores.
+        Astraios lets us focus on our business logics, and the template will do the chores.
       </>
     ),
   },
@@ -33,40 +33,13 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/jetty-logo.svg').default,
     description: (
       <>
-        JWT runs in standalone Jetty container, which standardize webservice runtime.
+        Astraios runs in standalone Jetty container, which standardize webservice runtime.
       </>
     ),
   },
   {
     title: 'Swagger Documentation',
     Svg: require('@site/static/img/swagger-logo.svg').default,
-    description: (
-      <>
-
-      </>
-    ),
-  },
-  {
-    title: 'Healthcheck Endpoint',
-    Svg: require('@site/static/img/healthcheck.svg').default,
-    description: (
-      <>
-
-      </>
-    ),
-  },
-  {
-    title: 'CORS Filter',
-    Svg: require('@site/static/img/cors.svg').default,
-    description: (
-      <>
-
-      </>
-    ),
-  },
-  {
-    title: 'Groovy Spock Testing',
-    Svg: require('@site/static/img/groovy.svg').default,
     description: (
       <>
 
