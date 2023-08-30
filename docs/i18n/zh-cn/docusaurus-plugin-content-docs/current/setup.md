@@ -35,7 +35,8 @@ For compilers to find openjdk@17 you may need to set:
 
 :::tip
 
-Maven 使用单独的 JDK 版本，可以通过 `mvn -v` 查看。如果不是 JDK 17，我们应该使用 [JAVA_HOME](https://stackoverflow.com/a/2503679) 让 Maven 指定我们的 JDK 17 ：
+Maven 使用单独的 JDK 版本，可以通过 `mvn -v` 查看。如果不是 JDK 17，我们应该使用
+[JAVA_HOME](https://stackoverflow.com/a/2503679) 让 Maven 指定我们的 JDK 17 ：
 
 ```bash
 $ /usr/libexec/java_home
