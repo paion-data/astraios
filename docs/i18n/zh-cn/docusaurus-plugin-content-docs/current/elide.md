@@ -60,7 +60,7 @@ export MODEL_PACKAGE_REPO_ID=my-repo-id
 export MODEL_PACKAGE_REPO_URL=https://private.mvnrepository.com/artifact/com.company/my-model-package
 ```
 
-### 第二步: 启动 Docker Compose
+### 第二步：启动 Docker Compose
 
 Astraios 可以在[Docker Compose]中运行，并达到以下作用
 
