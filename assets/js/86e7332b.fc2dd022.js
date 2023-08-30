@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[444],{2489:a=>{a.exports=JSON.parse('{"label":"java","permalink":"/astraios/blog/tags/java","allTagsPath":"/astraios/blog/tags","count":1}')}}]);
