@@ -140,3 +140,5 @@ To optionally disable GraphQL endpoints, exclude corresponding dependencies in P
 [ElideSettings instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/ElideSettings.java
 
 [what is binding]: https://qubitpi.github.io/jersey/ioc.html
+
+[Docker Compose]: https://docs.docker.com/compose/
