@@ -22,11 +22,9 @@ packer {
 }
 
 source "amazon-ebs" "astraios" {
-  ami_name = "astraios"
+  ami_name = "nexusgraph-astraios"
   force_deregister = "true"
   force_delete_snapshot = "true"
-
-  ami_groups = ["all"]
 
   instance_type = "t2.small"
   region = "${var.aws_image_region}"
@@ -47,6 +45,28 @@ build {
   sources = [
     "source.amazon-ebs.astraios"
   ]
+
+  # Load SSL Certificates into AMI image
+  provisioner "file" {
+    source = "./server.crt"
+    destination = "/home/ubuntu/server.crt"
+  }
+  provisioner "file" {
+    source = "./server.key"
+    destination = "/home/ubuntu/server.key"
+  }
+
+  # Load Nginx config file into AMI image
+  provisioner "file" {
+    source = "./nginx-ssl.conf"
+    destination = "/home/ubuntu/nginx-ssl.conf"
+  }
+
+  # Load Astraios WAR file into AMI image
+  provisioner "file" {
+    source = "../../target/astraios-1.0-SNAPSHOT.war"
+    destination = "/home/ubuntu/ROOT.war"
+  }
 
   provisioner "shell" {
     script = "../scripts/setup.sh"

@@ -19,19 +19,11 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install software-properties-common -y
 
 # Install JDK 17 - https://www.rosehosting.com/blog/how-to-install-java-17-lts-on-ubuntu-20-04/
-sudo apt update
-sudo apt install openjdk-17-jdk openjdk-17-jre
+sudo apt update -y
+sudo apt install openjdk-17-jdk -y
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-# Install Maven
-sudo apt install maven -y
-
-# Package WAR
-git clone https://github.com/ORG/REPO.git
-cd REPO
-mvn clean package -Dmaven.test.skip
-cd ../
-
-# Install and configure Jetty (version 17) container
+# Install and configure Jetty (for JDK 17) container
 JETTY_VERSION=11.0.15
 wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/$JETTY_VERSION/jetty-home-$JETTY_VERSION.tar.gz
 tar -xzvf jetty-home-$JETTY_VERSION.tar.gz
@@ -39,6 +31,12 @@ rm jetty-home-$JETTY_VERSION.tar.gz
 export JETTY_HOME=/home/ubuntu/jetty-home-$JETTY_VERSION
 mkdir jetty-base
 cd jetty-base
-java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy
-mv /home/ubuntu/REPO/target/REPO-1.0-SNAPSHOT.war webapps/ROOT.war
+java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp,websocket
+mv /home/ubuntu/ROOT.war webapps/ROOT.war
 cd ../
+
+# Install Nginx and load SSL config
+sudo apt install -y nginx
+sudo mv /home/ubuntu/nginx-ssl.conf /etc/nginx/sites-enabled/default
+sudo mv /home/ubuntu/server.crt /etc/ssl/certs/server.crt
+sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key

@@ -41,7 +41,7 @@ We Believe Binding to Standard Makes the Best Software
 ------------------------------------------------------
 
 CRUD web services are now widespread, standardizing organizational approaches to the cloud. But as business expand,
-web service often struggle to reach the desired levels of scale. Development slows as complexity growth.
+web service often struggle to reach the desired levels of scale. Development slows as complexity grows.
 
 By codifying and standardizing a webservice development and compliance rules, developers can be free to do what they
 want to: add business value by writing code.
@@ -61,8 +61,8 @@ project more likely. Astraios does more to make itself easy to use by
 - enabling "on-click" experience that goes from nothing to a full-fledged webservice on AWS cloud
 - delegating JPA persistence to [Yahoo Elide] so that the API of Astraios help developers use it correctly.
 
-Documentation
--------------
+Start Using Astraios
+--------------------
 
 - [Documentation]
 - [Javadoc]
