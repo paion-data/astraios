@@ -37,7 +37,7 @@ jobs:
 
   tests:
     name: Unit & Integration Tests
-    needs: [yaml-lint, markdown-lint, markdown-link-check]
+    needs: yml-md-style
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
