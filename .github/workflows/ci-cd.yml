@@ -32,26 +32,8 @@ env:
   ASTRAIOS_MODEL_PACKAGE_REPO_URL: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
 
 jobs:
-  yaml-lint:
-    name: YAML Style Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actionshub/yamllint@main
-  markdown-lint:
-    name: Markdown Style Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actionshub/markdownlint@main
-  markdown-link-check:
-    name: Markdown Link Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-verbose-mode: "yes"
+  yml-md-style:
+    uses: paion-data/github-actions-workflows/.github/workflows/yml-and-md-style-checks.yml@master
 
   tests:
     name: Unit & Integration Tests
