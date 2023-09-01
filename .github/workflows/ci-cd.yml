@@ -50,7 +50,8 @@ jobs:
           distribution: ${{ env.JDK_DISTRIBUTION }}
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
-      - uses: ./.github/actions/create-mvn-settings
+      - name: Generate Maven settings.xml
+        uses: ./.github/actions/create-mvn-settings
         with:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
           nexus-user: ${{ secrets.NEXUS_USER }}
@@ -82,7 +83,8 @@ jobs:
       - name: Build documentations
         working-directory: docs
         run: yarn build
-      - uses: ./.github/actions/create-mvn-settings
+      - name: Generate Maven settings.xml
+        uses: ./.github/actions/create-mvn-settings
         with:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
           nexus-user: ${{ secrets.NEXUS_USER }}
@@ -114,7 +116,7 @@ jobs:
         with:
           java-version: ${{ env.JDK_VERSION }}
           distribution: ${{ env.JDK_DISTRIBUTION }}
-      - name: Generate settings.xml
+      - name: Generate Maven settings.xml
         uses: ./.github/actions/create-mvn-settings
         with:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
