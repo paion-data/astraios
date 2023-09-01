@@ -28,10 +28,9 @@ import org.testcontainers.spock.Testcontainers
 
 import io.restassured.RestAssured
 import spock.lang.Shared
-import spock.lang.Specification
 
 @Testcontainers
-class ResourceConfigITSpec extends Specification {
+class ResourceConfigITSpec extends AbstractITSpec {
 
     static final int WS_PORT = 8080
 
@@ -49,6 +48,10 @@ class ResourceConfigITSpec extends Specification {
                 "DB_URL",
                 String.format("jdbc:mysql://localhost:%s/elide?serverTimezone=UTC", MYSQL.firstMappedPort)
         )
+    }
+
+    def cleanupSpec() {
+        RestAssured.reset()
     }
 
     @SuppressWarnings('GroovyAccessibility')
