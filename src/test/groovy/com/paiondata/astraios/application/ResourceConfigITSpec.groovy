@@ -72,7 +72,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
         RestAssured
                 .given()
                 .when()
-                .get("/v1/data/book")
+                .get("book")
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([]))
@@ -86,7 +86,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                     {"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride & Prejudice"}}}
                 """)
                 .when()
-                .post("/v1/data/book")
+                .post("book")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
 
@@ -94,7 +94,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
         RestAssured
                 .given()
                 .when()
-                .get("/v1/data/book")
+                .get("book")
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([
