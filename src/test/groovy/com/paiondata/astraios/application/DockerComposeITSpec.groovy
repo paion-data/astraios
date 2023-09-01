@@ -29,7 +29,7 @@ class DockerComposeITSpec extends AbstractITSpec {
             .withEnv("MODEL_PACKAGE_NAME", System.getenv().get("ASTRAIOS_MODEL_PACKAGE_NAME"))
             .withExposedService("web", WS_PORT, Wait.forHttp("/v1/data/note").forStatusCode(200))
 
-    def "JSON API allows for POSTing and GETing a book"() {
+    def "JSON API allows for POSTing and GETing an entity"() {
         expect: "database is initially empty"
         RestAssured
                 .given()
