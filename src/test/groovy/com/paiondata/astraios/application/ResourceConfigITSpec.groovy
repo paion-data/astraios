@@ -39,19 +39,12 @@ class ResourceConfigITSpec extends AbstractITSpec {
     @Shared
     final MySQLContainer MYSQL = new MySQLContainer("mysql:5.7.43").withDatabaseName("elide")
 
-    def setupSpec() {
-        RestAssured.baseURI = "http://localhost"
-        RestAssured.port = WS_PORT
-        RestAssured.basePath = "/"
-
+    @Override
+    def childSetupSpec() {
         System.setProperty(
                 "DB_URL",
                 String.format("jdbc:mysql://localhost:%s/elide?serverTimezone=UTC", MYSQL.firstMappedPort)
         )
-    }
-
-    def cleanupSpec() {
-        RestAssured.reset()
     }
 
     @SuppressWarnings('GroovyAccessibility')

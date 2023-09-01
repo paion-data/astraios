@@ -22,13 +22,25 @@ class AbstractITSpec extends Specification {
 
     static final int WS_PORT = 8080
 
+    def childSetupSpec() {
+        // intentionally left blank
+    }
+
+    def childCleanupSpec() {
+        // intentionally left blank
+    }
+
     def setupSpec() {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = WS_PORT
         RestAssured.basePath = "/v1/data/"
+
+        childSetupSpec()
     }
 
     def cleanupSpec() {
         RestAssured.reset()
+
+        childCleanupSpec()
     }
 }
