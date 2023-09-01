@@ -15,7 +15,7 @@ services:
       db:
         condition: service_healthy
   db:
-    image: "mysql:5.7"
+    image: "mysql:5.7.43"
     ports:
       - "3306:3306"
     volumes:

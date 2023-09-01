@@ -28,10 +28,9 @@ import org.testcontainers.spock.Testcontainers
 
 import io.restassured.RestAssured
 import spock.lang.Shared
-import spock.lang.Specification
 
 @Testcontainers
-class ResourceConfigITSpec extends Specification {
+class ResourceConfigITSpec extends AbstractITSpec {
 
     static final int WS_PORT = 8080
 
@@ -40,11 +39,8 @@ class ResourceConfigITSpec extends Specification {
     @Shared
     final MySQLContainer MYSQL = new MySQLContainer("mysql:5.7.43").withDatabaseName("elide")
 
-    def setupSpec() {
-        RestAssured.baseURI = "http://localhost"
-        RestAssured.port = WS_PORT
-        RestAssured.basePath = "/"
-
+    @Override
+    def childSetupSpec() {
         System.setProperty(
                 "DB_URL",
                 String.format("jdbc:mysql://localhost:%s/elide?serverTimezone=UTC", MYSQL.firstMappedPort)
@@ -76,7 +72,7 @@ class ResourceConfigITSpec extends Specification {
         RestAssured
                 .given()
                 .when()
-                .get("/v1/data/book")
+                .get("book")
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([]))
@@ -90,7 +86,7 @@ class ResourceConfigITSpec extends Specification {
                     {"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride & Prejudice"}}}
                 """)
                 .when()
-                .post("/v1/data/book")
+                .post("book")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
 
@@ -98,7 +94,7 @@ class ResourceConfigITSpec extends Specification {
         RestAssured
                 .given()
                 .when()
-                .get("/v1/data/book")
+                .get("book")
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([
