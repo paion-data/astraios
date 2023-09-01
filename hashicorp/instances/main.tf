@@ -14,7 +14,7 @@
 
 variable "aws_deploy_region" {
   type = string
-  description = "The EC2 region"
+  description = "The EC2 region injected through inversion of control"
 }
 
 variable "zone_id" {
@@ -49,7 +49,7 @@ data "aws_ami" "latest-astraios" {
 
   filter {
     name   = "name"
-    values = ["astraios"]
+    values = ["nexusgraph-astraios"]
   }
 
   filter {
@@ -60,7 +60,7 @@ data "aws_ami" "latest-astraios" {
 
 resource "aws_instance" "astraios" {
   ami = "${data.aws_ami.latest-astraios.id}"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   tags = {
     Name = "Paion Data Astraios"
   }
@@ -74,4 +74,13 @@ resource "aws_instance" "astraios" {
     cd /home/ubuntu/jetty-base
     java -jar $JETTY_HOME/start.jar
   EOF
+}
+
+resource "aws_route53_record" "astraios" {
+  zone_id         = var.zone_id
+  name            = "astraios.nexusgraph.com"
+  type            = "A"
+  ttl             = 300
+  records         = [aws_instance.astraios.public_ip]
+  allow_overwrite = true
 }
