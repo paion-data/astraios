@@ -18,6 +18,7 @@ package com.paiondata.astraios.application;
 import com.yahoo.elide.Elide;
 
 import com.paiondata.astraios.web.filters.CorsFilter;
+import com.paiondata.astraios.web.filters.OAuth2Filter;
 
 import org.glassfish.hk2.api.ServiceLocator;
 
@@ -50,6 +51,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 
         register(new CorsFilter());
         register(new BinderFactory().buildBinder(injector));
+        register(OAuth2Filter.class);
 
         // Bind api docs to given endpoint
         // This looks strange, but Jersey binds its Abstract binders first, and then later it binds 'external'
