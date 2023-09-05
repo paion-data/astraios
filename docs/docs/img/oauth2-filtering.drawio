@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-09-05T10:37:48.617Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="ev-Y3gI4adFKFiiSLb6v" version="21.7.1" type="device">
+<mxfile host="app.diagrams.net" modified="2023-09-05T13:39:07.312Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="jMOdtEZAgPHQk2PR7cyj" version="21.7.1" type="device">
   <diagram name="Page-1" id="qUw_CK1pjzlE3Cx89_ZL">
     <mxGraphModel dx="1451" dy="2022" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -10,13 +10,13 @@
         <mxCell id="iVyjQRI55B28_YTLfMTB-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#00AA00;fontStyle=1" edge="1" parent="1" source="iVyjQRI55B28_YTLfMTB-1" target="iVyjQRI55B28_YTLfMTB-14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="iVyjQRI55B28_YTLfMTB-1" value="&lt;font face=&quot;Ubuntu&quot; color=&quot;#ffffff&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;span&gt;Nexus&lt;br&gt;Graph&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=none;fillColor=#F26C9D;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="iVyjQRI55B28_YTLfMTB-1" value="&lt;font face=&quot;Ubuntu&quot; color=&quot;#ffffff&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;span&gt;OAuth&lt;br&gt;Client&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=none;fillColor=#F26C9D;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="320" y="360" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="iVyjQRI55B28_YTLfMTB-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=3;strokeColor=#F8C300;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="620" y="350" width="320" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="iVyjQRI55B28_YTLfMTB-5" value="&lt;font face=&quot;Ubuntu&quot; color=&quot;#ffffff&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;span&gt;Logto&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=none;fillColor=#E55FFB;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="iVyjQRI55B28_YTLfMTB-5" value="&lt;font face=&quot;Ubuntu&quot; color=&quot;#ffffff&quot;&gt;&lt;span style=&quot;font-size: 20px;&quot;&gt;&lt;span&gt;Auth&lt;br&gt;Server&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=none;fillColor=#E55FFB;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="740" y="-100" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="iVyjQRI55B28_YTLfMTB-7" value="getAccessToken(&quot;https://astraios-api.com/v1/data&quot;)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=313;fontFamily=Ubuntu;fontStyle=1;fontSize=20;" vertex="1" parent="1">
