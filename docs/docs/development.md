@@ -79,8 +79,6 @@ java -jar $JETTY_HOME/start.jar
 
 The webservice will run on port **8080**, and you will see the data you inserted
 
-[Docker Compose]: https://docs.docker.com/compose/
-
 [jcabi-mysql]: https://mysql.jcabi.com/
 
 [Testcontainers]: https://qubitpi.github.io/testcontainers-java/

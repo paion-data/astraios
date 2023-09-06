@@ -33,6 +33,8 @@ import com.yahoo.elide.datastores.jpa.transaction.NonJtaTransaction;
 
 import com.paiondata.astraios.config.ApplicationConfig;
 import com.paiondata.astraios.config.JpaDatastoreConfig;
+import com.paiondata.astraios.web.filters.oauth.JwtTokenValidator;
+import com.paiondata.astraios.web.filters.oauth.AccessTokenValidator;
 
 import org.aeonbits.owner.ConfigFactory;
 import org.glassfish.hk2.api.ServiceLocator;
@@ -95,6 +97,8 @@ public class BinderFactory {
                 bind(elideSettings).to(ElideSettings.class);
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
                 bind(elideSettings.getDataStore()).to(DataStore.class).named("elideDataStore");
+
+                bind(new JwtTokenValidator()).to(AccessTokenValidator.class);
             }
 
             private Elide buildElide(final ElideSettings elideSettings) {
