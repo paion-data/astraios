@@ -1,3 +1,4 @@
 com.paiondata.astraios.application
 com.paiondata.astraios.config
 com.paiondata.astraios.web.filters
+com.paiondata.astraios.web.filters.oauth
