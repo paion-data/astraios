@@ -25,10 +25,15 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
+import net.jcip.annotations.Immutable;
+import net.jcip.annotations.ThreadSafe;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Provider
+@Immutable
+@ThreadSafe
 @Priority(Priorities.AUTHENTICATION)
 public class OAuth2Filter implements ContainerRequestFilter {
 
@@ -51,7 +56,7 @@ public class OAuth2Filter implements ContainerRequestFilter {
      */
     @Inject
     public OAuth2Filter(final AccessTokenValidator accessTokenValidator) {
-        this.accessTokenValidator = accessTokenValidator;
+        this.accessTokenValidator = Objects.requireNonNull(accessTokenValidator);
     }
 
     @Override
@@ -72,6 +77,17 @@ public class OAuth2Filter implements ContainerRequestFilter {
         }
     }
 
+    /**
+     * Retrieves the access token from container request context.
+     *
+     * For example, when an HTTP request comes with header "Authorization": "Bearer 43rgfgef43ewfg4gergeg43g34g", this
+     * method returns "43rgfgef43ewfg4gergeg43g34g".
+     *
+     * @param containerRequestContext  The request context that is ASSUMED to contain the "Authorization" header
+     *
+     * @return the bare access token
+     */
+    @NotNull
     private static String getAccessToken(@NotNull final ContainerRequestContext containerRequestContext) {
         return containerRequestContext
                 .getHeaders()

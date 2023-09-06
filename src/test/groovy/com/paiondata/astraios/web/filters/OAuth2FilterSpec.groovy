@@ -65,4 +65,21 @@ class OAuth2FilterSpec extends Specification {
 
         abort = validToken ? "not aborted" : "aborted"
     }
+
+    @SuppressWarnings('GroovyAccessibility')
+    def "Filter can extract access token from request header"() {
+        given: "a header set with a access token in it"
+        MultivaluedMap<String, String> headers = new MultivaluedHashMap<>()
+        headers.put(
+                OAuth2Filter.AUTHORIZATION_HEADER,
+                [OAuth2Filter.AUTHORIZATION_SCHEME + " " + "43rgfgef43ewfg4gergeg43g34g"]
+        )
+
+        and: "the header is in request context"
+        ContainerRequestContext requestContext = Mock(ContainerRequestContext)
+        requestContext.getHeaders() >> headers
+
+        expect: "filter retrieves the token"
+        OAuth2Filter.getAccessToken(requestContext) == "43rgfgef43ewfg4gergeg43g34g"
+    }
 }

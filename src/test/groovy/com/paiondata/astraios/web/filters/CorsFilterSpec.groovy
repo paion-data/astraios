@@ -41,4 +41,3 @@ class CorsFilterSpec extends Specification {
         1 * headers.add("Access-Control-Allow-Origin", "*")
     }
 }
-
