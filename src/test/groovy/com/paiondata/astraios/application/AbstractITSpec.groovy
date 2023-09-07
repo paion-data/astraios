@@ -15,7 +15,7 @@
  */
 package com.paiondata.astraios.application
 
-import com.paiondata.astraios.web.filters.OAuth2Filter
+import com.paiondata.astraios.web.filters.OAuthFilter
 
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
@@ -39,8 +39,8 @@ class AbstractITSpec extends Specification {
         RestAssured.basePath = "/v1/data/"
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .addHeader(
-                        OAuth2Filter.AUTHORIZATION_HEADER,
-                        OAuth2Filter.AUTHORIZATION_SCHEME + " " + "someAccessToken")
+                        OAuthFilter.AUTHORIZATION_HEADER,
+                        OAuthFilter.AUTHORIZATION_SCHEME + " " + "someAccessToken")
                 .build()
 
         childSetupSpec()

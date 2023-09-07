@@ -35,7 +35,7 @@ import java.util.Objects;
 @Immutable
 @ThreadSafe
 @Priority(Priorities.AUTHENTICATION)
-public class OAuth2Filter implements ContainerRequestFilter {
+public class OAuthFilter implements ContainerRequestFilter {
 
     /**
      * The header key for OAuth 2 access token.
@@ -55,7 +55,7 @@ public class OAuth2Filter implements ContainerRequestFilter {
      * @param accessTokenValidator  An abstraction layer responsible for validating an OAuth2 access token
      */
     @Inject
-    public OAuth2Filter(final AccessTokenValidator accessTokenValidator) {
+    public OAuthFilter(final AccessTokenValidator accessTokenValidator) {
         this.accessTokenValidator = Objects.requireNonNull(accessTokenValidator);
     }
 

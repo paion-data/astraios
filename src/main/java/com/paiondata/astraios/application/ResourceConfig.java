@@ -17,15 +17,15 @@ package com.paiondata.astraios.application;
 
 import com.yahoo.elide.Elide;
 
+import com.paiondata.astraios.config.OAuthConfig;
 import com.paiondata.astraios.web.filters.CorsFilter;
-import com.paiondata.astraios.web.filters.OAuth2Filter;
+import com.paiondata.astraios.web.filters.OAuthFilter;
 
+import org.aeonbits.owner.ConfigFactory;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.ApplicationPath;
-import jakarta.ws.rs.core.Context;
 import net.jcip.annotations.Immutable;
 import net.jcip.annotations.ThreadSafe;
 
@@ -38,20 +38,39 @@ import net.jcip.annotations.ThreadSafe;
 public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 
     private static final String ENDPOINT_PACKAGE = "com.yahoo.elide.jsonapi.resources";
+    private static final OAuthConfig OAUTH_CONFIG = ConfigFactory.create(OAuthConfig.class);
 
     /**
      * DI Constructor.
      *
      * @param injector  A standard HK2 service locator
-     * @param servletContext  Currently unused
      */
     @Inject
-    public ResourceConfig(final ServiceLocator injector, @Context final ServletContext servletContext) {
+    public ResourceConfig(final ServiceLocator injector) {
+        this(injector, new BinderFactory(), OAUTH_CONFIG.authEnabled());
+    }
+
+    /**
+     * Constructor that allows for finer dependency injection control.
+     *
+     * @param injector  A standard HK2 service locator
+     * @param binderFactory  An object that produces resource binder
+     * @param oauthEnabled  Flag on whether or not to enable auth feature, mainly for differentiating dev/test and prod
+     */
+    private ResourceConfig(
+            final ServiceLocator injector,
+            final BinderFactory binderFactory,
+            final boolean oauthEnabled
+    ) {
         packages(ENDPOINT_PACKAGE);
 
-        register(new CorsFilter());
-        register(new BinderFactory().buildBinder(injector));
-        register(OAuth2Filter.class);
+        register(CorsFilter.class);
+
+        if (oauthEnabled) {
+            register(OAuthFilter.class);
+        }
+
+        register(binderFactory.buildBinder(injector));
 
         // Bind api docs to given endpoint
         // This looks strange, but Jersey binds its Abstract binders first, and then later it binds 'external'
