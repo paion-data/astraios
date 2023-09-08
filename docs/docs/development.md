@@ -142,7 +142,6 @@ To optionally disable GraphQL endpoints, exclude corresponding dependencies in P
 
 [what is binding]: https://qubitpi.github.io/jersey/ioc.html
 
-
 Running Webservice in Standalone Jetty (Production)
 ---------------------------------------------------
 
