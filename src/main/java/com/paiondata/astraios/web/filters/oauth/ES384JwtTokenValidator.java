@@ -128,6 +128,14 @@ public class ES384JwtTokenValidator implements AccessTokenValidator {
         }
     }
 
+    /**
+     * Returns a JWK key set that will be used to verify a given JWT access token.
+     *
+     * @param jwkProvider  An object that contains the JWK; cannot be {@code null}
+     * @param accessToken  A "key" that indexes the JWK from the {@code jwkProvider}; cannot be {@code null}
+     *
+     * @return a JWK key set
+     */
     private static Jwk getJwk(@NotNull final JwkProvider jwkProvider, @NotNull final String accessToken) {
         try {
             return jwkProvider.get(JWT.decode(accessToken).getKeyId());
@@ -138,6 +146,13 @@ public class ES384JwtTokenValidator implements AccessTokenValidator {
         }
     }
 
+    /**
+     * Returns the verifying algorithm associated with a specified JWK.
+     *
+     * @param jwk  The JWK contains the public key for decrypting the token signature, cannot be {@code null}
+     *
+     * @return a decrypting algorithm with public key and withoug private key enclosed
+     */
     private static Algorithm getVerificationAlgorithm(@NotNull final Jwk jwk) {
         try {
             return Algorithm.ECDSA384((ECPublicKey) jwk.getPublicKey(), null);
