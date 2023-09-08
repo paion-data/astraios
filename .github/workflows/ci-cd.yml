@@ -126,6 +126,7 @@ jobs:
       - name: Load webservice settings
         run: |
           echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
+          echo "${{ secrets.OAUTH_PROPERTIES }}" > src/main/resources/oauth.properties
           echo "${{ secrets.JPADATASTORE_PROPERTIES }}" > src/main/resources/jpadatastore.properties
       - name: Generate webservice WAR file
         run: mvn -B clean package
