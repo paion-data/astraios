@@ -33,7 +33,8 @@ import com.yahoo.elide.datastores.jpa.transaction.NonJtaTransaction;
 
 import com.paiondata.astraios.config.ApplicationConfig;
 import com.paiondata.astraios.config.JpaDatastoreConfig;
-import com.paiondata.astraios.web.filters.oauth.JwtTokenValidator;
+import com.paiondata.astraios.config.OAuthConfig;
+import com.paiondata.astraios.web.filters.oauth.ES384JwtTokenValidator;
 import com.paiondata.astraios.web.filters.oauth.AccessTokenValidator;
 
 import org.aeonbits.owner.ConfigFactory;
@@ -65,6 +66,8 @@ import java.util.function.Consumer;
 @Immutable
 @ThreadSafe
 public class BinderFactory {
+
+    private static final OAuthConfig OAUTH_CONFIG = ConfigFactory.create(OAuthConfig.class);
 
     /**
      * Builds a hk2 Binder instance.
@@ -98,7 +101,7 @@ public class BinderFactory {
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
                 bind(elideSettings.getDataStore()).to(DataStore.class).named("elideDataStore");
 
-                bind(new JwtTokenValidator()).to(AccessTokenValidator.class);
+                bind(new ES384JwtTokenValidator(OAUTH_CONFIG.jwksUrl())).to(AccessTokenValidator.class);
             }
 
             private Elide buildElide(final ElideSettings elideSettings) {

@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class OAuth2FilterSpec extends Specification {
+class OAuthFilterSpec extends Specification {
 
     def "When request is missing 'Authorization' header, request is aborted"() {
         given: "incoming request is missing auth header"
@@ -32,7 +32,7 @@ class OAuth2FilterSpec extends Specification {
         requestContext.getHeaders() >> new MultivaluedHashMap()
 
         when: "filter is trying to validate some token"
-        new OAuth2Filter(Mock(AccessTokenValidator)).filter(requestContext)
+        new OAuthFilter(Mock(AccessTokenValidator)).filter(requestContext)
 
         then: "non-existing token header aborts the request"
         1 * requestContext.abortWith(_ as Response)
@@ -46,14 +46,14 @@ class OAuth2FilterSpec extends Specification {
 
         and: "request always comes with a access token in header"
         MultivaluedMap<String, String> headers = new MultivaluedHashMap<>()
-        headers.put(OAuth2Filter.AUTHORIZATION_HEADER, [OAuth2Filter.AUTHORIZATION_SCHEME + " " + "some_token"])
+        headers.put(OAuthFilter.AUTHORIZATION_HEADER, [OAuthFilter.AUTHORIZATION_SCHEME + " " + "some_token"])
 
         and: "the header is in request context"
         ContainerRequestContext requestContext = Mock(ContainerRequestContext)
         requestContext.getHeaders() >> headers
 
         when: "filter validates token with the mocked validator"
-        new OAuth2Filter(validator).filter(requestContext)
+        new OAuthFilter(validator).filter(requestContext)
 
         then: "invalid token aborts the request while valid token does not"
         (validToken? 0 : 1) * requestContext.abortWith(_ as Response)
@@ -71,8 +71,8 @@ class OAuth2FilterSpec extends Specification {
         given: "a header set with a access token in it"
         MultivaluedMap<String, String> headers = new MultivaluedHashMap<>()
         headers.put(
-                OAuth2Filter.AUTHORIZATION_HEADER,
-                [OAuth2Filter.AUTHORIZATION_SCHEME + " " + "43rgfgef43ewfg4gergeg43g34g"]
+                OAuthFilter.AUTHORIZATION_HEADER,
+                [OAuthFilter.AUTHORIZATION_SCHEME + " " + "43rgfgef43ewfg4gergeg43g34g"]
         )
 
         and: "the header is in request context"
@@ -80,6 +80,6 @@ class OAuth2FilterSpec extends Specification {
         requestContext.getHeaders() >> headers
 
         expect: "filter retrieves the token"
-        OAuth2Filter.getAccessToken(requestContext) == "43rgfgef43ewfg4gergeg43g34g"
+        OAuthFilter.getAccessToken(requestContext) == "43rgfgef43ewfg4gergeg43g34g"
     }
 }
