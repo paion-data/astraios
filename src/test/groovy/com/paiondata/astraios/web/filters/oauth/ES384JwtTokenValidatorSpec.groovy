@@ -90,7 +90,7 @@ class ES384JwtTokenValidatorSpec extends Specification {
     }
 
     /**
-     * This token is is valid until around year 2091.
+     * This token is valid until around year 2091.
      *
      * @return a valid ES384 token that can be verified by keys from "https://u4v5ne.logto.app/oidc/jwks"
      */
