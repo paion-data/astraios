@@ -35,36 +35,36 @@ class ResourceConfigSpec extends Specification {
 
     @SuppressWarnings('GroovyAccessibility')
     def "Instantiation triggers initialization and binding lifecycles"() {
-        setup:
+        setup: "binder is mocked out"
         BinderFactory binderFactory = Mock(BinderFactory)
         binderFactory.buildBinder(_ as ServiceLocator) >> Mock(Binder)
 
-        when:
+        when: "injecting resources"
         org.glassfish.jersey.server.ResourceConfig resourceConfig = new ResourceConfig(
                 Mock(ServiceLocator),
                 binderFactory,
                 OAUTH_CONFIG.authEnabled()
         )
 
-        then:
+        then: "all request & response filters are injected"
         resourceConfig.classes.containsAll(ALWAYS_REGISTERED_FILTERS)
     }
 
     @Unroll
     @SuppressWarnings('GroovyAccessibility')
     def "When OAUTH_ENABLED = #oauthTurnedOn, OAuth filter is #registered"() {
-        setup:
+        setup: "binder is mocked out"
         BinderFactory binderFactory = Mock(BinderFactory)
         binderFactory.buildBinder(_ as ServiceLocator) >> Mock(Binder)
 
-        when:
+        when: "injecting resources"
         org.glassfish.jersey.server.ResourceConfig resourceConfig = new ResourceConfig(
                 Mock(ServiceLocator),
                 binderFactory,
                 oauthTurnedOn
         )
 
-        then:
+        then: "OAuth filter is injected according to configuration"
         resourceConfig.classes.contains(OAuthFilter) == containsOAuthFilter
 
         where:

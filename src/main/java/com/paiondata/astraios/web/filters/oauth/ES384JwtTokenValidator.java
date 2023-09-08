@@ -135,6 +135,8 @@ public class ES384JwtTokenValidator implements AccessTokenValidator {
      * @param accessToken  A "key" that indexes the JWK from the {@code jwkProvider}; cannot be {@code null}
      *
      * @return a JWK key set
+     *
+     * @throws IllegalStateException if no JWK set associated with the provided token is found from {@code jwkProvider}
      */
     private static Jwk getJwk(@NotNull final JwkProvider jwkProvider, @NotNull final String accessToken) {
         try {
@@ -151,7 +153,9 @@ public class ES384JwtTokenValidator implements AccessTokenValidator {
      *
      * @param jwk  The JWK contains the public key for decrypting the token signature, cannot be {@code null}
      *
-     * @return a decrypting algorithm with public key and withoug private key enclosed
+     * @return a decrypting algorithm with public key and without private key enclosed
+     *
+     * @throws IllegalStateException if public key cannot be retrieved from the JWK
      */
     private static Algorithm getVerificationAlgorithm(@NotNull final Jwk jwk) {
         try {
