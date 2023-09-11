@@ -39,7 +39,7 @@
         <version.jcip.annotations>1.0</version.jcip.annotations>
         <version.slf4j>2.0.7</version.slf4j>
         <version.logback>1.4.7</version.logback>
-        <version.owner>1.1.2</version.owner>
+        <version.owner>1.0.12</version.owner>
         <version.groovy>4.0.6</version.groovy>
 
         <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
@@ -447,11 +447,6 @@
     </profiles>
 
     <repositories>
-        <repository>
-            <id>paion</id>
-            <name>Paion Data Official Release Repository</name>
-            <url>https://nexus.paion-data.dev/repository/maven-oss</url>
-        </repository>
         <repository>
             <id>${env.ASTRAIOS_MODEL_PACKAGE_REPO_ID}</id>
             <name>Astraios model pacakge JAR repository</name>

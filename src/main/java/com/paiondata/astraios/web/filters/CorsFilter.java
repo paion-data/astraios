@@ -20,6 +20,9 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 
+/**
+ * {@link CorsFilter} prevents corss-origin request error in local dev environment.
+ */
 public class CorsFilter implements ContainerResponseFilter {
 
     @Override

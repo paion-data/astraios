@@ -31,6 +31,12 @@ import net.jcip.annotations.ThreadSafe;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * {@link OAuthFilter} is responsible for all OAuth 2 authorization logics, excluding authentications.
+ *
+ * For example, the filter validates an access token using an {@link AccessTokenValidator} that is
+ * <a href="https://stackoverflow.com/a/61620914">injected</a> into it.
+ */
 @Provider
 @Immutable
 @ThreadSafe

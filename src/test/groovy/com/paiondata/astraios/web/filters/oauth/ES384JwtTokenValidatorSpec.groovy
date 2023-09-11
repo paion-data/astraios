@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.auth0.jwk.Jwk
 import com.auth0.jwk.JwkException
 import com.auth0.jwk.JwkProvider
 import com.auth0.jwt.exceptions.SignatureVerificationException
+import com.paiondata.astraios.application.AbstractITSpec
 
 import spock.lang.Specification
 
@@ -95,7 +96,7 @@ class ES384JwtTokenValidatorSpec extends Specification {
      * @return a valid ES384 token that can be verified by keys from "https://u4v5ne.logto.app/oidc/jwks"
      */
     String validToken() {
-        "eyJhbGciOiJFUzM4NCIsInR5cCI6ImF0K2p3dCIsImtpZCI6IlR2WEQ5dkM3SU4tQ3IwRWhGWUlfemZselVMVXZEYnN0TTFuSWVibDJlNncifQ.eyJqdGkiOiJXZkNqX3Z0OWpjamNZcHBMMVVsOFEiLCJzdWIiOiJ2ajhqbXBzYnJjYjkiLCJpYXQiOjE2OTQwNzQyOTgsImV4cCI6Mzg0MTU1Nzk0NSwic2NvcGUiOiIiLCJjbGllbnRfaWQiOiJ5cG9uODl6OHJ0cmpkZzV0YTY2OWwiLCJpc3MiOiJodHRwczovL3U0djVuZS5sb2d0by5hcHAvb2lkYyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC92MS9kYXRhIn0.NUpvIX1iHq06S0G3swreoc7ixBxQfcGfd8jvqmMeBbnUaTQJ-Ap-UYwJkiZ0ojuOjG2_gETG0HcNcrugo6VKNmyU0-woh2-eA9ROqNNOjkHC41hDOdnBCzB-2__Qo_Xd"
+        AbstractITSpec.VALID_TOKEN
     }
 
     String invalidToken() {
