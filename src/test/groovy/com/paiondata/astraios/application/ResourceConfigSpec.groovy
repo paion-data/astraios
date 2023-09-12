@@ -1,5 +1,5 @@
 /*
- * Copyright Jiaqi Liu
+ * Copyright Paion Data
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import spock.lang.Unroll
 
 class ResourceConfigSpec extends Specification {
 
-    static final OAuthConfig OAUTH_CONFIG = ConfigFactory.create(OAuthConfig.class)
     static final Set<Class> ALWAYS_REGISTERED_FILTERS = [CorsFilter, JsonApiEndpoint] as Set
 
     @SuppressWarnings('GroovyAccessibility')
@@ -43,7 +42,7 @@ class ResourceConfigSpec extends Specification {
         org.glassfish.jersey.server.ResourceConfig resourceConfig = new ResourceConfig(
                 Mock(ServiceLocator),
                 binderFactory,
-                OAUTH_CONFIG.authEnabled()
+                false
         )
 
         then: "all request & response filters are injected"

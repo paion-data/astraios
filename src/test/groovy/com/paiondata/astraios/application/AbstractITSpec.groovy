@@ -24,6 +24,7 @@ import spock.lang.Specification
 class AbstractITSpec extends Specification {
 
     static final int WS_PORT = 8080
+    static final String VALID_TOKEN = "eyJhbGciOiJFUzM4NCIsInR5cCI6ImF0K2p3dCIsImtpZCI6IlR2WEQ5dkM3SU4tQ3IwRWhGWUlfemZselVMVXZEYnN0TTFuSWVibDJlNncifQ.eyJqdGkiOiJXZkNqX3Z0OWpjamNZcHBMMVVsOFEiLCJzdWIiOiJ2ajhqbXBzYnJjYjkiLCJpYXQiOjE2OTQwNzQyOTgsImV4cCI6Mzg0MTU1Nzk0NSwic2NvcGUiOiIiLCJjbGllbnRfaWQiOiJ5cG9uODl6OHJ0cmpkZzV0YTY2OWwiLCJpc3MiOiJodHRwczovL3U0djVuZS5sb2d0by5hcHAvb2lkYyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC92MS9kYXRhIn0.NUpvIX1iHq06S0G3swreoc7ixBxQfcGfd8jvqmMeBbnUaTQJ-Ap-UYwJkiZ0ojuOjG2_gETG0HcNcrugo6VKNmyU0-woh2-eA9ROqNNOjkHC41hDOdnBCzB-2__Qo_Xd"
 
     def childSetupSpec() {
         // intentionally left blank
@@ -37,11 +38,6 @@ class AbstractITSpec extends Specification {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = WS_PORT
         RestAssured.basePath = "/v1/data/"
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .addHeader(
-                        OAuthFilter.AUTHORIZATION_HEADER,
-                        OAuthFilter.AUTHORIZATION_SCHEME + " " + "someAccessToken")
-                .build()
 
         childSetupSpec()
     }

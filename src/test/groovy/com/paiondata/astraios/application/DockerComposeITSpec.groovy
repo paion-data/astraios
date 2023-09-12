@@ -15,6 +15,8 @@
  */
 package com.paiondata.astraios.application
 
+import com.paiondata.astraios.web.filters.OAuthFilter
+
 import org.hamcrest.Matchers
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
@@ -30,10 +32,18 @@ class DockerComposeITSpec extends AbstractITSpec {
             .withExposedService(
                     "web",
                     WS_PORT,
-                    Wait.forHttp("/v1/data/note")
-                            .withHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
-                            .forStatusCode(200)
+                    Wait.forHttp("/v1/data/note").forStatusCode(200)
             )
+
+    @Override
+    def childSetupSpec() {
+        System.setProperty("OAUTH_ENABLED", "false")
+    }
+
+    @Override
+    def childCleanupSpec() {
+        System.clearProperty("OAUTH_ENABLED")
+    }
 
     def "JSON API allows for POSTing and GETing an entity"() {
         expect: "database is initially empty"

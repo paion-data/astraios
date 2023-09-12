@@ -25,6 +25,7 @@ import org.aeonbits.owner.ConfigFactory;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.ApplicationPath;
 import net.jcip.annotations.Immutable;
 import net.jcip.annotations.ThreadSafe;
@@ -46,7 +47,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      * @param injector  A standard HK2 service locator
      */
     @Inject
-    public ResourceConfig(final ServiceLocator injector) {
+    public ResourceConfig(@NotNull final ServiceLocator injector) {
         this(injector, new BinderFactory(), OAUTH_CONFIG.authEnabled());
     }
 
@@ -58,8 +59,8 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      * @param oauthEnabled  Flag on whether or not to enable auth feature, mainly for differentiating dev/test and prod
      */
     private ResourceConfig(
-            final ServiceLocator injector,
-            final BinderFactory binderFactory,
+            @NotNull final ServiceLocator injector,
+            @NotNull final BinderFactory binderFactory,
             final boolean oauthEnabled
     ) {
         packages(ENDPOINT_PACKAGE);

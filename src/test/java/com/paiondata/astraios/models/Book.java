@@ -21,6 +21,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * A test entity.
+ */
 @Entity
 @Table(name = "Book")
 @Include(rootLevel = true, name = "book", description = "book entity", friendlyName = "book")

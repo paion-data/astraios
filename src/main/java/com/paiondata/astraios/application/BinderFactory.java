@@ -101,10 +101,20 @@ public class BinderFactory {
                 bind(elideSettings.getDictionary()).to(EntityDictionary.class);
                 bind(elideSettings.getDataStore()).to(DataStore.class).named("elideDataStore");
 
-                bind(new ES384JwtTokenValidator(OAUTH_CONFIG.jwksUrl())).to(AccessTokenValidator.class);
+                if (OAUTH_CONFIG.authEnabled()) {
+                    bind(new ES384JwtTokenValidator(OAUTH_CONFIG.jwksUrl())).to(AccessTokenValidator.class);
+                }
             }
 
-            private Elide buildElide(final ElideSettings elideSettings) {
+            /**
+             * Initializes Elide middleware service.
+             *
+             * @param elideSettings  An object for configuring various aspect of the Elide middleware
+             *
+             * @return a new instance
+             */
+            @NotNull
+            private Elide buildElide(@NotNull final ElideSettings elideSettings) {
                 return new Elide(
                         elideSettings,
                         new TransactionRegistry(),
@@ -113,19 +123,39 @@ public class BinderFactory {
                 );
             }
 
+            /**
+             * Initializes Elide config object.
+             *
+             * @return a new instance
+             */
+            @NotNull
             private ElideSettings buildElideSettings() {
                 return new ElideSettingsBuilder(buildDataStore(buildEntityManagerFactory()))
                         .withEntityDictionary(buildEntityDictionary(injector))
                         .build();
             }
 
-            private DataStore buildDataStore(final EntityManagerFactory entityManagerFactory) {
+            /**
+             * Initializes the Elide {@link DataStore} service with the specified {@link EntityManagerFactory}.
+             *
+             * @param entityManagerFactory  An object used to initialize JPA
+             *
+             * @return a new instance
+             */
+            @NotNull
+            private DataStore buildDataStore(@NotNull final EntityManagerFactory entityManagerFactory) {
                 return new JpaDataStore(
                         entityManagerFactory::createEntityManager,
                         em -> new NonJtaTransaction(em, TXCANCEL),
                         entityManagerFactory::getMetamodel);
             }
 
+            /**
+             * Initializes the {@link EntityManagerFactory} service used by Elide JPA.
+             *
+             * @return a new instance
+             */
+            @NotNull
             private EntityManagerFactory buildEntityManagerFactory() {
                 final String modelPackageName = APPLICATION_CONFIG.modelPackageName();
 
@@ -145,6 +175,14 @@ public class BinderFactory {
                 ).build();
             }
 
+            /**
+             * Returns a collection of DB configurations, including connecting credentials.
+             * <p>
+             * In addition, the configurations consumes all configs defined in {@link JpaDatastoreConfig}
+             *
+             * @return a new instance
+             */
+            @NotNull
             @SuppressWarnings("MultipleStringLiterals")
             private static Properties getDefaultDbConfigs() {
                 final Properties dbProperties = new Properties();
@@ -175,7 +213,15 @@ public class BinderFactory {
                 return dbProperties;
             }
 
-            private EntityDictionary buildEntityDictionary(final ServiceLocator injector) {
+            /**
+             * Initializes the Elide {@link EntityDictionary} service with a given dependency injector.
+             *
+             * @param injector  A standard HK2 service locator used by Elide
+             *
+             * @return a new instance
+             */
+            @NotNull
+            private EntityDictionary buildEntityDictionary(@NotNull final ServiceLocator injector) {
                 return new EntityDictionary(
                         new HashMap<>(),
                         new HashMap<>(),
