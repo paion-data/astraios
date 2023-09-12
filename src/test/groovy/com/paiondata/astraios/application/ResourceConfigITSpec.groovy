@@ -72,8 +72,13 @@ class ResourceConfigITSpec extends AbstractITSpec {
 
         ServletHolder jsonApiServlet = servletContextHandler.addServlet(ServletContainer.class, "/v1/data/*")
         jsonApiServlet.setInitOrder(0)
-        jsonApiServlet.setInitParameter("jersey.config.server.provider.packages", ResourceConfig.ENDPOINT_PACKAGE)
+        jsonApiServlet.setInitParameter("jersey.config.server.provider.packages", ResourceConfig.JAON_API_ENDPOINT_PACKAGE)
         jsonApiServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
+
+        ServletHolder graphqlServlet = servletContextHandler.addServlet(ServletContainer.class, "/graphql/v1/data/*")
+        graphqlServlet.setInitOrder(0)
+        graphqlServlet.setInitParameter("jersey.config.server.provider.packages", "com.yahoo.elide.graphql")
+        graphqlServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
 
         jettyEmbeddedServer.start()
     }
