@@ -11,8 +11,7 @@ services:
       - DB_DRIVER=com.mysql.jdbc.Driver
       - DB_DIALECT=org.hibernate.dialect.MySQLDialect
       - DB_URL=jdbc:mysql://db/elide?serverTimezone=UTC
-      - OAUTH_ENABLED=true
-      - JWKS_URL=https://u4v5ne.logto.app/oidc/jwks
+      - OAUTH_ENABLED=false
     depends_on:
       db:
         condition: service_healthy

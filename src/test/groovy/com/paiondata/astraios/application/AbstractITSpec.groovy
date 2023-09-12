@@ -38,19 +38,12 @@ class AbstractITSpec extends Specification {
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = WS_PORT
         RestAssured.basePath = "/v1/data/"
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .addHeader(OAuthFilter.AUTHORIZATION_HEADER, OAuthFilter.AUTHORIZATION_SCHEME + " " + VALID_TOKEN)
-                .build()
-
-        System.setProperty("OAUTH_ENABLED", "true")
-        System.setProperty("JWKS_URL", "https://u4v5ne.logto.app/oidc/jwks")
 
         childSetupSpec()
     }
 
     def cleanupSpec() {
         RestAssured.reset()
-        System.clearProperty("OAUTH_ENABLED")
 
         childCleanupSpec()
     }

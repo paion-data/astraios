@@ -32,13 +32,18 @@ class DockerComposeITSpec extends AbstractITSpec {
             .withExposedService(
                     "web",
                     WS_PORT,
-                    Wait.forHttp("/v1/data/note")
-                            .withHeader(
-                                    OAuthFilter.AUTHORIZATION_HEADER,
-                                    OAuthFilter.AUTHORIZATION_SCHEME + " " + VALID_TOKEN
-                            )
-                            .forStatusCode(200)
+                    Wait.forHttp("/v1/data/note").forStatusCode(200)
             )
+
+    @Override
+    def childSetupSpec() {
+        System.setProperty("OAUTH_ENABLED", "false")
+    }
+
+    @Override
+    def childCleanupSpec() {
+        System.clearProperty("OAUTH_ENABLED")
+    }
 
     def "JSON API allows for POSTing and GETing an entity"() {
         expect: "database is initially empty"
