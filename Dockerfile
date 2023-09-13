@@ -21,3 +21,6 @@ ARG WS_VERSION=1.0-SNAPSHOT
 ENV JETTY_WEBAPPS_DIR /var/lib/jetty/webapps
 
 COPY ./target/astraios-$WS_VERSION.war $JETTY_WEBAPPS_DIR/ROOT.war
+
+RUN java -jar "$JETTY_HOME/start.jar" --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp
+RUN rm -rf /var/lib/jetty/start.d/websocket.ini

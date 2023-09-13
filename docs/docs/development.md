@@ -147,10 +147,9 @@ Running Webservice in Standalone Jetty (Production)
 
 ### Download Jetty
 
-At [download page](https://www.eclipse.org/jetty/download.php), pick up a `.tgz` distribution. **It is very important
-to pick up Jetty server version that matches JDK version**. For JDK **17**, it's been tested that Jetty _11.0.15_ worked
-
-Hence, we will use "11.0.15" release as an example:
+For JDK **17**, which is Astraios' Java version, it's been tested that Jetty _11.0.15_ worked. Hence, we will use
+["11.0.15" release](https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.15/jetty-home-11.0.15.tar.gz) as
+an example:
 
 ![Error loading download-jetty.png](./img/download-jetty.png)
 
@@ -173,12 +172,12 @@ configs. In short, the Standalone Jetty container will be setup with
 export JETTY_HOME=/path/to/jetty-home-11.0.15
 mkdir -p /path/to/jetty-base
 cd /path/to/jetty-base
-java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp,websocket
+java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp
 ```
 
 where `/path/to/` is the _absolute_ path to the directory containing the `jetty-home-11.0.15` directory
 
-The `--add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp,websocket` is how we configure the Jetty
+The `--add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp` is how we configure the Jetty
 container.
 
 Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** directory and rename the WAR file to

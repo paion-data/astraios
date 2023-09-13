@@ -63,6 +63,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
         System.clearProperty("JWKS_URL")
     }
 
+
     @SuppressWarnings('GroovyAccessibility')
     def setup() {
         ServletContextHandler servletContextHandler = new ServletContextHandler()
@@ -70,20 +71,16 @@ class ResourceConfigITSpec extends AbstractITSpec {
 
         jettyEmbeddedServer.setHandler(servletContextHandler)
 
-        ServletHolder jsonApiServlet = servletContextHandler.addServlet(ServletContainer.class, "/v1/data/*")
-        jsonApiServlet.setInitOrder(0)
-        jsonApiServlet.setInitParameter("jersey.config.server.provider.packages", ResourceConfig.ENDPOINT_PACKAGE)
-        jsonApiServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
+        ServletHolder jerseyServlet = servletContextHandler.addServlet(ServletContainer.class, "/v1/data/*")
+        jerseyServlet.setInitOrder(0)
+        jerseyServlet.setInitParameter(
+                "jersey.config.server.provider.packages",
+                [ResourceConfig.JAON_API_ENDPOINT_PACKAGE, ResourceConfig.GRAPHQL_ENDPOINT_PACKAGE].join(";")
+        )
+        jerseyServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
 
         jettyEmbeddedServer.start()
-    }
 
-    def cleanup() {
-        jettyEmbeddedServer.stop()
-        jettyEmbeddedServer.destroy()
-    }
-
-    def "JSON API allows for POSTing and GETing a book"() {
         expect: "database is initially empty"
         RestAssured
                 .given()
@@ -92,7 +89,14 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([]))
+    }
 
+    def cleanup() {
+        jettyEmbeddedServer.stop()
+        jettyEmbeddedServer.destroy()
+    }
+
+    def "JSON API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
         when: "an entity is POSTed via JSON API"
         RestAssured
                 .given()
@@ -122,5 +126,52 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                 ]
                         ]
                 ]))
+
+        when: "we update that entity"
+        RestAssured
+                .given()
+                .contentType(JsonApi.MEDIA_TYPE)
+                .accept(JsonApi.MEDIA_TYPE)
+                .body("""
+                    {"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride and Prejudice"}}}
+                """)
+                .when()
+                .patch("book/elide-demo")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT)
+
+        then: "we can GET that entity with updated attribute"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo([
+                        [
+                                type: "book",
+                                id: "elide-demo",
+                                attributes: [
+                                        title: "Pride and Prejudice"
+                                ]
+                        ]
+                ]))
+
+        when: "the entity is deleted"
+        RestAssured
+                .given()
+                .when()
+                .delete("book/elide-demo")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT)
+
+        then: "that entity is not found in database anymore"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo([]))
     }
 }
