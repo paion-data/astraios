@@ -15,6 +15,24 @@
  */
 package com.paiondata.astraios.application
 
+import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
+import static com.yahoo.elide.test.graphql.GraphQLDSL.document
+import static com.yahoo.elide.test.graphql.GraphQLDSL.field
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selection
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selections
+import static com.yahoo.elide.test.graphql.GraphQLDSL.argument
+import static com.yahoo.elide.test.graphql.GraphQLDSL.QUOTE_VALUE
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attr
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attributes
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.data
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.datum
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
+import static com.yahoo.elide.test.graphql.GraphQLDSL.mutation
+
+import com.paiondata.astraios.models.Book;
+
 import com.yahoo.elide.jsonapi.JsonApi
 
 import com.paiondata.astraios.web.filters.OAuthFilter
@@ -30,12 +48,12 @@ import org.testcontainers.spock.Testcontainers
 
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
+import io.restassured.response.Response
+import io.restassured.response.ResponseBody
 import spock.lang.Shared
 
 @Testcontainers
 class ResourceConfigITSpec extends AbstractITSpec {
-
-    static final int WS_PORT = 8080
 
     final Server jettyEmbeddedServer = new Server(WS_PORT)
 
@@ -81,15 +99,6 @@ class ResourceConfigITSpec extends AbstractITSpec {
         jerseyServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
 
         jettyEmbeddedServer.start()
-
-        expect: "database is initially empty"
-        RestAssured
-                .given()
-                .when()
-                .get("book")
-                .then()
-                .statusCode(200)
-                .body("data", Matchers.equalTo([]))
     }
 
     def cleanup() {
@@ -98,18 +107,35 @@ class ResourceConfigITSpec extends AbstractITSpec {
     }
 
     def "JSON API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
-        when: "an entity is POSTed via JSON API"
+        expect: "database is initially empty"
         RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo([]))
+
+        when: "an entity is POSTed via JSON API"
+        Response response = RestAssured
                 .given()
                 .contentType(JsonApi.MEDIA_TYPE)
                 .accept(JsonApi.MEDIA_TYPE)
-                .body("""
-                    {"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride & Prejudice"}}}
-                """)
+                .body(
+                        data(
+                                resource(
+                                        type("book"),
+                                        attributes(
+                                                attr("title", "Pride & Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                )
                 .when()
                 .post("book")
-                .then()
-                .statusCode(HttpStatus.SC_CREATED)
+
+        String bookId = response.jsonPath().get("data").get("id")
+        response.then().statusCode(HttpStatus.SC_CREATED)
 
         then: "we can GET that entity next"
         RestAssured
@@ -121,7 +147,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .body("data", Matchers.equalTo([
                         [
                                 type: "book",
-                                id: "elide-demo",
+                                id: bookId,
                                 attributes: [
                                         title: "Pride & Prejudice"
                                 ]
@@ -133,11 +159,19 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType(JsonApi.MEDIA_TYPE)
                 .accept(JsonApi.MEDIA_TYPE)
-                .body("""
-                    {"data": {"type": "book", "id": "elide-demo", "attributes": {"title": "Pride and Prejudice"}}}
-                """)
+                .body(
+                        datum(
+                                resource(
+                                        type("book"),
+                                        id("1"),
+                                        attributes(
+                                                attr("title", "Pride and Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                )
                 .when()
-                .patch("book/elide-demo")
+                .patch("book/${bookId}")
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT)
 
@@ -151,7 +185,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .body("data", Matchers.equalTo([
                         [
                                 type: "book",
-                                id: "elide-demo",
+                                id: bookId,
                                 attributes: [
                                         title: "Pride and Prejudice"
                                 ]
@@ -162,7 +196,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
         RestAssured
                 .given()
                 .when()
-                .delete("book/elide-demo")
+                .delete("book/${bookId}")
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT)
 
@@ -174,5 +208,230 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.equalTo([]))
+    }
+
+    def "GraphQL API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
+        expect: "database is initially empty"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo(
+                        [
+                                book: [
+                                        edges: []
+                                ]
+                        ] as HashMap
+                ))
+
+        when: "an entity is POSTed via GraphQL"
+        Response response = RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query:
+                         document(
+                                 mutation(
+                                         selection(
+                                                field(
+                                                "book",
+                                                        arguments(
+                                                                argument("op","UPSERT"),
+                                                                argument("data", '{title: "Book Numero Dos"}')
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                        )
+
+                                ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
+
+        response.then()
+                .statusCode(200)
+
+        final String bookId = response.jsonPath().get("data").get("book").get("edges")[0].get("node").get("id")
+
+        then: "we can GET that entity next"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo(
+                        [
+                                book: [
+                                        edges: [
+                                                    [node:[id:bookId, title:"Book Numero Dos"]]
+                                        ]
+                                ]
+                        ] as HashMap
+
+                ))
+
+        Book book = new Book(id: bookId as long, title: "Book Updated")
+        when: "we update that entity"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query:
+                                document(
+                                        mutation(
+                                                selection(
+                                                        field(
+                                                                "book",
+                                                                arguments(
+                                                                        argument("op","UPSERT"),
+                                                                        argument("data", book)
+                                                                ),
+
+                                                                selections(
+                                                                        field("id"),
+                                                                        field("title")
+                                                                )
+                                                        )
+
+                                                ))
+                                ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+
+        then: "we can GET that entity with updated"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo(
+                        [
+                                book: [
+                                        edges: [
+                                                [node:[id:bookId, title:"Book Updated"]]
+                                        ]
+                                ]
+                        ] as HashMap
+
+                ))
+
+        when: "the entity is deleted"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query:
+                                document(
+                                        mutation(
+                                                selection(
+                                                        field(
+                                                                "book",
+                                                                arguments(
+                                                                        argument("op","DELETE"),
+                                                                        argument("ids", [bookId])
+                                                                ),
+
+                                                                selections(
+                                                                        field("id"),
+                                                                        field("title")
+                                                                )
+                                                        )
+
+                                                ))
+                                ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+
+        then: "that entity is not found in database anymore"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", Matchers.equalTo(
+                        [
+                                book: [
+                                        edges: []
+                                ]
+                        ] as HashMap
+                ))
     }
 }
