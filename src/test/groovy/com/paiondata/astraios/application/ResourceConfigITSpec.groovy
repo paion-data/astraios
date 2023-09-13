@@ -91,19 +91,6 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .body("data", Matchers.equalTo([]))
     }
 
-//    @SuppressWarnings('GroovyAccessibility')
-//    void setupJsonApi(ServletContextHandler servletContextHandler) {
-//
-//    }
-//
-//    @SuppressWarnings('GroovyAccessibility')
-//    void setupGraphQlApi(ServletContextHandler servletContextHandler) {
-//        ServletHolder graphqlServlet = servletContextHandler.addServlet(ServletContainer.class, "/v1/data/*")
-//        graphqlServlet.setInitOrder(0)
-//        graphqlServlet.setInitParameter(PACKAGES, ResourceConfig.GRAPHQL_ENDPOINT_PACKAGE)
-//        graphqlServlet.setInitParameter("jakarta.ws.rs.Application", ResourceConfig.class.getCanonicalName())
-//    }
-
     def cleanup() {
         jettyEmbeddedServer.stop()
         jettyEmbeddedServer.destroy()
