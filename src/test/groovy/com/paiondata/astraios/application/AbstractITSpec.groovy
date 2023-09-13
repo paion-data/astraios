@@ -15,10 +15,7 @@
  */
 package com.paiondata.astraios.application
 
-import com.paiondata.astraios.web.filters.OAuthFilter
-
 import io.restassured.RestAssured
-import io.restassured.builder.RequestSpecBuilder
 import spock.lang.Specification
 
 class AbstractITSpec extends Specification {

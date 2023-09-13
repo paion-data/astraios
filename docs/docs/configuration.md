@@ -21,7 +21,7 @@ The following configurations can be placed in the properties file called **appli
 
 :::
 
-- `MODEL_PACKAGE_NAME`: The fully qualified package name that contains a set of Elide JPA models
+- **MODEL_PACKAGE_NAME**: The fully qualified package name that contains a set of Elide JPA models
 
 OAuth 2
 -------
@@ -32,8 +32,8 @@ The following configurations can be placed in the properties file called **oauth
 
 :::
 
-- `OAUTH_ENABLED`: Whether or not to enable [OAuthFilter] container request filter.
-- `JWKS_URL`: (**Required if `OAUTH_ENABLED` is set to `true`**) A standard [JWKS] URL that, on GET, returns a json
+- **OAUTH_ENABLED**: Whether or not to enable [OAuthFilter] container request filter.
+- **JWKS_URL**: (**Required if `OAUTH_ENABLED` is set to `true`**) A standard [JWKS] URL that, on GET, returns a json
   object such as
 
   ```json
@@ -61,11 +61,11 @@ The following configurations can be placed in the properties file called **jpada
 
 :::
 
-- `DB_USER`: Persistence DB username (needs have both Read and Write permissions).
-- `DB_PASSWORD`: The persistence DB user password.
-- `DB_URL`: The persistence DB URL, such as "jdbc:mysql://localhost/elide?serverTimezone=UTC".
-- `DB_DRIVER`: The SQL DB driver class name, such as "com.mysql.jdbc.Driver".
-- `DB_DIALECT`: The SQL DB dialect name, such as "org.hibernate.dialect.MySQLDialect".
+- **DB_USER**: Persistence DB username (needs have both Read and Write permissions).
+- **DB_PASSWORD**: The persistence DB user password.
+- **DB_URL**: The persistence DB URL, such as "jdbc:mysql://localhost/elide?serverTimezone=UTC".
+- **DB_DRIVER**: The SQL DB driver class name, such as "com.mysql.jdbc.Driver".
+- **DB_DIALECT**: The SQL DB dialect name, such as "org.hibernate.dialect.MySQLDialect".
 
 [Java system properties]: https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
 [JWKS]: https://datatracker.ietf.org/doc/html/rfc7517
