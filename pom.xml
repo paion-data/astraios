@@ -36,16 +36,16 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
+        <version.elide>7.0.0-pr6</version.elide>
+        <version.validation.api>3.0.1</version.validation.api>
+        <version.jersey>3.1.1</version.jersey>
+        <hibernate.version>6.2.4.Final</hibernate.version>
         <version.jcip.annotations>1.0</version.jcip.annotations>
         <version.slf4j>2.0.7</version.slf4j>
         <version.logback>1.4.7</version.logback>
         <version.owner>1.0.12</version.owner>
         <version.groovy>4.0.6</version.groovy>
         <version.jetty>11.0.15</version.jetty>
-
-        <version.validation.api>3.0.1</version.validation.api>
-        <version.jersey>3.1.1</version.jersey>
-        <hibernate.version>6.2.4.Final</hibernate.version>
 
         <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
         <version.maven.javadoc.plugin>3.5.0</version.maven.javadoc.plugin>
@@ -111,19 +111,26 @@
         <dependency>
             <groupId>com.yahoo.elide</groupId>
             <artifactId>elide-core</artifactId>
-            <version>7.0.0-pr6</version>
+            <version>${version.elide}</version>
         </dependency>
         <dependency>
             <groupId>com.yahoo.elide</groupId>
             <artifactId>elide-datastore-jpa</artifactId>
-            <version>7.0.0-pr6</version>
+            <version>${version.elide}</version>
         </dependency>
         <dependency>
             <groupId>com.yahoo.elide</groupId>
             <artifactId>elide-graphql</artifactId>
-            <version>7.0.0-pr6</version>
+            <version>${version.elide}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.yahoo.elide</groupId>
+            <artifactId>elide-test-helpers</artifactId>
+            <version>${version.elide}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
