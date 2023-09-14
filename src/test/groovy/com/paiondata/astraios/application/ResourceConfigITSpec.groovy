@@ -21,7 +21,7 @@ import static com.yahoo.elide.test.graphql.GraphQLDSL.field
 import static com.yahoo.elide.test.graphql.GraphQLDSL.selection
 import static com.yahoo.elide.test.graphql.GraphQLDSL.selections
 import static com.yahoo.elide.test.graphql.GraphQLDSL.argument
-import static com.yahoo.elide.test.graphql.GraphQLDSL.QUOTE_VALUE
+import static org.hamcrest.Matchers.equalTo
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attr
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attributes
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.data
@@ -42,14 +42,12 @@ import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
 import org.glassfish.jersey.servlet.ServletContainer
-import org.hamcrest.Matchers
 import org.testcontainers.containers.MySQLContainer
 import org.testcontainers.spock.Testcontainers
 
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.response.Response
-import io.restassured.response.ResponseBody
 import spock.lang.Shared
 
 @Testcontainers
@@ -114,7 +112,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo([]))
+                .body(equalTo(data().toJSON()))
 
         when: "an entity is POSTed via JSON API"
         Response response = RestAssured
@@ -129,7 +127,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                                 attr("title", "Pride & Prejudice")
                                         )
                                 )
-                        ).toJSON()
+                        )
                 )
                 .when()
                 .post("book")
@@ -144,7 +142,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo([
+                .body("data", equalTo([
                         [
                                 type: "book",
                                 id: bookId,
@@ -163,12 +161,12 @@ class ResourceConfigITSpec extends AbstractITSpec {
                         datum(
                                 resource(
                                         type("book"),
-                                        id("1"),
+                                        id(bookId),
                                         attributes(
                                                 attr("title", "Pride and Prejudice")
                                         )
                                 )
-                        ).toJSON()
+                        )
                 )
                 .when()
                 .patch("book/${bookId}")
@@ -182,7 +180,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo([
+                .body("data", equalTo([
                         [
                                 type: "book",
                                 id: bookId,
@@ -207,7 +205,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo([]))
+                .body(equalTo(data().toJSON()))
     }
 
     def "GraphQL API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
@@ -233,7 +231,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .post()
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo(
+                .body("data", equalTo(
                         [
                                 book: [
                                         edges: []
@@ -275,7 +273,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
 
         final String bookId = response.jsonPath().get("data").get("book").get("edges")[0].get("node").get("id")
 
-        then: "we can GET that entity next"
+        then: "we can retrieve that entity next"
         RestAssured
                 .given()
                 .contentType("application/json")
@@ -297,15 +295,18 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .post()
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo(
-                        [
-                                book: [
-                                        edges: [
-                                                    [node:[id:bookId, title:"Book Numero Dos"]]
-                                        ]
-                                ]
-                        ] as HashMap
-
+                .body(equalTo(
+                        document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id", bookId),
+                                                        field("title", "Book Numero Dos")
+                                                )
+                                        )
+                                )
+                        ).toResponse()
                 ))
 
         Book book = new Book(id: bookId as long, title: "Book Updated")
@@ -340,7 +341,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .then()
                 .statusCode(200)
 
-        then: "we can GET that entity with updated"
+        then: "we can retrieve that entity with updated"
         RestAssured
                 .given()
                 .contentType("application/json")
@@ -362,15 +363,18 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .post()
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo(
-                        [
-                                book: [
-                                        edges: [
-                                                [node:[id:bookId, title:"Book Updated"]]
-                                        ]
-                                ]
-                        ] as HashMap
-
+                .body(equalTo(
+                        document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id", bookId),
+                                                        field("title", "Book Updated")
+                                                )
+                                        )
+                                )
+                        ).toResponse()
                 ))
 
         when: "the entity is deleted"
@@ -426,7 +430,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .post()
                 .then()
                 .statusCode(200)
-                .body("data", Matchers.equalTo(
+                .body("data", equalTo(
                         [
                                 book: [
                                         edges: []
