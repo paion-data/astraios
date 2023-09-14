@@ -218,7 +218,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query: document(
+                .body(
+                        query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -248,8 +249,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .contentType("application/json")
                 .accept("application/json")
                 .body(
-                        query:
-                         document(
+                        query: document(
                                  mutation(
                                          selection(
                                                 field(
@@ -281,7 +281,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query: document(
+                .body(
+                        query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -317,8 +318,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query:
-                                document(
+                .body(
+                        query: document(
                                         mutation(
                                                 selection(
                                                         field(
@@ -342,12 +343,13 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .then()
                 .statusCode(200)
 
-        then: "we can retrieve that entity with updated"
+        then: "we can retrieve that entity with updated attribute"
         RestAssured
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query: document(
+                .body(
+                        query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -382,8 +384,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query:
-                                document(
+                .body(
+                        query: document(
                                         mutation(
                                                 selection(
                                                         field(
@@ -412,7 +414,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(query: document(
+                .body(
+                        query: document(
                                 selection(
                                         field(
                                                 "book",
