@@ -132,7 +132,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .when()
                 .post("book")
 
-        String bookId = response.jsonPath().get("data").get("id")
+        String bookId = response.jsonPath().get("data.id")
         response.then().statusCode(HttpStatus.SC_CREATED)
 
         then: "we can GET that entity next"
@@ -142,15 +142,17 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", equalTo([
-                        [
-                                type: "book",
-                                id: bookId,
-                                attributes: [
-                                        title: "Pride & Prejudice"
-                                ]
-                        ]
-                ]))
+                .body(equalTo(
+                        data(
+                                resource(
+                                        type("book"),
+                                        id(bookId),
+                                        attributes(
+                                                attr("title", "Pride & Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                ))
 
         when: "we update that entity"
         RestAssured
@@ -180,15 +182,17 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .get("book")
                 .then()
                 .statusCode(200)
-                .body("data", equalTo([
-                        [
-                                type: "book",
-                                id: bookId,
-                                attributes: [
-                                        title: "Pride and Prejudice"
-                                ]
-                        ]
-                ]))
+                .body(equalTo(
+                        data(
+                                resource(
+                                        type("book"),
+                                        id(bookId),
+                                        attributes(
+                                                attr("title", "Pride & Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                ))
 
         when: "the entity is deleted"
         RestAssured
@@ -252,8 +256,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                                 field(
                                                 "book",
                                                         arguments(
-                                                                argument("op","UPSERT"),
-                                                                argument("data", '{title: "Book Numero Dos"}')
+                                                                argument("op", "UPSERT"),
+                                                                argument("data", new Book(title: "Book Numero Dos"))
                                                         ),
 
                                                         selections(
@@ -271,15 +275,14 @@ class ResourceConfigITSpec extends AbstractITSpec {
         response.then()
                 .statusCode(200)
 
-        final String bookId = response.jsonPath().get("data").get("book").get("edges")[0].get("node").get("id")
+        final String bookId = response.jsonPath().get("data.book.edges[0].node.id")
 
         then: "we can retrieve that entity next"
         RestAssured
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query: document(
+                .body(query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -323,7 +326,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                                         field(
                                                                 "book",
                                                                 arguments(
-                                                                        argument("op","UPSERT"),
+                                                                        argument("op", "UPSERT"),
                                                                         argument("data", book)
                                                                 ),
 
@@ -390,7 +393,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                                         field(
                                                                 "book",
                                                                 arguments(
-                                                                        argument("op","DELETE"),
+                                                                        argument("op", "DELETE"),
                                                                         argument("ids", [bookId])
                                                                 ),
 
