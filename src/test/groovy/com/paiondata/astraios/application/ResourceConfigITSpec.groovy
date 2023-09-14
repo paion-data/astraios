@@ -188,7 +188,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                         type("book"),
                                         id(bookId),
                                         attributes(
-                                                attr("title", "Pride & Prejudice")
+                                                attr("title", "Pride and Prejudice")
                                         )
                                 )
                         ).toJSON()
@@ -218,8 +218,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query: document(
+                .body(query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -318,8 +317,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query:
+                .body(query:
                                 document(
                                         mutation(
                                                 selection(
@@ -349,8 +347,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query: document(
+                .body(query: document(
                                 selection(
                                         field(
                                                 "book",
@@ -385,8 +382,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query:
+                .body(query:
                                 document(
                                         mutation(
                                                 selection(
@@ -416,8 +412,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .given()
                 .contentType("application/json")
                 .accept("application/json")
-                .body(
-                        query: document(
+                .body(query: document(
                                 selection(
                                         field(
                                                 "book",
