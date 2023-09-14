@@ -17,11 +17,9 @@ package com.paiondata.astraios.application
 
 import com.yahoo.elide.jsonapi.resources.JsonApiEndpoint
 
-import com.paiondata.astraios.config.OAuthConfig
 import com.paiondata.astraios.web.filters.CorsFilter
 import com.paiondata.astraios.web.filters.OAuthFilter
 
-import org.aeonbits.owner.ConfigFactory
 import org.glassfish.hk2.api.ServiceLocator
 import org.glassfish.jersey.internal.inject.Binder
 

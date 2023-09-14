@@ -59,8 +59,9 @@ class ResourceConfigITSpec extends AbstractITSpec {
 
     @Override
     def childCleanupSpec() {
-        System.clearProperty("OAUTH_ENABLED")
+        System.clearProperty("DB_URL")
         System.clearProperty("JWKS_URL")
+        System.clearProperty("OAUTH_ENABLED")
     }
 
 

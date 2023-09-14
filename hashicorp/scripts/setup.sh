@@ -31,7 +31,7 @@ rm jetty-home-$JETTY_VERSION.tar.gz
 export JETTY_HOME=/home/ubuntu/jetty-home-$JETTY_VERSION
 mkdir jetty-base
 cd jetty-base
-java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp,websocket
+java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp
 mv /home/ubuntu/ROOT.war webapps/ROOT.war
 cd ../
 

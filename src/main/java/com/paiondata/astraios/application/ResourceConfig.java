@@ -81,9 +81,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
         register(new org.glassfish.hk2.utilities.binding.AbstractBinder() {
             @Override
             protected void configure() {
-                final Elide elide = injector.getService(Elide.class, "elide");
-
-                elide.doScans();
+                injector.getService(Elide.class, "elide").doScans();
             }
         });
     }
