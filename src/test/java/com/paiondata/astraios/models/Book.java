@@ -18,6 +18,7 @@ package com.paiondata.astraios.models;
 import com.yahoo.elide.annotation.Include;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -33,7 +34,8 @@ public class Book {
      * Surrogate key.
      */
     @Id
-    public String id;
+    @GeneratedValue
+    public long id;
 
     /**
      * Attribute.
