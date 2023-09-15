@@ -23,3 +23,12 @@ otherwise, dependency injection will flaky and not right.
 :::
 
 ![Error loading resource-binding.png](./img/resource-binding.png)
+
+[Astraios]: https://paion-data.github.io/astraios/
+
+[Elide]: https://elide.io/
+[Elide instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/Elide.java
+[Elide Standalone]: https://github.com/yahoo/elide/tree/master/elide-standalone
+[ElideSettings instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/ElideSettings.java
+
+[what is binding]: https://qubitpi.github.io/jersey/ioc.html

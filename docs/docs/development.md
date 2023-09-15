@@ -172,15 +172,6 @@ To optionally disable GraphQL endpoints, exclude corresponding dependencies in P
         </dependency>
 ```
 
-[Astraios]: https://paion-data.github.io/astraios/
-
-[Elide]: https://elide.io/
-[Elide instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/Elide.java
-[Elide Standalone]: https://github.com/yahoo/elide/tree/master/elide-standalone
-[ElideSettings instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/ElideSettings.java
-
-[what is binding]: https://qubitpi.github.io/jersey/ioc.html
-
 Running Webservice in Standalone Jetty (Production)
 ---------------------------------------------------
 
