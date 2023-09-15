@@ -85,9 +85,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
-            <artifactId>${env.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
-            <version>${env.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION}</version>
+            <groupId>${astraios.model.package.jar.group.id}</groupId>
+            <artifactId>${astraios.model.package.jar.artifact.id}</artifactId>
+            <version>${astraios.model.package.jar.version}</version>
         </dependency>
 
         <!-- Logging -->
@@ -508,9 +508,9 @@
 
     <repositories>
         <repository>
-            <id>${env.ASTRAIOS_MODEL_PACKAGE_REPO_ID}</id>
+            <id>${astraios.model.package.repo.id}</id>
             <name>Astraios model pacakge JAR repository</name>
-            <url>${env.ASTRAIOS_MODEL_PACKAGE_REPO_URL}</url>
+            <url>${astraios.model.package.repo.url}</url>
         </repository>
     </repositories>
 </project>

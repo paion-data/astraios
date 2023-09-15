@@ -32,14 +32,19 @@ Running Webservice in Docker Compose
 
 To inject [Elide model package](https://github.com/yahoo/elide/tree/master/elide-standalone#create-models), simply put
 the models in a separate JAR and include it as a dependency in POM. If the model package is internal and cannot be
-visible publicly, either make the webservice project private or public with env variable masking, for example:
+visible publicly, either make the astraios project private or public with model package dependency info
+[injected via settings.xml](https://maven.apache.org/examples/injecting-properties-via-settings.html), for example:
 
 ```xml
+<project>
+
+    ...
+
     <dependencies>
         <dependency>
-            <groupId>${env.MODEL_PACKAGE_JAR_GROUP_ID}</groupId>
-            <artifactId>${env.MODEL_PACKAGE_JAR_ARTIFACT_ID}</artifactId>
-            <version>${env.MODEL_PACKAGE_JAR_VERSION}</version>
+            <groupId>${astraios.model.package.jar.group.id}</groupId>
+            <artifactId>${astraios.model.package.jar.artifact.id}</artifactId>
+            <version>${astraios.model.package.jar.version}</version>
         </dependency>
     </dependencies>
 
@@ -47,21 +52,55 @@ visible publicly, either make the webservice project private or public with env 
 
     <repositories>
         <repository>
-            <id>${env.MODEL_PACKAGE_REPO_ID}</id>
-            <name>JPA model pacakge JAR repository</name>
-            <url>${env.MODEL_PACKAGE_REPO_URL}</url>
+            <id>${astraios.model.package.repo.id}</id>
+            <name>Astraios model pacakge JAR repository</name>
+            <url>${astraios.model.package.repo.url}</url>
         </repository>
     </repositories>
+
+    ...
+
+</project>
 ```
 
-```bash
-export MODEL_PACKAGE_JAR_GROUP_ID=com.mycompnay
-export MODEL_PACKAGE_JAR_ARTIFACT_ID=my-model-package
-export MODEL_PACKAGE_JAR_VERSION=1.0.7
+with a corresponding `~/.m2/settings.xml`:
 
-export MODEL_PACKAGE_REPO_ID=my-repo-id
-export MODEL_PACKAGE_REPO_URL=https://private.mvnrepository.com/artifact/com.company/my-model-package
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <profiles>
+        <profile>
+            <id>astraios-config-properties</id>
+            <properties>
+                <astraios.model.package.jar.group.id>com.mycompnay</astraios.model.package.jar.group.id>
+                <astraios.model.package.jar.artifact.id>my-model-package</astraios.model.package.jar.artifact.id>
+                <astraios.model.package.jar.version>1.0.7</astraios.model.package.jar.version>
+                <astraios.model.package.repo.id>mycompany-maven-repo-id</astraios.model.package.repo.id>
+                <astraios.model.package.repo.url>
+                    https://private.mvnrepository.com/artifact/com.company/my-model-package
+                </astraios.model.package.repo.url>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <activeProfiles>
+        <activeProfile>astraios-config-properties</activeProfile>
+    </activeProfiles>
+
+    <servers>
+        ...
+    </servers>
+</settings>
 ```
+
+Lastly, if IntelliJ IDE is used for developing Astraios, please make sure to let IDE pick up the `~/.m2/settings.xml` by
+unchecking the _Use settings from .mvn/maven.config_:
+
+![Error loading load-m2-settings.png](./img/load-m2-settings.png)
 
 ### Step 2: Spinning Up Docker Compose
 

@@ -26,12 +26,46 @@ inputs:
     description: 'Nexus token'
     required: true
 
+  astraios-model-package-jar-group-id:
+    description: 'Maven group ID of JAR containing package specified by MODEL_PACKAGE_NAME'
+    required: true
+  astraios-model-package-jar-artifact-id:
+    description: 'Maven artifact ID of JAR containing package specified by MODEL_PACKAGE_NAME'
+    required: true
+  astraios-model-package-jar-version:
+    description: 'The version of JAR containing package specified by MODEL_PACKAGE_NAME'
+    required: true
+
+  astraios-model-package-repo-id:
+    description: 'The ID of the Maven repository ID hosting the JAR containing package specified by MODEL_PACKAGE_NAME'
+    required: true
+  astraios-model-package-repo-url:
+    description: 'The URL of the Maven repository that hosts the JAR containing package specified by MODEL_PACKAGE_NAME'
+    required: true
+
 runs:
   using: "composite"
   steps:
     - name: Authenticating internal model package download
       uses: whelk-io/maven-settings-xml-action@v20
       with:
+        profiles: >
+          [
+            {
+              "id": "astraios-config-properties",
+              "properties": {
+                "astraios.model.package.jar.group.id": "${{ inputs.astraios-model-package-jar-group-id }}",
+                "astraios.model.package.jar.artifact.id": "${{ inputs.astraios-model-package-jar-artifact-id }}",
+                "astraios.model.package.jar.version": "${{ inputs.astraios-model-package-jar-version }}",
+                "astraios.model.package.repo.id": "${{ inputs.astraios-model-package-repo-id }}",
+                "astraios.model.package.repo.url": "${{ inputs.astraios-model-package-repo-url }}"
+              }
+            }
+          ]
+        active_profiles: >
+          [
+            "astraios-config-properties"
+          ]
         servers: >
           [
             {

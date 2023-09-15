@@ -25,12 +25,6 @@ env:
   JDK_DISTRIBUTION: 'adopt'
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
-  ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID }}
-  ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID }}
-  ASTRAIOS_MODEL_PACKAGE_JAR_VERSION: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION }}
-  ASTRAIOS_MODEL_PACKAGE_REPO_ID: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_ID }}
-  ASTRAIOS_MODEL_PACKAGE_REPO_URL: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
-  ASTRAIOS_MODEL_PACKAGE_NAME: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_NAME }}
 
 jobs:
   yml-md-style:
@@ -57,6 +51,11 @@ jobs:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
           nexus-user: ${{ secrets.NEXUS_USER }}
           nexus-token: ${{ secrets.NEXUS_TOKEN }}
+          astraios-model-package-jar-group-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID }}
+          astraios-model-package-jar-artifact-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID }}
+          astraios-model-package-jar-version: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION }}
+          astraios-model-package-repo-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_ID }}
+          astraios-model-package-repo-url: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
       - name: Run unit & integration tests
         run: mvn -B clean verify
       - name: Sonar Scan
@@ -90,6 +89,11 @@ jobs:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
           nexus-user: ${{ secrets.NEXUS_USER }}
           nexus-token: ${{ secrets.NEXUS_TOKEN }}
+          astraios-model-package-jar-group-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID }}
+          astraios-model-package-jar-artifact-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID }}
+          astraios-model-package-jar-version: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION }}
+          astraios-model-package-repo-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_ID }}
+          astraios-model-package-repo-url: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
       - name: Generate Javadoc
         run: mvn -B clean javadoc:javadoc
       - name: Move Javadoc into documentation directory
@@ -123,6 +127,11 @@ jobs:
           nexus-server-id: ${{ secrets.NEXUS_SERVER_ID }}
           nexus-user: ${{ secrets.NEXUS_USER }}
           nexus-token: ${{ secrets.NEXUS_TOKEN }}
+          astraios-model-package-jar-group-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_GROUP_ID }}
+          astraios-model-package-jar-artifact-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_ARTIFACT_ID }}
+          astraios-model-package-jar-version: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_JAR_VERSION }}
+          astraios-model-package-repo-id: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_ID }}
+          astraios-model-package-repo-url: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
       - name: Load webservice settings
         run: |
           echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
