@@ -416,7 +416,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 ))
     }
 
-    def "GraphQL API allows to paging data"() {
+    def "GraphQL API allows to paginate and sort by entity attribute"() {
         when: "Create a new book"
         createNewBook(new Book(title: "First book"))
                 .then().statusCode(200)
@@ -426,7 +426,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
         selectBookResponse
                 .then().statusCode(200)
 
-        then: "We can implement paging operations"
+        then: "We can paginate and sort by entity attribute"
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
