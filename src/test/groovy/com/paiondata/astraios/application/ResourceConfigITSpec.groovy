@@ -414,13 +414,15 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                 ]
                         ] as HashMap
                 ))
+    }
 
+    def "GraphQL API allows to paging data"() {
         when: "Create a new book"
         createNewBook(new Book(title: "First book"))
                 .then().statusCode(200)
 
-        and: "Create a select book"
-        Response selectBookResponse =  createNewBook(new Book(title: "Select book"))
+        and: "Create a second book"
+        Response selectBookResponse =  createNewBook(new Book(title: "Second book"))
         selectBookResponse
                 .then().statusCode(200)
 
@@ -457,13 +459,12 @@ class ResourceConfigITSpec extends AbstractITSpec {
                         [
                                 book: [
                                         edges: [
-                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Select book"]]
+                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Second book"]]
                                         ],
                                         pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
                                 ]
                         ] as HashMap
                 ))
-
     }
 
     static Response createNewBook(@NotNull final Book book) {
