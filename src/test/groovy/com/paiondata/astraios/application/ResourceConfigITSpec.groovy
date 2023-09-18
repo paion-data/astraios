@@ -15,7 +15,6 @@
  */
 package com.paiondata.astraios.application
 
-import jakarta.ws.rs.core.MediaType
 import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
 import static com.yahoo.elide.test.graphql.GraphQLDSL.document
 import static com.yahoo.elide.test.graphql.GraphQLDSL.field
@@ -50,6 +49,7 @@ import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.response.Response
 import jakarta.validation.constraints.NotNull
+import jakarta.ws.rs.core.MediaType
 import spock.lang.Shared
 
 @Testcontainers
@@ -420,11 +420,12 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .then().statusCode(200)
 
         and: "Create a select book"
-        createNewBook(new Book(title: "Select book"))
+        Response selectBookResponse =  createNewBook(new Book(title: "Select book"))
+        selectBookResponse
                 .then().statusCode(200)
 
         then: "We can implement paging operations"
-        Response queryRespones = RestAssured
+        RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -450,15 +451,13 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 )
                 .when()
                 .post()
-
-        queryRespones
                 .then()
                 .statusCode(200)
                 .body("data",equalTo(
                         [
                                 book: [
                                         edges: [
-                                                [node:[id:"${queryRespones.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Select book"]]
+                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Select book"]]
                                         ],
                                         pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
                                 ]
