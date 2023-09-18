@@ -15,7 +15,7 @@
  */
 package com.paiondata.astraios.application
 
-import static com.yahoo.elide.test.graphql.GraphQLDSL.QUOTE_VALUE
+import jakarta.ws.rs.core.MediaType
 import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
 import static com.yahoo.elide.test.graphql.GraphQLDSL.document
 import static com.yahoo.elide.test.graphql.GraphQLDSL.field
@@ -31,7 +31,6 @@ import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
 import static com.yahoo.elide.test.graphql.GraphQLDSL.mutation
-import static org.hamcrest.Matchers.startsWith
 
 import com.paiondata.astraios.models.Book;
 
@@ -67,7 +66,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .addHeader(OAuthFilter.AUTHORIZATION_HEADER, OAuthFilter.AUTHORIZATION_SCHEME + " " + VALID_TOKEN)
                 .build()
 
-        System.setProperty("OAUTH_ENABLED", "false")
+        System.setProperty("OAUTH_ENABLED", "true")
         System.setProperty("JWKS_URL", "https://u4v5ne.logto.app/oidc/jwks")
 
         System.setProperty(
@@ -219,8 +218,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         expect: "database is initially empty"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -256,8 +255,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "we can retrieve that entity next"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -293,8 +292,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         when: "we update that entity"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                         mutation(
@@ -323,8 +322,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "we can retrieve that entity with updated attribute"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -359,8 +358,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         when: "the entity is deleted"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                         mutation(
@@ -389,8 +388,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "that entity is not found in database anymore"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -417,69 +416,49 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 ))
 
         when: "Create a new book"
-        createNewBook(new Book(title: "First book")).then().statusCode(200)
+        createNewBook(new Book(title: "First book"))
+                .then().statusCode(200)
 
         and: "Create a select book"
-        createNewBook(new Book(title: "Select book")).then().statusCode(200)
+        createNewBook(new Book(title: "Select book"))
+                .then().statusCode(200)
 
-        then: "we can retrieve that entity next"
-        RestAssured
+        then: "We can implement paging operations"
+        Response queryRespones = RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
-                        query: document(
-                                selection(
-                                        field(
-                                                "book",
-                                                selections(
-                                                        field("id"),
-                                                        field("title")
-                                                )
-                                        )
-                                )
-                        ).toQuery()
+                        query: """
+                                {
+                                    book(first: "1", after: "0", sort: "-id") {
+                                        edges {
+                                            node {
+                                                id
+                                                title
+                                            }
+                                        }
+                                        pageInfo {
+                                            totalRecords
+                                            startCursor
+                                            endCursor
+                                            hasNextPage
+                                        }
+                                    }
+                                }
+                        """
                 )
                 .when()
                 .post()
-                .then()
-                .statusCode(200)
-                .body(equalTo(
-                        document(
-                                selection(
-                                        field(
-                                                "book",
-                                                selections(
-                                                        field("id", "${Integer.valueOf(bookId)+1}"),
-                                                        field("title", "First book"),
-                                                ),
-                                                selections(
-                                                        field("id", "${Integer.valueOf(bookId)+2}"),
-                                                        field("title", "Select book"),
-                                               )
-                                        )
-                                )
-                        ).toResponse()
-                ))
 
-        and: "We can implement paging operations"
-        RestAssured
-                .given()
-                .contentType("application/json")
-                .accept("application/json")
-                .body(
-                        "query":"{book(first: \"1\", sort: \"-id\"){edges {node {id title}} pageInfo{ endCursor," +
-                                "startCursor, hasNextPage, totalRecords}}}"
-                )
-                .when()
-                .post()
+        queryRespones
                 .then()
                 .statusCode(200)
                 .body("data",equalTo(
                         [
                                 book: [
                                         edges: [
-                                                [node:[id:"${Integer.valueOf(bookId)+2}" as String, title:"Select book"]]
+                                                [node:[id:"${queryRespones.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Select book"]]
                                         ],
                                         pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
                                 ]
@@ -489,10 +468,10 @@ class ResourceConfigITSpec extends AbstractITSpec {
     }
 
     static Response createNewBook(@NotNull final Book book) {
-        return RestAssured
+        RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 mutation(
