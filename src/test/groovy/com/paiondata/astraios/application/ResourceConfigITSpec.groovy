@@ -15,6 +15,7 @@
  */
 package com.paiondata.astraios.application
 
+import static com.yahoo.elide.test.graphql.GraphQLDSL.QUOTE_VALUE
 import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
 import static com.yahoo.elide.test.graphql.GraphQLDSL.document
 import static com.yahoo.elide.test.graphql.GraphQLDSL.field
@@ -30,6 +31,7 @@ import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
 import static com.yahoo.elide.test.graphql.GraphQLDSL.mutation
+import static org.hamcrest.Matchers.startsWith
 
 import com.paiondata.astraios.models.Book;
 
@@ -48,6 +50,7 @@ import org.testcontainers.spock.Testcontainers
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.response.Response
+import jakarta.validation.constraints.NotNull
 import spock.lang.Shared
 
 @Testcontainers
@@ -64,7 +67,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 .addHeader(OAuthFilter.AUTHORIZATION_HEADER, OAuthFilter.AUTHORIZATION_SCHEME + " " + VALID_TOKEN)
                 .build()
 
-        System.setProperty("OAUTH_ENABLED", "true")
+        System.setProperty("OAUTH_ENABLED", "false")
         System.setProperty("JWKS_URL", "https://u4v5ne.logto.app/oidc/jwks")
 
         System.setProperty(
@@ -244,33 +247,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 ))
 
         when: "an entity is POSTed via GraphQL"
-        Response response = RestAssured
-                .given()
-                .contentType("application/json")
-                .accept("application/json")
-                .body(
-                        query: document(
-                                 mutation(
-                                         selection(
-                                                field(
-                                                "book",
-                                                        arguments(
-                                                                argument("op", "UPSERT"),
-                                                                argument("data", new Book(title: "Book Numero Dos"))
-                                                        ),
-
-                                                        selections(
-                                                                field("id"),
-                                                                field("title")
-                                                        )
-                                        )
-
-                                ))
-                        ).toQuery()
-                )
-                .when()
-                .post()
-
+        Response response =  createNewBook(new Book(title: "Book Numero Dos"))
         response.then()
                 .statusCode(200)
 
@@ -438,5 +415,105 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                 ]
                         ] as HashMap
                 ))
+
+        when: "Create a new book"
+        createNewBook(new Book(title: "First book")).then().statusCode(200)
+
+        and: "Create a select book"
+        createNewBook(new Book(title: "Select book")).then().statusCode(200)
+
+        then: "we can retrieve that entity next"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body(equalTo(
+                        document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id", "${Integer.valueOf(bookId)+1}"),
+                                                        field("title", "First book"),
+                                                ),
+                                                selections(
+                                                        field("id", "${Integer.valueOf(bookId)+2}"),
+                                                        field("title", "Select book"),
+                                               )
+                                        )
+                                )
+                        ).toResponse()
+                ))
+
+        and: "We can implement paging operations"
+        RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        "query":"{book(first: \"1\", sort: \"-id\"){edges {node {id title}} pageInfo{ endCursor," +
+                                "startCursor, hasNextPage, totalRecords}}}"
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data",equalTo(
+                        [
+                                book: [
+                                        edges: [
+                                                [node:[id:"${Integer.valueOf(bookId)+2}" as String, title:"Select book"]]
+                                        ],
+                                        pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
+                                ]
+                        ] as HashMap
+                ))
+
+    }
+
+    static Response createNewBook(@NotNull final Book book) {
+        return RestAssured
+                .given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(
+                        query: document(
+                                mutation(
+                                        selection(
+                                                field(
+                                                        "book",
+                                                        arguments(
+                                                                argument("op", "UPSERT"),
+                                                                argument("data", book)
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                                )
+
+                                        ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
     }
 }
