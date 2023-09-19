@@ -71,6 +71,8 @@ resource "aws_instance" "astraios" {
     export JETTY_HOME=/home/ubuntu/jetty-home-11.0.15
     export SENTRY_DSN=${var.sentry_dsn}
 
+    sudo /usr/bin/filebeat -e -c filebeat.yml -d "publish" &
+
     cd /home/ubuntu/jetty-base
     java -jar $JETTY_HOME/start.jar
   EOF
