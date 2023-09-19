@@ -145,6 +145,9 @@ jobs:
         run: |
           echo '${{ secrets.SSL_CERTIFICATE }}' > server.crt
           echo '${{ secrets.SSL_CERTIFICATE_KEY }}' > server.key
+      - name: Inject Logstash host into Filebeat config file
+        working-directory: hashicorp/images
+        run: sed -i -e 's,logstash-host,'elk.nexusgraph.com',g' filebeat.yml
       - name: Load runtime settings into Terraform variable file
         working-directory: hashicorp/instances
         run: |

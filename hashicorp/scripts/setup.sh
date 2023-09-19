@@ -40,3 +40,8 @@ sudo apt install -y nginx
 sudo mv /home/ubuntu/nginx-ssl.conf /etc/nginx/sites-enabled/default
 sudo mv /home/ubuntu/server.crt /etc/ssl/certs/server.crt
 sudo mv /home/ubuntu/server.key /etc/ssl/private/server.key
+
+# Install Filebeat for sending logs to ELK
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.9.2-amd64.deb
+sudo dpkg -i filebeat-8.9.2-amd64.deb
+sudo mv /home/ubuntu/filebeat.yml /etc/filebeat/filebeat.yml

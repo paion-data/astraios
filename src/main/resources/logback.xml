@@ -14,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <configuration>
-    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
+    <appender name="ELK" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logback/astraios.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logback/astraios.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
     <appender name="Sentry" class="io.sentry.logback.SentryAppender">
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="Console" />
+        <appender-ref ref="ELK" />
         <appender-ref ref="Sentry" />
     </root>
 </configuration>
