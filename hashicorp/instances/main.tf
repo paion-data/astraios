@@ -64,6 +64,7 @@ resource "aws_instance" "astraios" {
   tags = {
     Name = "Paion Data Astraios"
   }
+
   security_groups = ["Paion Data Astraios"]
 
   user_data = <<-EOF

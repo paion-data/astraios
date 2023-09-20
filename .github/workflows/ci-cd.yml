@@ -135,8 +135,8 @@ jobs:
           astraios-model-package-repo-url: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_REPO_URL }}
       - name: Load webservice settings
         run: |
-          echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
           echo "${{ secrets.OAUTH_PROPERTIES }}" > src/main/resources/oauth.properties
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" > src/main/resources/application.properties
           echo "${{ secrets.JPADATASTORE_PROPERTIES }}" > src/main/resources/jpadatastore.properties
       - name: Generate webservice WAR file
         run: mvn -B clean package
@@ -147,7 +147,7 @@ jobs:
           echo '${{ secrets.SSL_CERTIFICATE_KEY }}' > server.key
       - name: Inject Logstash host into Filebeat config file
         working-directory: hashicorp/images
-        run: sed -i -e 's,logstash-host,'elk.nexusgraph.com',g' filebeat.yml
+        run: sed -i -e 's,logstash-host,'${{ secrets.ELK_URL }}',g' filebeat.yml
       - name: Load runtime settings into Terraform variable file
         working-directory: hashicorp/instances
         run: |

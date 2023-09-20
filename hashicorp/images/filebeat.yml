@@ -19,7 +19,7 @@ filebeat.config.modules:
 filebeat.inputs:
   - type: log
     paths:
-      - /home/ubuntu/logstash-tutorial.log
+      - /home/ubuntu/jetty-base/logback/astraios.log
 
 output.logstash:
   hosts: ["logstash-host:5044"]
