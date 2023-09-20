@@ -68,6 +68,12 @@ build {
     destination = "/home/ubuntu/ROOT.war"
   }
 
+  # Load Filebeat config into AMI image
+  provisioner "file" {
+    source = "./filebeat.yml"
+    destination = "/home/ubuntu/filebeat.yml"
+  }
+
   provisioner "shell" {
     script = "../scripts/setup.sh"
   }
