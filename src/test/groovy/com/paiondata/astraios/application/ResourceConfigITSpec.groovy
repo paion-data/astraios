@@ -48,6 +48,8 @@ import org.testcontainers.spock.Testcontainers
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.response.Response
+import jakarta.validation.constraints.NotNull
+import jakarta.ws.rs.core.MediaType
 import spock.lang.Shared
 
 @Testcontainers
@@ -216,8 +218,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         expect: "database is initially empty"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -244,33 +246,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 ))
 
         when: "an entity is POSTed via GraphQL"
-        Response response = RestAssured
-                .given()
-                .contentType("application/json")
-                .accept("application/json")
-                .body(
-                        query: document(
-                                 mutation(
-                                         selection(
-                                                field(
-                                                "book",
-                                                        arguments(
-                                                                argument("op", "UPSERT"),
-                                                                argument("data", new Book(title: "Book Numero Dos"))
-                                                        ),
-
-                                                        selections(
-                                                                field("id"),
-                                                                field("title")
-                                                        )
-                                        )
-
-                                ))
-                        ).toQuery()
-                )
-                .when()
-                .post()
-
+        Response response =  createNewBook(new Book(title: "Book Numero Dos"))
         response.then()
                 .statusCode(200)
 
@@ -279,8 +255,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "we can retrieve that entity next"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -316,8 +292,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         when: "we update that entity"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                         mutation(
@@ -346,8 +322,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "we can retrieve that entity with updated attribute"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -382,8 +358,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         when: "the entity is deleted"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                         mutation(
@@ -412,8 +388,8 @@ class ResourceConfigITSpec extends AbstractITSpec {
         then: "that entity is not found in database anymore"
         RestAssured
                 .given()
-                .contentType("application/json")
-                .accept("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .body(
                         query: document(
                                 selection(
@@ -438,5 +414,85 @@ class ResourceConfigITSpec extends AbstractITSpec {
                                 ]
                         ] as HashMap
                 ))
+    }
+
+    def "GraphQL API allows to paginate and sort by entity attribute"() {
+        when: "Create a new book"
+        createNewBook(new Book(title: "First book"))
+                .then().statusCode(200)
+
+        and: "Create a second book"
+        Response selectBookResponse =  createNewBook(new Book(title: "Second book"))
+        selectBookResponse
+                .then().statusCode(200)
+
+        then: "We can paginate and sort by entity attribute"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: """
+                                {
+                                    book(first: "1", after: "0", sort: "-id") {
+                                        edges {
+                                            node {
+                                                id
+                                                title
+                                            }
+                                        }
+                                        pageInfo {
+                                            totalRecords
+                                            startCursor
+                                            endCursor
+                                            hasNextPage
+                                        }
+                                    }
+                                }
+                        """
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data",equalTo(
+                        [
+                                book: [
+                                        edges: [
+                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Second book"]]
+                                        ],
+                                        pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
+                                ]
+                        ] as HashMap
+                ))
+    }
+
+    static Response createNewBook(@NotNull final Book book) {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                mutation(
+                                        selection(
+                                                field(
+                                                        "book",
+                                                        arguments(
+                                                                argument("op", "UPSERT"),
+                                                                argument("data", book)
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                                )
+
+                                        ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
     }
 }
