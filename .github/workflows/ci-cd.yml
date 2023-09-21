@@ -150,7 +150,7 @@ jobs:
         run: sed -i -e 's,logstash-host,'${{ secrets.ELK_URL }}',g' filebeat.yml
       - name: Inject domain name Nginx config file
         working-directory: hashicorp/images
-        run: sed -i -e 's,domain-for-nexus-graph,'${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}',g' filebeat.yml
+        run: sed -i -e 's,domain-for-nexus-graph,'${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}',g' nginx-ssl.conf
       - name: Load runtime settings into Terraform variable file
         working-directory: hashicorp/instances
         run: |
