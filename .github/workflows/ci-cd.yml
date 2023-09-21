@@ -148,11 +148,15 @@ jobs:
       - name: Inject Logstash host into Filebeat config file
         working-directory: hashicorp/images
         run: sed -i -e 's,logstash-host,'${{ secrets.ELK_URL }}',g' filebeat.yml
+      - name: Inject domain name Nginx config file
+        working-directory: hashicorp/images
+        run: sed -i -e 's,domain-for-nexus-graph,'${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}',g' nginx-ssl.conf
       - name: Load runtime settings into Terraform variable file
         working-directory: hashicorp/instances
         run: |
           touch variables.auto.tfvars
           echo 'zone_id = "${{ secrets.ZONE_ID }}"' > variables.auto.tfvars
+          echo 'domain_for_nexusgraph = "${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}"' >> variables.auto.tfvars
           echo 'sentry_dsn = "${{ secrets.SENTRY_DSN }}"' >> variables.auto.tfvars
       - name: Push AMI and Deploy EC2
         uses: QubitPi/aergia@master

@@ -23,6 +23,12 @@ variable "zone_id" {
   sensitive = true
 }
 
+variable "domain_for_nexusgraph" {
+  type = string
+  description = "Domain name that Nexus Graph queries against"
+  sensitive = true
+}
+
 variable "sentry_dsn" {
   type = string
   description = "Sentry.io DSN"
@@ -81,7 +87,7 @@ resource "aws_instance" "astraios" {
 
 resource "aws_route53_record" "astraios" {
   zone_id         = var.zone_id
-  name            = "astraios.nexusgraph.com"
+  name            = var.domain_for_nexusgraph
   type            = "A"
   ttl             = 300
   records         = [aws_instance.astraios.public_ip]
