@@ -17,13 +17,27 @@ package com.paiondata.astraios.web.filters;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.core.Response;
 
 /**
  * {@link CorsFilter} prevents corss-origin request error in local dev environment.
  */
-public class CorsFilter implements ContainerResponseFilter {
+public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
+
+    @Override
+    public void filter(ContainerRequestContext request)  {
+        if (isPreflightRequest(request)) {
+            request.abortWith(Response.ok().build());
+        }
+    }
+
+    private static boolean isPreflightRequest(ContainerRequestContext request) {
+        return request.getHeaderString("Origin") != null
+                && request.getMethod().equalsIgnoreCase("OPTIONS");
+    }
 
     @Override
     public void filter(
