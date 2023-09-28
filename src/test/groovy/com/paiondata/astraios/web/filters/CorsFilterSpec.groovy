@@ -19,7 +19,9 @@ import jakarta.ws.rs.container.ContainerRequestContext
 import jakarta.ws.rs.container.ContainerResponseContext
 import jakarta.ws.rs.core.MultivaluedHashMap
 import jakarta.ws.rs.core.MultivaluedMap
+import jakarta.ws.rs.core.Response
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class CorsFilterSpec extends Specification {
 
@@ -39,5 +41,44 @@ class CorsFilterSpec extends Specification {
 
         then:
         1 * headers.add("Access-Control-Allow-Origin", "*")
+    }
+
+    def "#requestType was #abort"() {
+        given:
+        ContainerRequestContext request = Mock(ContainerRequestContext)
+        request.getHeaderString("Origin") >> requestHeader
+        request.getMethod() >>  requestMethod
+
+        when:
+        new CorsFilter().filter(request)
+
+        then:
+        callTimes * request.abortWith(_ as Response)
+
+        where:
+        requestHeader  || requestMethod || callTimes
+        "*"            ||   "OPTIONS"   || 1
+        null           ||     "POST"    || 0
+
+        requestType = callTimes == 1 ? "Preflight request" : "Other requests"
+        abort = callTimes == 1 ? "abort" : "not abort"
+    }
+
+    @Unroll
+    def "The request #judgment a flight request"() {
+        given:
+        ContainerRequestContext request = Mock(ContainerRequestContext)
+        request.getHeaderString("Origin") >> requestHeader
+        request.getMethod() >> requestMethod
+
+        expect:
+        CorsFilter.isPreflightRequest(request) == result
+
+        where:
+        requestHeader  || requestMethod || result
+        "*"            ||   "OPTIONS"   || true
+        null           ||     "POST"    || false
+
+        judgment = result ? "is" : "not"
     }
 }
