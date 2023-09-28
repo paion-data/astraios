@@ -59,9 +59,11 @@ class CorsFilterSpec extends Specification {
         where:
         requestHeader  | requestMethod || callTimes
         "*"            |   "OPTIONS"   || 1
+        "*"            |     "POST"    || 0
+        null           |   "OPTIONS"   || 0
         null           |     "POST"    || 0
 
-        requestType = callTimes == 1 ? "Preflight request" : "Other requests"
+        requestType = callTimes == 1 ? "Preflight request" : "Other requests or no header"
         abort = callTimes == 1 ? "abort" : "not abort"
     }
 
@@ -79,6 +81,8 @@ class CorsFilterSpec extends Specification {
         where:
         requestHeader  | requestMethod || result
         "*"            |   "OPTIONS"   || true
+        "*"            |     "POST"    || false
+        null           |   "OPTIONS"   || false
         null           |     "POST"    || false
 
         judgment = result ? "is" : "not"
