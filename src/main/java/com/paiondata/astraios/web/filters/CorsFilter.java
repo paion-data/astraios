@@ -28,7 +28,9 @@ import jakarta.ws.rs.core.Response;
 public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     @Override
-    public void filter(ContainerRequestContext request)  {
+    public void filter(
+            @NotNull final ContainerRequestContext request
+    ) {
         if (isPreflightRequest(request)) {
             request.abortWith(Response.ok().build());
         }
@@ -36,6 +38,10 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
 
     /**
      * A preflight request is an OPTIONS request with an Origin header.
+     *
+     * @param request  A preflight request
+     *
+     * @return A judgment result of the boolean type
      */
     private static boolean isPreflightRequest(
             @NotNull final ContainerRequestContext request
