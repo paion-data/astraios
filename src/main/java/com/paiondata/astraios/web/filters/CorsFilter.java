@@ -40,6 +40,10 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
             @NotNull final ContainerRequestContext request,
             @NotNull final ContainerResponseContext response
     ) {
+        if (request.getHeaderString("Origin") == null) {
+            return;
+        }
+
         response.getHeaders().add("Access-Control-Allow-Origin", "*");
         response.getHeaders().add(
                 "Access-Control-Allow-Headers",

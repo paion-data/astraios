@@ -25,10 +25,13 @@ import spock.lang.Unroll
 
 class CorsFilterSpec extends Specification {
 
+    @Unroll
     def "Cross-origin header gets attached"() {
         given:
         ContainerResponseContext response = Mock(ContainerResponseContext)
         MultivaluedMap headers = Mock(MultivaluedMap)
+        ContainerRequestContext request = Mock(ContainerRequestContext)
+        request.getHeaderString("Origin") >> originHeader
         response.getHeaders() >>> [
                 headers,
                 new MultivaluedHashMap<>([:]),
@@ -37,10 +40,15 @@ class CorsFilterSpec extends Specification {
         ]
 
         when:
-        new CorsFilter().filter(Mock(ContainerRequestContext), response)
+        new CorsFilter().filter(request, response)
 
         then:
-        1 * headers.add("Access-Control-Allow-Origin", "*")
+        callTimes * headers.add("Access-Control-Allow-Origin", "*")
+
+        where:
+        originHeader || callTimes
+        "*"          || 1
+        null         || 0
     }
 
     @Unroll
