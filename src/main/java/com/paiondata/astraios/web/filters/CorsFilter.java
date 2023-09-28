@@ -23,31 +23,16 @@ import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.core.Response;
 
 /**
- * {@link CorsFilter} prevents corss-origin request error in local dev environment.
+ * {@link CorsFilter} prevents corss-origin request error in local dev environment, and abort the preflight request and
+ * make the request successful
  */
 public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     @Override
-    public void filter(
-            @NotNull final ContainerRequestContext request
-    ) {
+    public void filter(@NotNull final ContainerRequestContext request) {
         if (isPreflightRequest(request)) {
             request.abortWith(Response.ok().build());
         }
-    }
-
-    /**
-     * A preflight request is an OPTIONS request with an Origin header.
-     *
-     * @param request  A preflight request
-     *
-     * @return A judgment result of the boolean type
-     */
-    private static boolean isPreflightRequest(
-            @NotNull final ContainerRequestContext request
-    ) {
-        return request.getHeaderString("Origin") != null
-                && request.getMethod().equalsIgnoreCase("OPTIONS");
     }
 
     @Override
@@ -65,5 +50,24 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
                 "Access-Control-Allow-Methods",
                 "GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD"
         );
+    }
+
+    /**
+     * Returns whether or not a request is a preflight request.
+     * <p>
+     * A request is considered preflight if
+     * <ul>
+     *     <li> the request contains
+     *          <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin">"Origin"</a> header, and
+     *     <li> the request method is "OPTIONS"
+     * </ul>
+     *
+     * @param request  a pre-checked HTTP request
+     *
+     * @return {@code true} if the request is a preflight request or {@code false}, otherwise
+     */
+    private static boolean isPreflightRequest(@NotNull final ContainerRequestContext request) {
+        return request.getHeaderString("Origin") != null
+                && request.getMethod().equalsIgnoreCase("OPTIONS");
     }
 }
