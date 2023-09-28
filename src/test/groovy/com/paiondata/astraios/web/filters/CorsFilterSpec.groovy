@@ -26,7 +26,7 @@ import spock.lang.Unroll
 class CorsFilterSpec extends Specification {
 
     @Unroll
-    def "Cross-origin header gets attached"() {
+    def "Cross-origin header #attached when #whetherOriginHeader"() {
         given:
         ContainerResponseContext response = Mock(ContainerResponseContext)
         MultivaluedMap headers = Mock(MultivaluedMap)
@@ -49,6 +49,9 @@ class CorsFilterSpec extends Specification {
         originHeader || callTimes
         "*"          || 1
         null         || 0
+
+        whetherOriginHeader = callTimes == 1 ? 'requests with "Origin" headers' : 'requests without "Origin" headers'
+        sttached = callTimes == 1 ? "gets attached" : "not gets attached"
     }
 
     @Unroll

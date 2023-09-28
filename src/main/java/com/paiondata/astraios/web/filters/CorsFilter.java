@@ -28,6 +28,8 @@ import jakarta.ws.rs.core.Response;
  */
 public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
+    final static String originHeader = "Origin";
+
     @Override
     public void filter(@NotNull final ContainerRequestContext request) {
         if (isPreflightRequest(request)) {
@@ -40,7 +42,7 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
             @NotNull final ContainerRequestContext request,
             @NotNull final ContainerResponseContext response
     ) {
-        if (request.getHeaderString("Origin") == null) {
+        if (request.getHeaderString(originHeader) == null) {
             return;
         }
 
@@ -71,7 +73,7 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
      * @return {@code true} if the request is a preflight request or {@code false}, otherwise
      */
     private static boolean isPreflightRequest(@NotNull final ContainerRequestContext request) {
-        return request.getHeaderString("Origin") != null
+        return request.getHeaderString(originHeader) != null
                 && request.getMethod().equalsIgnoreCase("OPTIONS");
     }
 }
