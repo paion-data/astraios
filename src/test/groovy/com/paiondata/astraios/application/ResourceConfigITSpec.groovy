@@ -246,7 +246,7 @@ class ResourceConfigITSpec extends AbstractITSpec {
                 ))
 
         when: "an entity is POSTed via GraphQL"
-        Response response =  createNewBook(new Book(title: "Book Numero Dos"))
+        Response response = createNewBook(new Book(title: "Book Numero Dos"))
         response.then()
                 .statusCode(200)
 
