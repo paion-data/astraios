@@ -51,7 +51,7 @@ class CorsFilterSpec extends Specification {
         null         || 0
 
         whetherOriginHeader = callTimes == 1 ? 'requests with "Origin" headers' : 'requests without "Origin" headers'
-        sttached = callTimes == 1 ? "gets attached" : "not gets attached"
+        attached = callTimes == 1 ? "gets attached" : "not gets attached"
     }
 
     @Unroll
