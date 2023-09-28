@@ -34,7 +34,12 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
         }
     }
 
-    private static boolean isPreflightRequest(ContainerRequestContext request) {
+    /**
+     * A preflight request is an OPTIONS request with an Origin header.
+     */
+    private static boolean isPreflightRequest(
+            @NotNull final ContainerRequestContext request
+    ) {
         return request.getHeaderString("Origin") != null
                 && request.getMethod().equalsIgnoreCase("OPTIONS");
     }
