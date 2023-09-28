@@ -28,7 +28,7 @@ import jakarta.ws.rs.core.Response;
  */
 public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
-    final static String originHeader = "Origin";
+    static final String originHeader = "Origin";
 
     @Override
     public void filter(@NotNull final ContainerRequestContext request) {
