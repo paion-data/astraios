@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response;
 
 /**
  * {@link CorsFilter} prevents corss-origin request error in local dev environment, and abort the preflight request and
- * make the request successful
+ * make the request successful.
  */
 public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
