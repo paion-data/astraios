@@ -141,25 +141,24 @@ jobs:
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Load SSL Certificates into AMI
-        working-directory: hashicorp/images
         run: |
-          echo '${{ secrets.SSL_CERTIFICATE }}' > server.crt
-          echo '${{ secrets.SSL_CERTIFICATE_KEY }}' > server.key
-      - name: Inject Logstash host into Filebeat config file
+          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE }}' > server.crt
+          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE_KEY }}' > server.key
         working-directory: hashicorp/images
-        run: sed -i -e 's,logstash-host,'${{ secrets.ELK_URL }}',g' filebeat.yml
-      - name: Inject domain name Nginx config file
+      - name: Load Filebeat config file
+        run: echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_FILEBEAT_CONFIG_FILE }}' > nexusgraph-astraios-filebeat.yml
         working-directory: hashicorp/images
-        run: sed -i -e 's,domain-for-nexus-graph,'${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}',g' nginx-ssl.conf
-      - name: Load runtime settings into Terraform variable file
+      - name: Load Nginx config file
+        run: echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_NGINX_CONFIG_FILE }}' > nexusgraph-astraios-nginx.conf
+        working-directory: hashicorp/images
+      - name: Load HashiCorp Packer variable file
+        run: echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_PACKER_VAR_FILE }}' > nexusgraph-astraios.auto.pkrvars.hcl
+        working-directory: hashicorp/images
+      - name: Load HashiCorp Terraform variable file
+        run: echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_TERRAFORM_VAR_FILE }}' > nexusgraph-astraios.auto.pkrvars.hcl
         working-directory: hashicorp/instances
-        run: |
-          touch variables.auto.tfvars
-          echo 'zone_id = "${{ secrets.ZONE_ID }}"' > variables.auto.tfvars
-          echo 'domain_for_nexusgraph = "${{ secrets.DOMAIN_FOR_NEXUS_GRAPH }}"' >> variables.auto.tfvars
-          echo 'sentry_dsn = "${{ secrets.SENTRY_DSN }}"' >> variables.auto.tfvars
       - name: Push AMI and Deploy EC2
-        uses: QubitPi/aergia@master
+        uses: paion-data/github-actions-workflows@master
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

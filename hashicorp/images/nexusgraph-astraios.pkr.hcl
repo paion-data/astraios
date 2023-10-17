@@ -12,6 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+variable "aws_image_region" {
+  type =  string
+  sensitive = true
+}
+
+variable "nexusgraph_astraios_ssl_cert_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "nexusgraph_astraios_ssl_cert_key_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "nexusgraph_astraios_nginx_config_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "nexusgraph_astraios_filebeat_config_file_path" {
+  type =  string
+  sensitive = true
+}
+
+variable "skip_create_ami" {
+  type =  bool
+  sensitive = true
+}
+
 packer {
   required_plugins {
     amazon = {
@@ -30,7 +60,7 @@ source "amazon-ebs" "astraios" {
   region = "${var.aws_image_region}"
   source_ami_filter {
     filters = {
-      name = "ubuntu/images/*ubuntu-*-20.04-amd64-server-*"
+      name = "ubuntu/images/*ubuntu-*-22.04-amd64-server-*"
       root-device-type = "ebs"
       virtualization-type = "hvm"
     }
@@ -48,18 +78,24 @@ build {
 
   # Load SSL Certificates into AMI image
   provisioner "file" {
-    source = "./server.crt"
+    source = "${var.nexusgraph_astraios_ssl_cert_file_path}"
     destination = "/home/ubuntu/server.crt"
   }
   provisioner "file" {
-    source = "./server.key"
+    source = "${var.nexusgraph_astraios_ssl_cert_key_file_path}"
     destination = "/home/ubuntu/server.key"
   }
 
   # Load Nginx config file into AMI image
   provisioner "file" {
-    source = "./nginx-ssl.conf"
+    source = "${var.nexusgraph_astraios_nginx_config_file_path}"
     destination = "/home/ubuntu/nginx-ssl.conf"
+  }
+
+  # Load Filebeat config into AMI image
+  provisioner "file" {
+    source = "${var.nexusgraph_astraios_filebeat_config_file_path}"
+    destination = "/home/ubuntu/filebeat.yml"
   }
 
   # Load Astraios WAR file into AMI image
@@ -68,13 +104,7 @@ build {
     destination = "/home/ubuntu/ROOT.war"
   }
 
-  # Load Filebeat config into AMI image
-  provisioner "file" {
-    source = "./filebeat.yml"
-    destination = "/home/ubuntu/filebeat.yml"
-  }
-
   provisioner "shell" {
-    script = "../scripts/setup.sh"
+    script = "../scripts/nexusgrah-astraios-pkr-setup.sh"
   }
 }
