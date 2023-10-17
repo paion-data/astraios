@@ -45,7 +45,7 @@ import net.jcip.annotations.ThreadSafe;
 public interface OAuthConfig extends Config {
 
     /**
-     * Whether or not to enable {@link com.qubitpi.ws.jersey.template.web.filters.OAuthFilter} container request filter.
+     * Returns whether or not to enable {@link com.paiondata.astraios.web.filters.OAuthFilter} container request filter.
      *
      * @return {@code true} if enabling the OAuth filter or {@code false}, otherwise
      */
