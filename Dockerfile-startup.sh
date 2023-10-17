@@ -17,5 +17,4 @@ set -e
 # limitations under the License.
 
 cd $JETTY_BASE
-ls
 java -jar $JETTY_HOME/start.jar
