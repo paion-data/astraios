@@ -17,7 +17,7 @@ variable "aws_deploy_region" {
   description = "The EC2 region injected through inversion of control"
 }
 
-variable "zone_id" {
+variable "nexusgraph_astraios_zone_id" {
   type = string
   description = "Hosted zone ID on Route 53"
   sensitive = true
@@ -49,6 +49,13 @@ provider "aws" {
   region = var.aws_deploy_region
 }
 
+data "template_file" "nexusgraph-astraios-init" {
+  template = "${file("../scripts/nexusgraph-astraios-tf-init.sh")}"
+  vars = {
+    sentry_dsn = "${var.sentry_dsn}"
+  }
+}
+
 data "aws_ami" "latest-astraios" {
   most_recent = true
   owners = ["899075777617"]
@@ -64,32 +71,23 @@ data "aws_ami" "latest-astraios" {
   }
 }
 
-resource "aws_instance" "astraios" {
+resource "aws_instance" "nexusgraph-astraios" {
   ami = "${data.aws_ami.latest-astraios.id}"
   instance_type = "t2.small"
   tags = {
-    Name = "Paion Data Astraios"
+    Name = "Paion Data Nexus Graph Astraios"
   }
 
-  security_groups = ["Paion Data Astraios"]
+  security_groups = ["Paion Data Nexus Graph Astraios"]
 
-  user_data = <<-EOF
-    #!/bin/bash
-    export JETTY_HOME=/home/ubuntu/jetty-home-11.0.15
-    export SENTRY_DSN=${var.sentry_dsn}
-
-    sudo /usr/bin/filebeat -e -c filebeat.yml -d "publish" &
-
-    cd /home/ubuntu/jetty-base
-    java -jar $JETTY_HOME/start.jar
-  EOF
+  user_data = "${data.template_file.nexusgraph-astraios-init.rendered}"
 }
 
-resource "aws_route53_record" "astraios" {
-  zone_id         = var.zone_id
+resource "aws_route53_record" "nexusgraph-astraios" {
+  zone_id         = var.nexusgraph_astraios_zone_id
   name            = var.domain_for_nexusgraph
   type            = "A"
   ttl             = 300
-  records         = [aws_instance.astraios.public_ip]
+  records         = [aws_instance.nexusgraph-astraios.public_ip]
   allow_overwrite = true
 }

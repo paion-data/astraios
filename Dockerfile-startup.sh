@@ -1,3 +1,7 @@
+#!/bin/bash
+set -x
+set -e
+
 # Copyright Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +16,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-filebeat.config.modules:
-  path: ${path.config}/modules.d/*.yml
-  reload.enabled: false
-
-filebeat.inputs:
-  - type: log
-    paths:
-      - /home/ubuntu/jetty-base/logback/astraios.log
-
-output.logstash:
-  hosts: ["logstash-host:5044"]
+cd $JETTY_BASE
+java -jar $JETTY_HOME/start.jar
