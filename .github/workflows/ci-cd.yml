@@ -142,8 +142,8 @@ jobs:
         run: mvn -B clean package
       - name: Load SSL Certificates into AMI
         run: |
-          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE }}' > server.crt
-          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE_KEY }}' > server.key
+          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE }}' > nexusgraph-astraios.crt
+          echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_SSL_CERTIFICATE_KEY }}' > nexusgraph-astraios.key
         working-directory: hashicorp/images
       - name: Load Filebeat config file
         run: echo '${{ secrets.NEXUSGRAPH_ASTRAIOS_FILEBEAT_CONFIG_FILE }}' > nexusgraph-astraios-filebeat.yml
