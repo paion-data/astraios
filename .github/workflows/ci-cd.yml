@@ -100,7 +100,9 @@ jobs:
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Move WAR file to a location for HashiCorp deployment to pickup
-        run: mv target/astraios-1.0-SNAPSHOT.war ../
+        run: |
+          mkdir ../WAR
+          mv target/astraios-1.0-SNAPSHOT.war ../WAR
       - name: QubitPi/hashicorp-aws
         uses: QubitPi/hashicorp-aws@master
         with:
