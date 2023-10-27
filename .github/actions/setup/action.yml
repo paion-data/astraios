@@ -17,7 +17,7 @@ description: 'CI/CD setup, such as installing JDK and fetch runbook'
 
 inputs:
   runbooks-repo-token:
-    description: 'hashicorp-aws-runbooks fine-grained PAT token; '
+    description: 'hashicorp-aws-runbooks fine-grained PAT token;'
     required: true
 
 runs:
