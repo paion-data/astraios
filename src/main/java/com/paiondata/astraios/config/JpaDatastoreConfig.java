@@ -26,14 +26,14 @@ import net.jcip.annotations.ThreadSafe;
  * <p>
  * {@link JpaDatastoreConfig} tries to load the configurations from several sources in the following order:
  * <ol>
- *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/env.html">
- *          operating system's environment variables</a>; for instance, an environment variable can be set with
- *          {@code export DB_USER="foo"}
+ *     <li> a file named <b>jpadatastore.properties</b> placed under CLASSPATH. This file can be put under
+ *          {@code src/main/resources} source directory with contents, for example, {@code DB_USER=foo}
  *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html">
  *          Java system properties</a>; for example, a Java system property can
  *          be set using {@code System.setProperty("DB_USER", "foo")}
- *     <li> a file named <b>jpadatastore.properties</b> placed under CLASSPATH. This file can be put under
- *          {@code src/main/resources} source directory with contents, for example, {@code DB_USER=foo}
+ *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/env.html">
+ *          operating system's environment variables</a>; for instance, an environment variable can be set with
+ *          {@code export DB_USER="foo"}
  * </ol>
  * Note that environment config has higher priority than Java system properties. Java system properties have higher
  * priority than file based configuration.
@@ -41,7 +41,7 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"classpath:jpadatastore.properties", "system:env", "system:properties"})
+@Config.Sources({"classpath:jpadatastore.properties", "system:properties", "system:env"})
 public interface JpaDatastoreConfig extends Config {
 
     /**

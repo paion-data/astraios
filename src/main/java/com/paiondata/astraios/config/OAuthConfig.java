@@ -26,14 +26,14 @@ import net.jcip.annotations.ThreadSafe;
  * <p>
  * {@link OAuthConfig} tries to load the configurations from several sources in the following order:
  * <ol>
- *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/env.html">
- *          operating system's environment variables</a>; for instance, an environment variable can be set with
- *          {@code export OAUTH_ENABLED="true"}
+ *     <li> a file named <b>oauth.properties</b> placed under CLASSPATH. This file can be put under
+ *          {@code src/main/resources} source directory with contents, for example, {@code OAUTH_ENABLED=true}
  *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html">
  *          Java system properties</a>; for example, a Java system property can
  *          be set using {@code System.setProperty("OAUTH_ENABLED", "true")}
- *     <li> a file named <b>oauth.properties</b> placed under CLASSPATH. This file can be put under
- *          {@code src/main/resources} source directory with contents, for example, {@code OAUTH_ENABLED=true}
+ *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/env.html">
+ *          operating system's environment variables</a>; for instance, an environment variable can be set with
+ *          {@code export OAUTH_ENABLED="true"}
  * </ol>
  * Note that environment config has higher priority than Java system properties. Java system properties have higher
  * priority than file based configuration.
@@ -41,7 +41,7 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"classpath:oauth.properties", "system:env", "system:properties"})
+@Config.Sources({"classpath:oauth.properties", "system:properties", "system:env"})
 public interface OAuthConfig extends Config {
 
     /**
