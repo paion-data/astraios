@@ -44,6 +44,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      - name: Checkout HashiCorp deployment config files
+        run: git clone https://${{ secrets.RUNBOOKS_REPO_TOKEN }}@github.com/QubitPi/hashicorp-aws-runbooks.git ../hashicorp-aws-runbooks
+      - name: Load Maven settings.xml
+        shell: bash
+        run: cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.xml ~/.m2/settings.xml
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
       - name: Run unit & integration tests
