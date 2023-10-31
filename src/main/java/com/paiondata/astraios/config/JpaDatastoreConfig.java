@@ -41,7 +41,7 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"system:env", "system:properties", "classpath:jpadatastore.properties"})
+@Config.Sources({"classpath:jpadatastore.properties", "system:env", "system:properties"})
 public interface JpaDatastoreConfig extends Config {
 
     /**

@@ -41,7 +41,7 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"system:env", "system:properties", "classpath:oauth.properties"})
+@Config.Sources({"classpath:oauth.properties", "system:env", "system:properties"})
 public interface OAuthConfig extends Config {
 
     /**

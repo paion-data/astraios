@@ -42,7 +42,7 @@ import net.jcip.annotations.ThreadSafe;
 @Immutable
 @ThreadSafe
 @Config.LoadPolicy(Config.LoadType.MERGE)
-@Config.Sources({"system:env", "system:properties", "classpath:application.properties"})
+@Config.Sources({"classpath:application.properties", "system:properties", "system:env"})
 public interface ApplicationConfig extends Config {
 
     /**
