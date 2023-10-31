@@ -5,12 +5,12 @@ title: Configuration
 
 The configurations in this page can be set from several sources in the following order:
 
-1. the [operating system's environment variables]; for instance, an environment variable can be set with
-   `export OAUTH_ENABLED="true"`
+1. a **.properties** file placed under CLASSPATH. This file can be put under `src/main/resources` source directory with
+   contents, for example, `OAUTH_ENABLED=true`
 2. the [Java system properties]; for example, a Java system property can be set using
    `System.setProperty("OAUTH_ENABLED", "true")`
-3. a **.properties** file placed under CLASSPATH. This file can be put under `src/main/resources` source directory with
-   contents, for example, `OAUTH_ENABLED=true`
+3. the [operating system's environment variables]; for instance, an environment variable can be set with
+   `export OAUTH_ENABLED="true"`
 
 Core Properties
 ---------------
