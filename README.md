@@ -37,6 +37,8 @@ Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
 [Astraios] is a [JSR 370] web service **template** that lets us spin up model driven GraphQL or JSON API web service
 with minimal effort.
 
+https://github.com/paion-data/astraios/assets/16126939/875d50a2-4fc4-4ca3-8e75-c846769686d4
+
 We Believe Binding to Standard Makes the Best Software
 ------------------------------------------------------
 
