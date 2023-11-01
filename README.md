@@ -1,5 +1,7 @@
 <div align="center">
-<img width="20%" alt="Astraios Logo" src="./docs/static/img/logo.png">
+    <a href="https://www.behance.net/gallery/149763581/Design-Practice-Glass-Planet-Vector-Illustration">
+        <img width="20%" alt="Astraios Logo" src="./docs/static/img/logo.png">
+    </a>
 </div>
 
 Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
