@@ -32,7 +32,7 @@ class DockerComposeITSpec extends AbstractITSpec {
             .withExposedService(
                     "web",
                     WS_PORT,
-                    Wait.forHttp("/v1/data/note").forStatusCode(200)
+                    Wait.forHttp("/v1/data/graph").forStatusCode(200)
             )
 
     @Override
@@ -50,7 +50,7 @@ class DockerComposeITSpec extends AbstractITSpec {
         RestAssured
                 .given()
                 .when()
-                .get("note")
+                .get("graph")
                 .then()
                 .statusCode(200
                 )
