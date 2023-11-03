@@ -51,7 +51,12 @@ runs:
       run: cp ../hashicorp-aws-runbooks/paion-data/astraios/aws-ws.tfvars ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
     - name: Load Maven settings.xml
       shell: bash
-      run: cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.xml ~/.m2/settings.xml
+      run: |
+        if [[ ${{ inputs.data-models-repo-org }} == "QubitPi" ]]; then
+          cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.test.xml ~/.m2/settings.xml
+        else
+          cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.xml ~/.m2/settings.xml
+        fi
     - name: Load webservice properties files
       shell: bash
       run: |
