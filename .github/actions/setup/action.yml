@@ -19,6 +19,9 @@ inputs:
   runbooks-repo-token:
     description: 'hashicorp-aws-runbooks fine-grained PAT token;'
     required: true
+  data-models-repo-token:
+    description: 'Astraios data models repo fine-grained PAT token;'
+    required: true
 
 runs:
   using: "composite"
@@ -49,3 +52,9 @@ runs:
         cp ../hashicorp-aws-runbooks/paion-data/astraios/oauth.properties src/main/resources/
         cp ../hashicorp-aws-runbooks/paion-data/astraios/application.properties src/main/resources/
         cp ../hashicorp-aws-runbooks/paion-data/astraios/jpadatastore.properties src/main/resources/
+    - name: Install data models
+      shell: bash
+      run: |
+        git clone https://${{ inputs.data-models-repo-token }}@github.com/paion-data/astraios-config.git ../astraios-config
+        cd ../astraios-config
+        mvn clean install
