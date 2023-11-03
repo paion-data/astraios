@@ -81,15 +81,15 @@ Astraios 可以在[Docker Compose]中运行，并达到以下作用
 git clone git@github.com:paion-data/astraios.git
 cd astraios
 mvn clean package
-MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=$TEST_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
 ```
 
-其中 `$ASTRAIOS_MODEL_PACKAGE_NAME` 包是用来配置 JAR 中包含的所有
+其中 `$TEST_MODEL_PACKAGE_NAME` 包是用来配置 JAR 中包含的所有
 [elide models](https://elide.io/pages/guide/v7/02-data-model.html)，它是可以设置的。
 例如，可以在命令行中使用以下命令进行设置：
 
 ```bash
-export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.jwt.models
+export $TEST_MODEL_PACKAGE_NAME=com.mycompany.jwt.models
 ```
 
 该变量将被[传递](https://stackoverflow.com/a/58900415)到 Docker Compose 文件中。
@@ -100,7 +100,7 @@ export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.jwt.models
 
 如果测试在 IntelliJ IDE 中运行，请确保模型包 JAR 位于 IDE 的**外部库**中。
 
-否则，依赖注入无法在 [$ASTRAIOS_MODEL_PACKAGE_NAME](#第一步：定义数据模型) 指定的包下找到 bean 类
+否则，依赖注入无法在 [$TEST_MODEL_PACKAGE_NAME](#第一步：定义数据模型) 指定的包下找到 bean 类
 
 ### 实体缺少默认的构造函数
 

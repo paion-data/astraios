@@ -22,6 +22,12 @@ inputs:
   data-models-repo-token:
     description: 'Astraios data models repo fine-grained PAT token;'
     required: true
+  data-models-repo-org:
+    description: 'Astraios data models repo owner, e.g. paion-data'
+    required: true
+  data-models-repo-name:
+    description: 'Astraios data models repo name, e.g. my-jpa-data-model'
+    required: true
 
 runs:
   using: "composite"
@@ -55,6 +61,6 @@ runs:
     - name: Install data models
       shell: bash
       run: |
-        git clone https://${{ inputs.data-models-repo-token }}@github.com/paion-data/astraios-config.git ../astraios-config
-        cd ../astraios-config
+        git clone https://${{ inputs.data-models-repo-token }}@github.com/${{ inputs.data-models-repo-org }}/${{ inputs.data-models-repo-name }}.git ../jpa-models
+        cd ../jpa-models
         mvn clean install
