@@ -25,7 +25,7 @@ name: Astraios CI/CD
 env:
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
-  ASTRAIOS_MODEL_PACKAGE_NAME: ${{ secrets.ASTRAIOS_MODEL_PACKAGE_NAME }}
+  TEST_MODEL_PACKAGE_NAME: com.qubitpi.ws.jersey.template.models
 
 jobs:
   yml-md-style:
@@ -43,7 +43,9 @@ jobs:
         uses: ./.github/actions/setup
         with:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
-          data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
+          data-models-repo-token: ""
+          data-models-repo-org: QubitPi
+          data-models-repo-name: jersey-webservice-template-jpa-data-model
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
       - name: Run unit & integration tests
@@ -66,7 +68,9 @@ jobs:
         uses: ./.github/actions/setup
         with:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
-          data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
+          data-models-repo-token: ""
+          data-models-repo-org: QubitPi
+          data-models-repo-name: jersey-webservice-template-jpa-data-model
       - name: Install dependencies
         working-directory: docs
         run: yarn
@@ -100,6 +104,8 @@ jobs:
         with:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
           data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
+          data-models-repo-org: paion-data
+          data-models-repo-name: astraios-config
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Move WAR file to a location for HashiCorp deployment to pickup

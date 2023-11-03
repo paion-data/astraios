@@ -124,14 +124,14 @@ Simply run:
 git clone git@github.com:paion-data/astraios.git
 cd astraios
 mvn clean package
-MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=$TEST_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
 ```
 
-where `$ASTRAIOS_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
+where `$TEST_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
 [elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
 
 ```bash
-export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.models
+export $TEST_MODEL_PACKAGE_NAME=com.mycompany.models
 ```
 
 The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
@@ -143,7 +143,7 @@ The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker 
 _If tests is running in IntelliJ IDE_, make sure the model package JAR it is in IDE's **External Libraries**
 
 Otherwise, the dependency injection didn't find a bean class under the package specified by
-[$ASTRAIOS_MODEL_PACKAGE_NAME](#step-1-defining-data-models)
+[$TEST_MODEL_PACKAGE_NAME](#step-1-defining-data-models)
 
 ### Entity Missing Default Constructor
 

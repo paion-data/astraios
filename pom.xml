@@ -510,12 +510,4 @@
             </build>
         </profile>
     </profiles>
-
-    <repositories>
-        <repository>
-            <id>${astraios.model.package.repo.id}</id>
-            <name>Astraios model pacakge JAR repository</name>
-            <url>${astraios.model.package.repo.url}</url>
-        </repository>
-    </repositories>
 </project>

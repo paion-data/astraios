@@ -28,11 +28,11 @@ import io.restassured.RestAssured
 class DockerComposeITSpec extends AbstractITSpec {
 
     final DockerComposeContainer COMPOSE = new DockerComposeContainer(new File("docker-compose.yml"))
-            .withEnv("MODEL_PACKAGE_NAME", System.getenv().get("ASTRAIOS_MODEL_PACKAGE_NAME"))
+            .withEnv("MODEL_PACKAGE_NAME", System.getenv().get("TEST_MODEL_PACKAGE_NAME"))
             .withExposedService(
                     "web",
                     WS_PORT,
-                    Wait.forHttp("/v1/data/graph").forStatusCode(200)
+                    Wait.forHttp("/v1/data/book").forStatusCode(200)
             )
 
     @Override
@@ -50,7 +50,7 @@ class DockerComposeITSpec extends AbstractITSpec {
         RestAssured
                 .given()
                 .when()
-                .get("graph")
+                .get("book")
                 .then()
                 .statusCode(200
                 )
