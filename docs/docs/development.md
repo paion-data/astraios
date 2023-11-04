@@ -6,7 +6,39 @@ title: Development
 Running Tests
 -------------
 
-The following commands runs both unit and integration tests
+The IT tests will run against an [example model] so make sure the following environment variable is set to point to this
+model:
+
+```bash
+export TEST_MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models
+```
+
+Next, download the model to _CLASSPATH_ by setting up the `~/.m2/settings.xml` with
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <profiles>
+        <profile>
+            <id>astraios-models</id>
+            <properties>
+                <astraios.model.package.jar.group.id>com.qubitpi</astraios.model.package.jar.group.id>
+                <astraios.model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</astraios.model.package.jar.artifact.id>
+                <astraios.model.package.jar.version>1.0.0</astraios.model.package.jar.version>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>astraios-models</activeProfile>
+    </activeProfiles>
+</settings>
+```
+
+Then execute the following commands to run both unit and integration tests:
 
 ```bash
 mvn clean verify
@@ -224,6 +256,8 @@ java -jar $JETTY_HOME/start.jar
 ```
 
 The webservice will run on port **8080**, and you will see the data you inserted
+
+[example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
 
 [jcabi-mysql]: https://mysql.jcabi.com/
 

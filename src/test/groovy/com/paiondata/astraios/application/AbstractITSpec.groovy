@@ -15,10 +15,35 @@
  */
 package com.paiondata.astraios.application
 
+import static com.yahoo.elide.test.graphql.GraphQLDSL.argument
+import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
+import static com.yahoo.elide.test.graphql.GraphQLDSL.document
+import static com.yahoo.elide.test.graphql.GraphQLDSL.field
+import static com.yahoo.elide.test.graphql.GraphQLDSL.mutation
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selection
+import static com.yahoo.elide.test.graphql.GraphQLDSL.selections
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attr
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attributes
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.data
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.datum
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
+import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
+import static org.hamcrest.Matchers.equalTo
+
+import com.yahoo.elide.jsonapi.JsonApi
+
+import com.paiondata.astraios.models.Book
+
+import org.apache.http.HttpStatus
+
 import io.restassured.RestAssured
+import io.restassured.response.Response
+import jakarta.validation.constraints.NotNull
+import jakarta.ws.rs.core.MediaType
 import spock.lang.Specification
 
-class AbstractITSpec extends Specification {
+abstract class AbstractITSpec extends Specification {
 
     static final int WS_PORT = 8080
     static final String VALID_TOKEN = "eyJhbGciOiJFUzM4NCIsInR5cCI6ImF0K2p3dCIsImtpZCI6IlR2WEQ5dkM3SU4tQ3IwRWhGWUlfemZselVMVXZEYnN0TTFuSWVibDJlNncifQ.eyJqdGkiOiJXZkNqX3Z0OWpjamNZcHBMMVVsOFEiLCJzdWIiOiJ2ajhqbXBzYnJjYjkiLCJpYXQiOjE2OTQwNzQyOTgsImV4cCI6Mzg0MTU1Nzk0NSwic2NvcGUiOiIiLCJjbGllbnRfaWQiOiJ5cG9uODl6OHJ0cmpkZzV0YTY2OWwiLCJpc3MiOiJodHRwczovL3U0djVuZS5sb2d0by5hcHAvb2lkYyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC92MS9kYXRhIn0.NUpvIX1iHq06S0G3swreoc7ixBxQfcGfd8jvqmMeBbnUaTQJ-Ap-UYwJkiZ0ojuOjG2_gETG0HcNcrugo6VKNmyU0-woh2-eA9ROqNNOjkHC41hDOdnBCzB-2__Qo_Xd"
@@ -43,5 +68,395 @@ class AbstractITSpec extends Specification {
         RestAssured.reset()
 
         childCleanupSpec()
+    }
+
+    def "JSON API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
+        expect: "database is initially empty"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body(equalTo(data().toJSON()))
+
+        when: "an entity is POSTed via JSON API"
+        Response response = RestAssured
+                .given()
+                .contentType(JsonApi.MEDIA_TYPE)
+                .accept(JsonApi.MEDIA_TYPE)
+                .body(
+                        data(
+                                resource(
+                                        type("book"),
+                                        attributes(
+                                                attr("title", "Pride & Prejudice")
+                                        )
+                                )
+                        )
+                )
+                .when()
+                .post("book")
+
+        String bookId = response.jsonPath().get("data.id")
+        response.then().statusCode(HttpStatus.SC_CREATED)
+
+        then: "we can GET that entity next"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body(equalTo(
+                        data(
+                                resource(
+                                        type("book"),
+                                        id(bookId),
+                                        attributes(
+                                                attr("title", "Pride & Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                ))
+
+        when: "we update that entity"
+        RestAssured
+                .given()
+                .contentType(JsonApi.MEDIA_TYPE)
+                .accept(JsonApi.MEDIA_TYPE)
+                .body(
+                        datum(
+                                resource(
+                                        type("book"),
+                                        id(bookId),
+                                        attributes(
+                                                attr("title", "Pride and Prejudice")
+                                        )
+                                )
+                        )
+                )
+                .when()
+                .patch("book/${bookId}")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT)
+
+        then: "we can GET that entity with updated attribute"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body(equalTo(
+                        data(
+                                resource(
+                                        type("book"),
+                                        id(bookId),
+                                        attributes(
+                                                attr("title", "Pride and Prejudice")
+                                        )
+                                )
+                        ).toJSON()
+                ))
+
+        when: "the entity is deleted"
+        RestAssured
+                .given()
+                .when()
+                .delete("book/${bookId}")
+                .then()
+                .statusCode(HttpStatus.SC_NO_CONTENT)
+
+        then: "that entity is not found in database anymore"
+        RestAssured
+                .given()
+                .when()
+                .get("book")
+                .then()
+                .statusCode(200)
+                .body(equalTo(data().toJSON()))
+    }
+
+    def "GraphQL API allows for POSTing, GETing, PATCHing, and DELETing a book"() {
+        expect: "database is initially empty"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", equalTo(
+                        [
+                                book: [
+                                        edges: []
+                                ]
+                        ] as HashMap
+                ))
+
+        when: "an entity is POSTed via GraphQL"
+        Response response = createNewBook(new Book(title: "Book Numero Dos"))
+        response.then()
+                .statusCode(200)
+
+        final String bookId = response.jsonPath().get("data.book.edges[0].node.id")
+
+        then: "we can retrieve that entity next"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body(equalTo(
+                        document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id", bookId),
+                                                        field("title", "Book Numero Dos")
+                                                )
+                                        )
+                                )
+                        ).toResponse()
+                ))
+
+        Book book = new Book(id: bookId as long, title: "Book Updated")
+        when: "we update that entity"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                mutation(
+                                        selection(
+                                                field(
+                                                        "book",
+                                                        arguments(
+                                                                argument("op", "UPSERT"),
+                                                                argument("data", book)
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                                )
+
+                                        ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+
+        then: "we can retrieve that entity with updated attribute"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body(equalTo(
+                        document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id", bookId),
+                                                        field("title", "Book Updated")
+                                                )
+                                        )
+                                )
+                        ).toResponse()
+                ))
+
+        when: "the entity is deleted"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                mutation(
+                                        selection(
+                                                field(
+                                                        "book",
+                                                        arguments(
+                                                                argument("op", "DELETE"),
+                                                                argument("ids", [bookId])
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                                )
+
+                                        ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+
+        then: "that entity is not found in database anymore"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                selection(
+                                        field(
+                                                "book",
+                                                selections(
+                                                        field("id"),
+                                                        field("title")
+                                                )
+                                        )
+                                )
+                        ).toQuery()
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data", equalTo(
+                        [
+                                book: [
+                                        edges: []
+                                ]
+                        ] as HashMap
+                ))
+    }
+
+    def "GraphQL API allows to paginate and sort by entity attribute"() {
+        when: "Create a new book"
+        createNewBook(new Book(title: "First book"))
+                .then().statusCode(200)
+
+        and: "Create a second book"
+        Response selectBookResponse =  createNewBook(new Book(title: "Second book"))
+        selectBookResponse
+                .then().statusCode(200)
+
+        then: "We can paginate and sort by entity attribute"
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: """
+                                {
+                                    book(first: "1", after: "0", sort: "-id") {
+                                        edges {
+                                            node {
+                                                id
+                                                title
+                                            }
+                                        }
+                                        pageInfo {
+                                            totalRecords
+                                            startCursor
+                                            endCursor
+                                            hasNextPage
+                                        }
+                                    }
+                                }
+                        """
+                )
+                .when()
+                .post()
+                .then()
+                .statusCode(200)
+                .body("data",equalTo(
+                        [
+                                book: [
+                                        edges: [
+                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Second book"]]
+                                        ],
+                                        pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
+                                ]
+                        ] as HashMap
+                ))
+    }
+
+    static Response createNewBook(@NotNull final Book book) {
+        RestAssured
+                .given()
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(
+                        query: document(
+                                mutation(
+                                        selection(
+                                                field(
+                                                        "book",
+                                                        arguments(
+                                                                argument("op", "UPSERT"),
+                                                                argument("data", book)
+                                                        ),
+
+                                                        selections(
+                                                                field("id"),
+                                                                field("title")
+                                                        )
+                                                )
+
+                                        ))
+                        ).toQuery()
+                )
+                .when()
+                .post()
     }
 }
