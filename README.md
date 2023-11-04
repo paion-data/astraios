@@ -69,6 +69,13 @@ Start Using Astraios
 - [Documentation]
 - [Javadoc]
 
+Contributors <sup>[![Update Link Missing!](https://img.shields.io/badge/Click%20To%20Update-00AA00.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/paion-data/astraios/actions/workflows/contributors.yml)</sup>
+------------
+
+<!-- readme: collaborators,contributors,bots -start -->
+
+<!-- readme: collaborators,contributors,bots -end -->
+
 License
 -------
 

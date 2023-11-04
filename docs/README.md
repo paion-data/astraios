@@ -31,7 +31,7 @@ To start the localized site in dev mode, use:
 yarn start --locale zh-cn
 ```
 
-Your site is accessible at `http://localhost:3000/nexusgraph/zh-cn/`
+Your site is accessible at `http://localhost:3000/astraios/zh-cn/`
 
 Build
 -----
