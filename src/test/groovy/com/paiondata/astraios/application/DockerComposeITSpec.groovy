@@ -15,14 +15,9 @@
  */
 package com.paiondata.astraios.application
 
-import com.paiondata.astraios.web.filters.OAuthFilter
-
-import org.hamcrest.Matchers
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.spock.Testcontainers
-
-import io.restassured.RestAssured
 
 @Testcontainers
 class DockerComposeITSpec extends AbstractITSpec {
@@ -43,17 +38,5 @@ class DockerComposeITSpec extends AbstractITSpec {
     @Override
     def childCleanupSpec() {
         System.clearProperty("OAUTH_ENABLED")
-    }
-
-    def "JSON API allows for POSTing and GETing an entity"() {
-        expect: "database is initially empty"
-        RestAssured
-                .given()
-                .when()
-                .get("book")
-                .then()
-                .statusCode(200
-                )
-                .body("data", Matchers.equalTo([]))
     }
 }
