@@ -216,58 +216,137 @@ To optionally disable GraphQL endpoints, exclude corresponding dependencies in P
         </dependency>
 ```
 
-Running Webservice in Standalone Jetty (Production)
----------------------------------------------------
+Querying Webservice
+-------------------
 
-### Download Jetty
+### GraphQL Queries through GraphiQL
 
-For JDK **17**, which is Astraios' Java version, it's been tested that Jetty _11.0.15_ worked. Hence, we will use
-["11.0.15" release](https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-home/11.0.15/jetty-home-11.0.15.tar.gz) as
-an example:
+#### Install GraphiQL (on Mac)
 
-![Error loading download-jetty.png](./img/download-jetty.png)
-
-Put the `tar.gz` file into a location of your choice as the installation path and extract the Jetty binary using
+via [Homebrew](https://formulae.brew.sh/cask/graphiql)
 
 ```bash
-tar -xzvf jetty-home-11.0.15.tar.gz
+brew install --cask graphiql
 ```
 
-The extracted directory *jetty-home-11.0.15* is the Jetty distribution. We call this directory **$JETTY_HOME**, which
-should not be modified.
+#### Quering GraphQL Endpoint
 
-### Setting Up Standalone Jetty
+Let's crete a book:
 
-Our [WAR file](#packaging) will be dropped to a directory where Jetty can pick up and run. We call this directory
-**$JETTY_BASE**, which is usually different from the _$JETTY_HOME_. The _$JETTY_BASE_ also contains container runtime
-configs. In short, the Standalone Jetty container will be setup with
-
-```bash
-export JETTY_HOME=/path/to/jetty-home-11.0.15
-mkdir -p /path/to/jetty-base
-cd /path/to/jetty-base
-java -jar $JETTY_HOME/start.jar --add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp
+```graphql
+mutation {
+  book(op: UPSERT, data:{title: "Pride & Prejudice"}) {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+  }
+}
 ```
 
-where `/path/to/` is the _absolute_ path to the directory containing the `jetty-home-11.0.15` directory
+![Error loading graphiql-mutation-example.png](./img/graphiql-mutation-example.png)
 
-The `--add-module=annotations,server,http,deploy,servlet,webapp,resources,jsp` is how we configure the Jetty
-container.
+We can create few more books, sort and paginate them with:
 
-Lastly, drop the [WAR file](#packaging) into **/path/to/jetty-base/webapps** directory and rename the WAR file to
-**ROOT.war**:
-
-```bash
-mv /path/to/war-file /path/to/jetty-base/webapps/ROOT.war
+```graphql
+{
+  book(sort: "-id", first: "1", after: "0") {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+    pageInfo {
+      totalRecords
+      startCursor
+      endCursor
+      hasNextPage
+    }
+  }
+}
 ```
 
-### Running Webservice
+### TypeScript/JavaScript Axios
 
-```bash
-java -jar $JETTY_HOME/start.jar
+:::caution
+
+Note that any serialization of TS/JS object (`someObject`) should be done with
+`JSON.stringify(someObject).replace(/"/g, '\\"')`, otherwise the GraphQL query won't be parsed properly by webservice.
+
+:::
+
+```typescript
+import axios from "axios";
+
+const JERSEY_WEBSERVICE_TEMPLATE_GRAPHQL_API_ENDPOINT = "https://myservice.com/v1/data";
+
+export class Client {
+  public saveOrUpdate(book: Book, userId: string, accessToken: string): Promise<any> {
+    const someJsonField = JSON.stringify({ field1: book.field1, field2: book.field2 }).replace(/"/g, '\\"');
+
+    return this.postGraphQLQuery(
+      `
+      mutation saveGraph {
+        graph(op: UPSERT, data: {
+          id: "${book.id}"
+          title: "${book.title}"
+          authorId: "${book.authorId}"
+          jsonField: "${someJsonField}"
+        }) {
+          edges {
+            node {
+              id
+              title
+              author
+            }
+          }
+        }
+      }
+      `,
+      accessToken
+    );
+  }
+
+  public getBooksByAuthorId(authorId: string, accessToken: string) {
+    return this.postGraphQLQuery(
+      `
+      query getBooksByAuthorId {
+        book(filter:"authorId==${authorId}") {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
+      `,
+      accessToken
+    );
+  }
+
+  private postGraphQLQuery(query: string, accessToken: string): Promise<any> {
+    return axios
+      .post(JERSEY_WEBSERVICE_TEMPLATE_GRAPHQL_API_ENDPOINT, { query: query }, this.getHeaders(accessToken))
+      .then((response) => {
+        return response;
+      });
+  }
+
+  private getHeaders(token: string) {
+    return {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+  }
+}
 ```
-
-The webservice will run on port **8080**, and you will see the data you inserted
 
 [example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
 
