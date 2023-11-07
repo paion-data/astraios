@@ -156,10 +156,10 @@ Simply run:
 git clone git@github.com:paion-data/astraios.git
 cd astraios
 mvn clean package
-MODEL_PACKAGE_NAME=$TEST_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=$ASTRAIOS_MODEL_PACKAGE_NAME docker compose up --build --force-recreate
 ```
 
-where `$TEST_MODEL_PACKAGE_NAME` is the package in config JAR that contains all
+where the value of `$ASTRAIOS_MODEL_PACKAGE_NAME` variable is the package in config JAR that contains all
 [elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
 
 ```bash
