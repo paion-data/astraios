@@ -168,6 +168,18 @@ export $TEST_MODEL_PACKAGE_NAME=com.mycompany.models
 
 The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
 
+:::tip
+
+The MySQL database, if running correctly, can be accessed from host machine via
+
+```bash
+mysql -h localhost -P 3306 -D elide --protocol=tcp -u root -proot
+```
+
+Note all data is in `elide` database which we have specified to use in the command above.
+
+:::
+
 ### Troubleshooting
 
 #### Database Does Not Have My Model Packages's Bean Table
