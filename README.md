@@ -11,7 +11,7 @@ Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
 ![GitHub Actions Badge][GitHub Actions Badge]
 ![HashiCorp Packer Badge][HashiCorp Packer Badge]
 ![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
-![AWS EC2 min size][AWS EC2 min size]
+[![AWS EC2 min size][AWS EC2 min size]](https://aws.amazon.com/ec2/instance-types/)
 
 <a href="https://sonarcloud.io/summary/new_code?id=paion-data_astraios">
     <img
