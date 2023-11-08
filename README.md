@@ -11,6 +11,7 @@ Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
 ![GitHub Actions Badge][GitHub Actions Badge]
 ![HashiCorp Packer Badge][HashiCorp Packer Badge]
 ![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
+![AWS EC2 min size][AWS EC2 min size]
 
 <a href="https://sonarcloud.io/summary/new_code?id=paion-data_astraios">
     <img
@@ -101,6 +102,7 @@ The use and distribution terms for [Astraios] are covered by the
 [Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
 [Astraios]: https://paion-data.github.io/astraios/
+[AWS EC2 min size]: https://img.shields.io/badge/EC2-t2.small-FF9902?style=for-the-badge&logo=amazonec2&logoColor=white
 
 [Documentation]: https://paion-data.github.io/astraios/
 
