@@ -25,9 +25,9 @@ Next, download the model to _CLASSPATH_ by setting up the `~/.m2/settings.xml` w
         <profile>
             <id>astraios-models</id>
             <properties>
-                <astraios.model.package.jar.group.id>com.qubitpi</astraios.model.package.jar.group.id>
-                <astraios.model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</astraios.model.package.jar.artifact.id>
-                <astraios.model.package.jar.version>1.0.0</astraios.model.package.jar.version>
+                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
+                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</model.package.jar.artifact.id>
+                <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
     </profiles>
@@ -74,9 +74,9 @@ visible publicly, either make the astraios project private or public with model 
 
     <dependencies>
         <dependency>
-            <groupId>${astraios.model.package.jar.group.id}</groupId>
-            <artifactId>${astraios.model.package.jar.artifact.id}</artifactId>
-            <version>${astraios.model.package.jar.version}</version>
+            <groupId>${model.package.jar.group.id}</groupId>
+            <artifactId>${model.package.jar.artifact.id}</artifactId>
+            <version>${model.package.jar.version}</version>
         </dependency>
     </dependencies>
 
@@ -107,9 +107,9 @@ with a corresponding `~/.m2/settings.xml`:
         <profile>
             <id>astraios-config-properties</id>
             <properties>
-                <astraios.model.package.jar.group.id>com.mycompnay</astraios.model.package.jar.group.id>
-                <astraios.model.package.jar.artifact.id>my-model-package</astraios.model.package.jar.artifact.id>
-                <astraios.model.package.jar.version>1.0.7</astraios.model.package.jar.version>
+                <model.package.jar.group.id>com.mycompnay</model.package.jar.group.id>
+                <model.package.jar.artifact.id>my-model-package</model.package.jar.artifact.id>
+                <model.package.jar.version>1.0.7</model.package.jar.version>
                 <astraios.model.package.repo.id>mycompany-maven-repo-id</astraios.model.package.repo.id>
                 <astraios.model.package.repo.url>
                     https://private.mvnrepository.com/artifact/com.company/my-model-package

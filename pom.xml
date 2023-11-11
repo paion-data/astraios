@@ -85,9 +85,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>${astraios.model.package.jar.group.id}</groupId>
-            <artifactId>${astraios.model.package.jar.artifact.id}</artifactId>
-            <version>${astraios.model.package.jar.version}</version>
+            <groupId>${model.package.jar.group.id}</groupId>
+            <artifactId>${model.package.jar.artifact.id}</artifactId>
+            <version>${model.package.jar.version}</version>
         </dependency>
 
         <!-- Logging -->
