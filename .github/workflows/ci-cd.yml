@@ -29,7 +29,7 @@ env:
 
 jobs:
   yml-md-style:
-    uses: paion-data/github-actions-workflows/.github/workflows/yml-and-md-style-checks.yml@master
+    uses: QubitPi/hashicorp-aws/.github/workflows/yml-and-md-style-checks.yml@master
 
   tests:
     name: Unit & Integration Tests
