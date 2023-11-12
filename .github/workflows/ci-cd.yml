@@ -37,8 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Environment setup
         uses: ./.github/actions/setup
         with:
@@ -62,8 +60,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: Environment setup
         uses: ./.github/actions/setup
         with:
