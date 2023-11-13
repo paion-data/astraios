@@ -207,7 +207,7 @@ public class BinderFactory {
                 final Properties dbProperties = new Properties();
 
                 dbProperties.put("hibernate.show_sql", "true");
-                dbProperties.put("hibernate.hbm2ddl.auto", "create");
+                dbProperties.put("hibernate.hbm2ddl.auto", "update");
                 dbProperties.put("hibernate.dialect", JPA_DATASTORE_CONFIG.dbDialect());
                 dbProperties.put("hibernate.current_session_context_class", "thread");
                 dbProperties.put("hibernate.jdbc.use_scrollable_resultset", "true");
