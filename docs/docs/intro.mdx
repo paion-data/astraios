@@ -1,0 +1,238 @@
+---
+sidebar_position: 1
+title: Getting Started
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+So You Want An API?
+-------------------
+
+:::caution
+
+Before proceeding, it is important to note that we **do NOT support Spring/Spring Boot paradigm**. Astraios runs as a
+**Jetty/Jersey** webservice.
+
+:::
+
+:::info Please make sure JDK 17, Maven, and Docker Engine have been installed 🤗
+
+- We offer [instruction](setup#installing-java--maven-on-mac) on how to install JDK 17 and Maven
+- We also offer [links to Docker Engine installation](setup#installing-docker-engine)
+
+:::
+
+Instantiating the Template
+--------------------------
+
+![Error loading instantiation-1.png](./img/instantiation-1.png)
+![Error loading instantiation-2.png](./img/instantiation-2.png)
+
+Creating Models
+---------------
+
+Astraios models are some of the most important code in any webservice project. Our models are the view of our data that
+we wish to expose. In this example we will be modeling a _book_ since most people have a high-level familiarity with
+books in life.
+
+Our _Book_ model looks something like this:
+
+```java
+import com.yahoo.elide.annotation.Include;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Book")
+@Include(rootLevel = true, name = "book", description = "book entity", friendlyName = "book")
+public class Book {
+
+    @Id
+    @GeneratedValue
+    public long id;
+
+    public String title = "";
+}
+```
+
+:::tip
+
+Models are usually packaged as **JAR** file in a separate Maven project. Here is a complete
+[example](https://github.com/QubitPi/jersey-webservice-template-jpa-data-model)
+
+:::
+
+In the end, run `mvn clean install` to install our model
+
+:::info
+
+From this point on, we assume [this example data model][jersey-webservice-template-jpa-data-model] is used
+
+```bash
+git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-model.git
+cd jersey-webservice-template-jpa-data-model
+mvn clean install
+```
+
+:::
+
+Loading Data Models
+-------------------
+
+So now we have some models, but without an API it is not very useful. Now we need to instruct our _my-webservice_ to
+load [data models](#creating-models) via Maven config file, i.e. **~/.m2/settings.xml**:
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <profiles>
+        <profile>
+            <id>astraios-data-models</id>
+            <properties>
+                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
+                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</model.package.jar.artifact.id>
+                <model.package.jar.version>1.0.0</model.package.jar.version>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>astraios-data-models</activeProfile>
+    </activeProfiles>
+</settings>
+```
+
+Running
+-------
+
+With data models defined, can run _my-webservice_
+
+```bash
+cd my-webservice
+mvn clean package
+MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+```
+
+Writing Data
+------------
+
+### Inserting Data
+
+We have defined our views on the database and exposed those views over HTTP. Next let's use cURL to put data in the
+database.
+
+<Tabs>
+  <TabItem value="jsonapi" label="JSON-API" default>
+    ```bash
+    curl -X POST http://localhost:8080/v1/data/book \
+        -H "Content-Type: application/vnd.api+json" \
+        -H "Accept: application/vnd.api+json" \
+        -d '{"data": {"type": "book", "attributes": { "title": "Pride and Prejudice" }}}'
+    ```
+  </TabItem>
+  <TabItem value="graphql" label="GraphQL">
+    ```bash
+    curl -X POST "http://localhost:8080/v1/data" \
+        -H "Content-Type: application/json" \
+        -H "Accept: application/json"  \
+        -d '{ "query" : "mutation { book(op: UPSERT, data:{title: \"Pride & Prejudice\"}) { edges { node { id title } } } }" }'
+    ```
+  </TabItem>
+  <TabItem value="graphql-query" label="(GraphQL) Query">
+    ```graphql
+    mutation {
+      book(op: UPSERT, data:{title: "Pride & Prejudice"}) {
+        edges {
+          node {
+            id
+            title
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+When we run that cURL call we should see a bunch of JSON returned, that is our newly inserted object!
+
+<Tabs>
+  <TabItem value="jsonapi" label="JSON-API" default>
+    ```json
+    {
+       "data":{
+          "type":"book",
+          "id":"1",
+          "attributes":{
+             "title":"Pride and Prejudice"
+          }
+       }
+    }
+    ```
+  </TabItem>
+  <TabItem value="graphql" label="GraphQL">
+    ```json
+    {
+       "data":{
+          "book":{
+             "edges":[
+                {
+                   "node":{
+                      "id":"4",
+                      "title":"Pride & Prejudice"
+                   }
+                }
+             ]
+          }
+       }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+### Modifying Data
+
+Notice that, when we created it, we did not set any of the attributes of our new book record. Updating our data to help
+our users is just as easy as it is to add new data. Let's update our model with the following cURL call.
+
+<Tabs>
+  <TabItem value="jsonapi" label="JSON-API" default>
+    ```bash
+    curl -X PATCH http://localhost:8080/v1/data/book/1 \
+        -H "Content-Type: application/vnd.api+json" \
+        -H "Accept: application/vnd.api+json" \
+        -d '{"data": {"type": "book", "id": "1", "attributes": { "title": "Emma" }}}'
+    ```
+  </TabItem>
+  <TabItem value="graphql" label="GraphQL">
+    ```bash
+    curl -X POST "http://localhost:8080/v1/data" \
+        -H "Content-Type: application/json" \
+        -H "Accept: application/json"  \
+        -d '{ "query" : "mutation { book(op: UPSERT, data: {id: \"1\", title: \"Emma\"}) { edges { node { id title } } } }" }'
+    ```
+  </TabItem>
+  <TabItem value="graphql-query" label="(GraphQL) Query">
+    ```graphql
+    mutation {
+      book(op: UPSERT, data: {id: "1", title: "Emma"}) {
+        edges {
+          node {
+            id
+            title
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+[jersey-webservice-template-jpa-data-model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model
