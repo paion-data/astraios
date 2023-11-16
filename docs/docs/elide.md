@@ -22,7 +22,7 @@ otherwise, dependency injection will flaky and not right.
 
 :::
 
-![Error loading resource-binding.png](./img/resource-binding.png)
+![Error loading resource-binding.png](img/resource-binding.png)
 
 [Astraios]: https://paion-data.github.io/astraios/
 

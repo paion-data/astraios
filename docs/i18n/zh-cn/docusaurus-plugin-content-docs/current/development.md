@@ -35,7 +35,7 @@ Jetty _11.0.15_ 可以工作。
 
 因此，我们将使用“11.0.15”版本作为示例：
 
-![Error loading download-jetty.png](./img/download-jetty.png)
+![Error loading download-jetty.png](img/download-jetty.png)
 
 将 `tar.gz` 文件放入您选择的安装路径的位置，并使用以下命令提取 Jetty 二进制文件
 

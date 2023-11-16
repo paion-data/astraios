@@ -1,5 +1,5 @@
 Astraios Documentation
-========================================
+======================
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
@@ -46,8 +46,7 @@ service. Docusaurus will build one single-page application per locale:
 - **build**: for the default, English language
 - **build/zh-cn**: for the Chinese language
 
-Deployment
-----------
+### Deployment
 
 Using SSH:
 
