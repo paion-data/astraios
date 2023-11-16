@@ -132,7 +132,7 @@ with a corresponding `~/.m2/settings.xml`:
 Lastly, if IntelliJ IDE is used for developing Astraios, please make sure to let IDE pick up the `~/.m2/settings.xml` by
 unchecking the _Use settings from .mvn/maven.config_:
 
-![Error loading load-m2-settings.png](./img/load-m2-settings.png)
+![Error loading load-m2-settings.png](img/load-m2-settings.png)
 
 ### Step 2: Spinning Up Docker Compose
 
@@ -148,7 +148,7 @@ to run this Docker Compose in production!_
 
 :::
 
-![Error Loading docker-compose.png](./img/docker-compose.png)
+![Error Loading docker-compose.png](img/docker-compose.png)
 
 Simply run:
 
@@ -246,7 +246,7 @@ mutation {
 }
 ```
 
-![Error loading graphiql-mutation-example.png](./img/graphiql-mutation-example.png)
+![Error loading graphiql-mutation-example.png](img/graphiql-mutation-example.png)
 
 We can create few more books, sort and paginate them with:
 
