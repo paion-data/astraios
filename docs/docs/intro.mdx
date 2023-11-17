@@ -67,7 +67,7 @@ public class Book {
 :::tip
 
 Models are usually packaged as **JAR** file in a separate Maven project. Here is a complete
-[example](https://github.com/QubitPi/jersey-webservice-template-jpa-data-model)
+[example](https://github.com/QubitPi/jersey-webservice-template-jpa-data-models)
 
 :::
 
@@ -75,11 +75,11 @@ In the end, run `mvn clean install` to install our model
 
 :::info
 
-From this point on, we assume [this example data model][jersey-webservice-template-jpa-data-model] is used
+From this point on, we assume [this example data model][jersey-webservice-template-jpa-data-models] is used
 
 ```bash
-git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-model.git
-cd jersey-webservice-template-jpa-data-model
+git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git
+cd jersey-webservice-template-jpa-data-models
 mvn clean install
 ```
 
@@ -102,7 +102,7 @@ load [data models](#creating-models) via Maven config file, i.e. **~/.m2/setting
             <id>astraios-data-models</id>
             <properties>
                 <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</model.package.jar.artifact.id>
+                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
@@ -288,4 +288,5 @@ our users is just as easy as it is to add new data. Let's update our model with 
 
 [Astraios GitHub]: https://github.com/paion-data/astraios
 
-[jersey-webservice-template-jpa-data-model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model
+[jersey-webservice-template-jpa-data-models]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models
+

@@ -1,7 +1,18 @@
 ---
-sidebar_position: 3
+sidebar_position: 12
 title: Development
 ---
+
+The following guide is intended to help developers who maintain or want to make changes to the Astraios.
+
+Building
+--------
+
+Astraios is built using [Maven](https://maven.apache.org/). To fully build and package the project at least once, run
+
+```bash
+mvn clean package
+```
 
 Running Tests
 -------------
@@ -26,7 +37,7 @@ Next, download the model to _CLASSPATH_ by setting up the `~/.m2/settings.xml` w
             <id>astraios-models</id>
             <properties>
                 <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-model</model.package.jar.artifact.id>
+                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
@@ -348,7 +359,7 @@ export class Client {
 }
 ```
 
-[example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
+[example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
 
 [jcabi-mysql]: https://mysql.jcabi.com/
 
