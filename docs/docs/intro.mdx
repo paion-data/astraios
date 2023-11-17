@@ -6,15 +6,15 @@ title: Getting Started
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-So You Want An API?
--------------------
-
 :::caution
 
-Before proceeding, it is important to note that we **do NOT support Spring/Spring Boot paradigm**. Astraios runs as a
+Before proceeding, it is important to note that **we DO NOT support Spring/Spring Boot paradigm**. Astraios runs as a
 **Jetty/Jersey** webservice.
 
 :::
+
+So You Want An API?
+-------------------
 
 :::info Please make sure JDK 17, Maven, and Docker Engine have been installed 🤗
 
@@ -26,8 +26,13 @@ Before proceeding, it is important to note that we **do NOT support Spring/Sprin
 Instantiating the Template
 --------------------------
 
-![Error loading instantiation-1.png](./img/instantiation-1.png)
-![Error loading instantiation-2.png](./img/instantiation-2.png)
+Please visit [Astraios GitHub] and either
+
+1. clone the repo with `git clone https://github.com/paion-data/astraios.git`, or
+2. make it a template instantiation with our own webservice name by doing the following:
+
+  ![Error loading instantiation-1.png](./img/instantiation-1.png)
+  ![Error loading instantiation-2.png](./img/instantiation-2.png)
 
 Creating Models
 ---------------
@@ -197,6 +202,52 @@ When we run that cURL call we should see a bunch of JSON returned, that is our n
   </TabItem>
 </Tabs>
 
+### Looking at Our Data
+
+<Tabs>
+  <TabItem value="browser" label="Web Browser" default>
+    <!-- markdown-link-check-disable -->
+    Simply open up our favorite browser and hit **http://localhost:8080/v1/data/book**
+    <!-- markdown-link-check-enable -->
+
+:::tip
+
+It is recommended to view result with some
+[JSON formatter](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) browser
+extension for better viewing experience
+
+:::
+
+  </TabItem>
+  <TabItem value="json-api" label="JSON-API">
+    ```bash
+    curl "http://localhost:8080/v1/data/book"
+    ```
+  </TabItem>
+  <TabItem value="graphql" label="GraphQL">
+    ```bash
+    curl -X POST "http://localhost:8080/v1/data" \
+        -H "Content-Type: application/json" \
+        -H "Accept: application/json"  \
+        -d '{ "query" : "{ book { edges { node { id title } } } }" }'
+    ```
+  </TabItem>
+  <TabItem value="graphql-query" label="(GraphQL) Query">
+    ```graphql
+    {
+      book {
+        edges {
+          node {
+            id
+            title
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
 ### Modifying Data
 
 Notice that, when we created it, we did not set any of the attributes of our new book record. Updating our data to help
@@ -234,5 +285,7 @@ our users is just as easy as it is to add new data. Let's update our model with 
     ```
   </TabItem>
 </Tabs>
+
+[Astraios GitHub]: https://github.com/paion-data/astraios
 
 [jersey-webservice-template-jpa-data-model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-model
