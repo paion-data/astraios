@@ -1,0 +1,8 @@
+{
+  "label": "Elide Library",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Astraios delegates persistence logics to yahoo/elide"
+  }
+}

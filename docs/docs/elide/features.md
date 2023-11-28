@@ -24,21 +24,21 @@ Common API Features
 Data Modeling Features
 ----------------------
 
-- **Lifecycle Hooks** - Register [custom functions & business logic](data-model#lifecycle-hooks) that get invoked
+- **Lifecycle Hooks** - Register [custom functions & business logic](data-model.md#lifecycle-hooks) that get invoked
   whenever our data model is read or manipulated.
 - **Security** - Assign [permission rules](security) to fields and entities in our data model using a custom security
   DSL.  Bind rules to in-memory functions or security filters that are pushed to the persistence layer.
-- **Computed Attributes & Relationships** - Define [custom fields and relationships](data-model#computed-attributes)
+- **Computed Attributes & Relationships** - Define [custom fields and relationships](data-model.md#computed-attributes)
   that are computed at query time.
-- **API Versioning** - [Version our models](data-model#api-versions) to support schema evolution without breaking our
+- **API Versioning** - [Version our models](data-model.md#api-versions) to support schema evolution without breaking our
   client contracts.
-- **Composite Identifiers** - Support both simple and complex [model identifiers](data-model#model-identifiers)
+- **Composite Identifiers** - Support both simple and complex [model identifiers](data-model.md#model-identifiers)
   including compound types.
 
 JSON-API Features
 -----------------
 
-- **OpenAPI** - Astraios can automatically generate [OpenAPI documentation](openapi) for Astraios APIS for schema
+- **OpenAPI** - Astraios can automatically generate [OpenAPI documentation](openapi.md) for Astraios APIS for schema
   introspection.
 - **Test DSL** - Astraios includes a [test DSL](test) that works with [Rest Assured](https://rest-assured.io/) for
   writing readable integration tests.
@@ -77,7 +77,7 @@ Analytic Features
   [semantic modeling language](analytics.html#model-configuration) that allows non-developers the ability to define
   metrics and dimensions by writing templated native SQL fragments. The fragments are assembled into complete SQL
   statements at query time.
-- **Caching** - The aggregation store includes a [customizable cache](performance#aggregationdatastore-cache). The
+- **Caching** - The aggregation store includes a [customizable cache](performance.md#aggregationdatastore-cache). The
   cache supports time and version based strategies for expunging stale data.
 - **Async API** - Astraios includes an asynchronous API for long-running queries on analytic models.
 - **Data Export** - Astraios includes a data export API for streaming large query results in JSON or CSV formats.
@@ -85,6 +85,6 @@ Analytic Features
 Operability Features
 --------------------
 
-- **Logging** - Astraios supports rich [native logging](audit) for query generation and security rules.
+- **Logging** - Astraios supports rich [native logging](audit.md) for query generation and security rules.
 
 <!-- markdown-link-check-enable -->
