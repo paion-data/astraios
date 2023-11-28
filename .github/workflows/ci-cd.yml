@@ -43,7 +43,7 @@ jobs:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
           data-models-repo-token: ""
           data-models-repo-org: QubitPi
-          data-models-repo-name: jersey-webservice-template-jpa-data-model
+          data-models-repo-name: jersey-webservice-template-jpa-data-models
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
       - name: Run unit & integration tests
@@ -66,7 +66,7 @@ jobs:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
           data-models-repo-token: ""
           data-models-repo-org: QubitPi
-          data-models-repo-name: jersey-webservice-template-jpa-data-model
+          data-models-repo-name: jersey-webservice-template-jpa-data-models
       - name: Install dependencies
         working-directory: docs
         run: yarn

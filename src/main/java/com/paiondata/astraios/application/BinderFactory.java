@@ -148,7 +148,8 @@ public class BinderFactory {
                 return new JpaDataStore(
                         entityManagerFactory::createEntityManager,
                         em -> new NonJtaTransaction(em, TXCANCEL),
-                        entityManagerFactory::getMetamodel);
+                        entityManagerFactory::getMetamodel
+                );
             }
 
             /**
