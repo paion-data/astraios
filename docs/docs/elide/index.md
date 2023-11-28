@@ -1,5 +1,5 @@
 ---
-sidebar_position: 58
+sidebar_position: 1
 title: JPA through Elide Middleware
 ---
 

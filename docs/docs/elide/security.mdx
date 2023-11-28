@@ -54,7 +54,7 @@ the roots of the graph. Applying security rules to the relationships to prune th
 patterns. To better understand the sequence of how security is applied, consider the data model depicted in Figure
 below consisting of articles where each contains zero or more comments.
 
-![Security Article Comment UML](./img/security-article-comment-uml.png)
+![Security Article Comment UML](img/security-article-comment-uml.png)
 
 The request to update a specific comment of a particular article involves the following permission checks:
 
@@ -80,7 +80,7 @@ Checks can either be invoked:
 
 Astraios supports three different concrete `Check` classes depending on what is being checked:
 
-![Error loading check-tree.png](./img/check-tree.png)
+![Error loading check-tree.png](img/check-tree.png)
 
 `Check` is the root interface of all three variants which are discussed next
 
