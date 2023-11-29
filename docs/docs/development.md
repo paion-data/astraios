@@ -5,15 +5,6 @@ title: Development
 
 The following guide is intended to help developers who maintain or want to make changes to the Astraios.
 
-Building
---------
-
-Astraios is built using [Maven](https://maven.apache.org/). To fully build and package the project at least once, run
-
-```bash
-mvn clean package
-```
-
 Running Tests
 -------------
 
@@ -24,7 +15,21 @@ model:
 export TEST_MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models
 ```
 
-Next, download the model to _CLASSPATH_ by setting up the `~/.m2/settings.xml` with
+<!-- markdown-link-check-disable -->
+Next, download the [data model](elide/data-model) to _CLASSPATH_ by setting up the following `~/.m2/settings.xml`
+<!-- markdown-link-check-enable -->
+
+:::tip
+
+Astraios ships with an example `settings.xml` which contains exactly the same settings as the one below. As an
+alternative, we could simply run
+
+```bash
+cd astraios
+cp settings.xml.example ~/.m2/settings.xml
+```
+
+:::
 
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"

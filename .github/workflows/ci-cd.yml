@@ -37,11 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Environment setup
-        uses: ./.github/actions/setup
+      - name: Test environment setup
+        uses: ./.github/actions/ci-setup
         with:
-          runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
-          data-models-repo-token: ""
           data-models-repo-org: QubitPi
           data-models-repo-name: jersey-webservice-template-jpa-data-models
       - name: Set up Docker for Integration Tests
@@ -60,11 +58,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Environment setup
-        uses: ./.github/actions/setup
+      - name: Test environment setup
+        uses: ./.github/actions/ci-setup
         with:
-          runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
-          data-models-repo-token: ""
           data-models-repo-org: QubitPi
           data-models-repo-name: jersey-webservice-template-jpa-data-models
       - name: Install dependencies
@@ -95,8 +91,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Environment setup
-        uses: ./.github/actions/setup
+      - name: Test environment setup
+        if: github.ref != 'refs/heads/master'
+        uses: ./.github/actions/ci-setup
+        with:
+          data-models-repo-org: QubitPi
+          data-models-repo-name: jersey-webservice-template-jpa-data-models
+      - name: Deployment environment setup
+        if: github.ref == 'refs/heads/master'
+        uses: ./.github/actions/cd-setup
         with:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
           data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
