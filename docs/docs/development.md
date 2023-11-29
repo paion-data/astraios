@@ -11,6 +11,8 @@ Building
 Astraios is built using [Maven](https://maven.apache.org/). To fully build and package the project at least once, run
 
 ```bash
+git clone git@github.com:paion-data/astraios.git
+cp settings.xml.example ~/.m2/settings.xml
 mvn clean package
 ```
 
