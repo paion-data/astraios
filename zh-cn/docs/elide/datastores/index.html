@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.0.0">
-<title data-rh="true">Data Stores | Astraios</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://paion-data.github.io/astraios/zh-cn/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://paion-data.github.io/astraios/zh-cn/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores"><meta data-rh="true" property="og:locale" content="zh_cn"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-cn"><meta data-rh="true" name="docsearch:language" content="zh-cn"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Data Stores | Astraios"><meta data-rh="true" name="description" content="A data store is responsible for:"><meta data-rh="true" property="og:description" content="A data store is responsible for:"><link data-rh="true" rel="icon" href="/astraios/zh-cn/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/docs/elide/datastores" hreflang="en"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores" hreflang="zh-cn"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/docs/elide/datastores" hreflang="x-default"><link rel="stylesheet" href="/astraios/zh-cn/assets/css/styles.be4ffb03.css">
-<script src="/astraios/zh-cn/assets/js/runtime~main.e96cf1d1.js" defer="defer"></script>
+<title data-rh="true">Data Stores | Astraios</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://paion-data.github.io/astraios/zh-cn/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://paion-data.github.io/astraios/zh-cn/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores"><meta data-rh="true" property="og:locale" content="zh_cn"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-cn"><meta data-rh="true" name="docsearch:language" content="zh-cn"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Data Stores | Astraios"><meta data-rh="true" name="description" content="A data store is responsible for:"><meta data-rh="true" property="og:description" content="A data store is responsible for:"><link data-rh="true" rel="icon" href="/astraios/zh-cn/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/docs/elide/datastores" hreflang="en"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/zh-cn/docs/elide/datastores" hreflang="zh-cn"><link data-rh="true" rel="alternate" href="https://paion-data.github.io/astraios/docs/elide/datastores" hreflang="x-default"><link rel="stylesheet" href="/astraios/zh-cn/assets/css/styles.834bd13a.css">
+<script src="/astraios/zh-cn/assets/js/runtime~main.4445ae06.js" defer="defer"></script>
 <script src="/astraios/zh-cn/assets/js/main.e2811226.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -15,11 +15,10 @@
 <li>Implementing filtering, sorting, and pagination.</li>
 <li>Declaring the entities it manages persistence for.</li>
 </ol>
-<p>If a data store is unable to fully implement filtering, sorting, or pagination, it can instead rely on the Astraios
-framework to perform these functions in memory.  By default, however, Astraios pushes these responsibilities to the
-store.</p>
+<p>If a data store is unable to fully implement filtering, sorting, or pagination, it can instead rely on the Elide
+framework to perform these functions in memory.  By default, however, Elide pushes these responsibilities to the store.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="included-stores">Included Stores<a href="#included-stores" class="hash-link" aria-label="Included Stores的直接链接" title="Included Stores的直接链接">​</a></h2>
-<p>Astraios comes bundled with a number of data stores:</p>
+<p>Elide comes bundled with a number of data stores:</p>
 <ol>
 <li>Hashmap Data Store - Data is persisted in a hash table on the JVM heap.</li>
 <li>JPA Data Store - A data store that can map operations on a data model to an underlying relational database (ORM) or
@@ -31,7 +30,7 @@ entirely implement CRUD operations on the model.</li>
 <li><a href="https://github.com/yahoo/elide/tree/master/elide-datastore/elide-datastore-search" target="_blank" rel="noopener noreferrer">Search Data Store</a> - A store
 which provides full text search on text fields while delegating other requests to another provided store.</li>
 <li><a href="/astraios/zh-cn/docs/elide/analytics">Aggregation Data Store</a> - A store which provides computation of groupable measures (similar to SQL group
-by). The aggregation store has custom annotations that map an Astraios model to native SQL queries against a JDBC
+by). The aggregation store has custom annotations that map an Elide model to native SQL queries against a JDBC
 database.</li>
 </ol>
 <p>The Hashmap Data Store is included as part of <code>elide-core</code> while other data stores can be included through the
