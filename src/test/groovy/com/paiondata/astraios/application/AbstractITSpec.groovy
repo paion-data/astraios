@@ -37,6 +37,7 @@ import com.paiondata.astraios.models.Book
 
 import org.apache.http.HttpStatus
 
+import groovy.json.JsonBuilder
 import io.restassured.RestAssured
 import io.restassured.response.Response
 import jakarta.validation.constraints.NotNull
@@ -210,7 +211,7 @@ abstract class AbstractITSpec extends Specification {
                 ))
 
         when: "an entity is POSTed via GraphQL"
-        Response response = createNewBook(new Book(title: "Book Numero Dos"))
+        Response response = createBook(new Book(title: "Book Numero Dos"))
         response.then()
                 .statusCode(200)
 
@@ -380,17 +381,15 @@ abstract class AbstractITSpec extends Specification {
                 ))
     }
 
-    def "GraphQL API allows to paginate and sort by entity attribute"() {
-        when: "Create a new book"
-        createNewBook(new Book(title: "First book"))
-                .then().statusCode(200)
+    def "GraphQL API can sort and paginate (effectively fetching 1 record with some min/max attribute)"() {
+        given: "3 entities are inserted into the database"
+        createBook(new Book(title: "Pride & Prejudice"))
+        createBook(new Book(title: "Effective Java"))
+        final String maxBookId = createBook(new Book(title: "Critiques of Pure Reason"))
+                .jsonPath()
+                .get("data.book.edges[0].node.id")
 
-        and: "Create a second book"
-        Response selectBookResponse =  createNewBook(new Book(title: "Second book"))
-        selectBookResponse
-                .then().statusCode(200)
-
-        then: "We can paginate and sort by entity attribute"
+        expect: "sorting by ID in descending order and paginating to get the firsts result returns Kant's work"
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -398,7 +397,7 @@ abstract class AbstractITSpec extends Specification {
                 .body(
                         query: """
                                 {
-                                    book(first: "1", after: "0", sort: "-id") {
+                                    book(sort: "-id", first: "1", after: "0") {
                                         edges {
                                             node {
                                                 id
@@ -413,25 +412,34 @@ abstract class AbstractITSpec extends Specification {
                                         }
                                     }
                                 }
+
                         """
                 )
-                .when()
-                .post()
-                .then()
+                .when().post().then()
                 .statusCode(200)
-                .body("data",equalTo(
-                        [
-                                book: [
-                                        edges: [
-                                                [node:[id:"${selectBookResponse.jsonPath().get("data.book.edges[0].node.id")}" as String, title:"Second book"]]
-                                        ],
-                                        pageInfo:[endCursor:"1",startCursor:"0",hasNextPage:true,totalRecords:2]
+                .body(equalTo(
+                        new JsonBuilder(
+                                data: [
+                                        book: [
+                                                edges:[[
+                                                               node: [
+                                                                       id: "${maxBookId}",
+                                                                       title:"Critiques of Pure Reason"
+                                                               ]
+                                                       ]],
+                                                pageInfo: [
+                                                        totalRecords: 3,
+                                                        startCursor: "0",
+                                                        endCursor: "1",
+                                                        hasNextPage:true
+                                                ]
+                                        ]
                                 ]
-                        ] as HashMap
+                        ).toString()
                 ))
     }
 
-    static Response createNewBook(@NotNull final Book book) {
+    static Response createBook(@NotNull final Book book) {
         RestAssured
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -446,14 +454,13 @@ abstract class AbstractITSpec extends Specification {
                                                                 argument("op", "UPSERT"),
                                                                 argument("data", book)
                                                         ),
-
                                                         selections(
                                                                 field("id"),
                                                                 field("title")
                                                         )
                                                 )
-
-                                        ))
+                                        )
+                                )
                         ).toQuery()
                 )
                 .when()
