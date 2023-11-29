@@ -56,7 +56,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * A binder factory builds a custom binder for the Jersey application.
@@ -191,8 +190,7 @@ public class BinderFactory {
                     @NotNull final String packageName
             ) {
                 return scanner.getAnnotatedClasses(packageName, Entity.class).stream()
-                        .map(Class::getName)
-                        .collect(Collectors.toList());
+                        .map(Class::getName).toList();
             }
 
             /**
