@@ -15,7 +15,9 @@ model:
 export TEST_MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models
 ```
 
+<!-- markdown-link-check-disable -->
 Next, download the [data model](elide/data-model) to _CLASSPATH_ by setting up the following `~/.m2/settings.xml`
+<!-- markdown-link-check-enable -->
 
 :::tip
 
