@@ -9,13 +9,13 @@ import TabItem from '@theme/TabItem';
 Core Concepts
 -------------
 
-API authentication is largely a solved problem and generally outside the scope of Astraios. Authorization - the act
-of verifying data and operation access for an _already authenticated user_ in the Astraios framework involves a few
-core concepts:
+API authentication is largely a solved problem and generally outside the scope of Elide. Authorization - the act of
+verifying data and operation access for an _already authenticated user_ in the Elide framework involves a few core
+concepts:
 
-- **User** - Each API request is associated with a user principal. The user is opaque to the Astraios framework but
-  is passed to developer-defined _check_ functions that evaluate arbitrary logic or build filter expressions. More
-  details can be found [here](#user).
+- **User** - Each API request is associated with a user principal. The user is opaque to the Elide framework but is
+  passed to developer-defined _check_ functions that evaluate arbitrary logic or build filter expressions. More details
+  can be found [here](#user).
 - **Checks** - a function _or_ filter expression that grants or denies a user **permission** to perform a particular
   action.
 - **Permissions** - a set of annotations (read, update, delete, create, and transfer) that correspond to actions on
@@ -41,18 +41,18 @@ Security is applied hierarchically with three goals:
 
 Both JSON-API and GraphQL define mechanisms to fetch and manipulate entities defined by the data model schema. Some
 (rootable) entities can be reached directly by providing their data type and unique identifier in the query. Other
-entities can only be reached through relationships to other entities by traversing the entity relationship graph.
-The Astraios framework supports both methods of access. This is beneficial because it alleviates the need for all
-models to be read-accessible at the root of the graph. When everything is exposed at the root, the developer needs
-to enumerate all of the valid access patterns for all of the data models which can be unwieldy. In addition to
-eliminating redundancy in security declaration, this form of security can have significant performance benefits for
-enforcing security on large collections stored in key-value stores that have limited ability for the underlying
-persistence layer to directly apply security filters. It is often possible to deny read access to an entire
-collection (i.e. hierarchical relationship) before attempting to verify access to each individual member within that
-collection. Typically, security rules only need to be defined for a subset of models and relationships - often near
-the roots of the graph. Applying security rules to the relationships to prune the graph can eliminate invalid access
-patterns. To better understand the sequence of how security is applied, consider the data model depicted in Figure
-below consisting of articles where each contains zero or more comments.
+entities can only be reached through relationships to other entities by traversing the entity relationship graph. The
+Elide framework supports both methods of access. This is beneficial because it alleviates the need for all models to be
+read-accessible at the root of the graph. When everything is exposed at the root, the developer needs to enumerate all
+of the valid access patterns for all of the data models which can be unwieldy. In addition to eliminating redundancy in
+security declaration, this form of security can have significant performance benefits for enforcing security on large
+collections stored in key-value stores that have limited ability for the underlying persistence layer to directly apply
+security filters. It is often possible to deny read access to an entire collection (i.e. hierarchical relationship)
+before attempting to verify access to each individual member within that collection. Typically, security rules only need
+to be defined for a subset of models and relationships - often near the roots of the graph. Applying security rules to
+the relationships to prune the graph can eliminate invalid access patterns. To better understand the sequence of how
+security is applied, consider the data model depicted in Figure below consisting of articles where each contains zero or
+more comments.
 
 ![Security Article Comment UML](img/security-article-comment-uml.png)
 
@@ -61,8 +61,8 @@ The request to update a specific comment of a particular article involves the fo
 1. Read permission check on the Article's comments field.
 2. Update permission check on the Comment's title field.
 
-When a client modifies one side of a bidirectional relationship, Astraios will automatically update the opposite
-side of the relationship. This implies that the client must have permission to write both sides of the relationship.
+When a client modifies one side of a bidirectional relationship, Elide will automatically update the opposite side of
+the relationship. This implies that the client must have permission to write both sides of the relationship.
 
 Checks
 ------
@@ -78,7 +78,7 @@ Checks can either be invoked:
 - immediately before committing the transaction that wraps the entire API request. This is limited to checks on
   fields of newly created objects.
 
-Astraios supports three different concrete `Check` classes depending on what is being checked:
+Elide supports three different concrete `Check` classes depending on what is being checked:
 
 ![Error loading check-tree.png](img/check-tree.png)
 
@@ -87,7 +87,7 @@ Astraios supports three different concrete `Check` classes depending on what is 
 ### Operation Checks
 
 Operation checks are inline checks whose evaluation requires the entity instance being read from or written to. They
-operate in memory of the process running Astraios.
+operate in memory of the process running Elide.
 
 Operation checks are expected to implement the following `Check` interface:
 
@@ -143,7 +143,7 @@ public abstract FilterExpression getFilterExpression(Type<?> entityClass, Reques
 ```
 
 `FilterExpressionCheck` _is_ an `OperationCheck`. If a security rule combines both an `OperationCheck` and
-`FilterExpression` in a disjunction (logical OR), Astraios will evaluate both in memory as operation checks.
+`FilterExpression` in a disjunction (logical OR), Elide will evaluate both in memory as operation checks.
 
 Most `FilterExpressionCheck` functions construct a `FilterPredicate` which is a concrete implementation of the
 `FilterExpression` interface:
@@ -193,7 +193,7 @@ The `User` objects wraps the Jakarta
 [SecurityContext](https://qubitpi.github.io/jakartaee-rest/jaxrs-api/target/apidocs/jakarta.ws.rs/jakarta/ws/rs/core/SecurityContext.html)
 -object.
 
-The `SecurityContext` is created outside the Astraios framework in a [JAX-RS](https://jcp.org/en/jsr/detail?id=311)
+The `SecurityContext` is created outside the Elide framework in a [JAX-RS](https://jcp.org/en/jsr/detail?id=311)
 [ContainerRequestFilter](https://qubitpi.github.io/jakartaee-rest/jaxrs-api/target/apidocs/jakarta.ws.rs/jakarta/ws/rs/container/ContainerRequestFilter.html):
 
 ```java
@@ -223,7 +223,7 @@ The permission annotations wrap a boolean expression composed of the check(s) to
 `OR`, and `NOT` operators and grouped using parenthesis. The checks are uniquely identified within the expression by
 a string - typically a human readable phrase that describes the intent of the check (_"principal is admin at company
 OR principal is super user with write permissions"_). These strings are mapped to the explicit `Check` classes at
-runtime by registering them with Astraios. When no registration is made, the checks can be identified by their fully
+runtime by registering them with Elide. When no registration is made, the checks can be identified by their fully
 qualified class names. The complete expression grammar can be found [here][source-grammar].
 
 To better understand how permissions work consider the following sample code. (Only the relevant portions are
@@ -315,8 +315,8 @@ included.)
 
 `ReadPermission` governs whether a model or field can be read by a particular user. If the expression evaluates to
 `true` then access is granted. Notably, `ReadPermission` is evaluated as the user navigates through the entity
-relationship graph. Astraios's security model is focused on field-level access, with permission annotations applied on
-an entity or package being shorthand for applying that same security to every field in that scope. For example, if a
+relationship graph. Elide's security model is focused on field-level access, with permission annotations applied on an
+entity or package being shorthand for applying that same security to every field in that scope. For example, if a
 request is made to `GET /users/1/posts/3/comments/99` the permission execution will be as follows:
 
 1. `ReadPermission` on `User<1>#posts`
@@ -365,20 +365,20 @@ be moved or copied to another collection after creation. Excluding this annotati
 be moved or copied to other collections _provided the user agent can read the object_ (`ReadPermission` is satisfied on
 at least some of its fields).
 
-Registering Checks in Astraios
-------------------------------
+Registering Checks in Elide
+---------------------------
 
-Once an Astraios data model has been annotated with Permission annotations, the textual descriptions of the checks must
-be tied to actual check classes and registered in Astraios. This can be done in one of two ways:
+Once an Elide data model has been annotated with Permission annotations, the textual descriptions of the checks must be
+tied to actual check classes and registered in Elide. This can be done in one of two ways:
 
-1. Automatically by marking the `Check` classes with a `SecurityCheck` annotation. Astraios will automatically scan for
+1. Automatically by marking the `Check` classes with a `SecurityCheck` annotation. Elide will automatically scan for
    `SecurityCheck` classes and bind them.
 2. Manually by creating a `Map<String, Class<? extends Check>>` where they key is the description and the value is the
    Check class. This is then passed to the constructor of the `EntityDictionary`.
 
 ### Automatic Scanning
 
-Astraios will find our security checks in the classpath if they are tagged with the `SecurityCheck` annotation:
+Elide will find our security checks in the classpath if they are tagged with the `SecurityCheck` annotation:
 
 ```java
 @SecurityCheck(AdminCheck.USER_IS_ADMIN)
@@ -394,13 +394,13 @@ public class AdminCheck extends UserCheck {
 ```
 
 The `EntityDictionary` must be told to scan for checks (by calling `dictionary.scanForSecurityChecks`). This is done
-automatically in Astraios at startup.
+automatically in Elide at startup.
 
 OAuth 2 Access Token
 --------------------
 
-Astraios adds a layer of security on its own by validating [OAuth 2 access token] on all incoming request. Each Astraios
-API request requires a standard `"Authentication": "Bearer <access_token>"` token header:
+Elide adds a layer of security on its own by validating [OAuth 2 access token] on all incoming request. Each Elide API
+request requires a standard `"Authentication": "Bearer <access_token>"` token header:
 
 :::info
 

@@ -46,23 +46,6 @@ service. Docusaurus will build one single-page application per locale:
 - **build**: for the default, English language
 - **build/zh-cn**: for the Chinese language
 
-### Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the
-`gh-pages` branch.
-
 ### Troubleshooting
 
 #### Docusaurus Blogs Relative Linking is Treated False-Negative by CI Markdown Link check
