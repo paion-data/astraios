@@ -2,16 +2,20 @@
 <img width="20%" alt="Astraios Logo" src="./docs/static/img/logo.png">
 </div>
 
+<div align="center">
+
+<b>In less than 10 minutes</b>, your colleague went downstairs for a cup of coffee <img src="https://github.com/paion-data/astraios/assets/16126939/414e01bc-082d-4cc1-8478-b53c8c817943" width="45px" />
+
+<b>You, using Astraios, coded up and deployed a production-quality CRUD webservice</b> <img src="https://github.com/paion-data/astraios/assets/16126939/283b3171-d960-4d53-8524-5eb6d97f4185" width="45px" />
+
+</div>
+
 Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
-=============================================================
+========
 
 [![GitHub Workflow Status][GitHub Workflow Status]](https://github.com/paion-data/astraios/actions/workflows/ci-cd.yml)
 ![Last Commit](https://img.shields.io/github/last-commit/paion-data/astraios/master?logo=github&style=for-the-badge)
 [![Apache License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
-![GitHub Actions Badge][GitHub Actions Badge]
-![HashiCorp Packer Badge][HashiCorp Packer Badge]
-![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
-[![AWS EC2 min size][AWS EC2 min size]](https://aws.amazon.com/ec2/instance-types/)
 
 <a href="https://sonarcloud.io/summary/new_code?id=paion-data_astraios">
     <img
@@ -35,40 +39,58 @@ Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
 [![Reliability Rating][Sonar Reliability Rating]](https://sonarcloud.io/summary/new_code?id=paion-data_astraios)
 [![Technical Debt][Sonar Technical Debt]](https://sonarcloud.io/summary/new_code?id=paion-data_astraios)
 
-[Astraios] is a [JSR 370] web service **template** that lets us spin up model driven GraphQL or JSON API web service
-with minimal effort.
+[Astraios] is a [JSR 370] web service **template** that lets us _spin up_ and _deploy_ model driven GraphQL or JSON API
+web service with minimal effort.
 
-https://github.com/paion-data/astraios/assets/16126939/875d50a2-4fc4-4ca3-8e75-c846769686d4
+Astraios seamlessly combines development and deployment of a CRUD (Create, Read, Update, Delete) API with
 
-We Believe Binding to Standard Makes the Best Software
-------------------------------------------------------
+1. a business-oriented approach using [Convention Over Configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which resulted in a highly opinionated APIs for web & mobile
+2. the latest
+   [Immutable Infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure)
+   DevOp practice that
+   [fully automates the API deployment onto
+  AWS](https://qubitpi.github.io/hashicorp-aws/)
 
-CRUD web services are now widespread, standardizing organizational approaches to the cloud. But as business expand,
-web service often struggle to reach the desired levels of scale. Development slows as complexity grows.
+At the end of the day, Astraios helps organization to **improve the velocity and quality of their teams' work**
 
-By codifying and standardizing a webservice development and compliance rules, developers can be free to do what they
-want to: add business value by writing code.
+Spinning Up the API in 1 Minute
+-------------------------------
 
-Astraios applies the [Pareto Principle] to webservice design. Use case analysis shows that the vast majority of web
-service component need just a handful of inputs to meet most customer requirements. Focusing on this "easy 80%" of use
-cases results in neat, concise web service that are simple to understand and use. It also causes web service to become
-more opinionated, which guides developers into a standard pattern, bringing consistency around how software is used in
-the organization.
+### Running API From Template <sup>[![Java Version Badge][Java Version Badge]](https://paion-data.github.io/astraios/docs/setup#installing-java--maven-on-mac) ![Maven Badge][Maven Badge] [![Docker Compose Badge][Docker Compose Badge]](https://docs.docker.com/engine/install/)</sup>
 
-Gradually, more than just code can be shared. Best practices start to emerge. [Golden paths] are created.
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/paion-data/astraios/master/quickstart.sh)"
+```
 
-[The Technology Acceptance Model (TAM)] suggests that adoption is predicted on how much people see something as being
-useful and easy to use. Standardization and golden paths address both these factors and make adoption of an open source
-project more likely. Astraios does more to make itself easy to use by
+### Writing Data
 
-- enabling "on-click" experience that goes from nothing to a full-fledged webservice on AWS cloud
-- delegating JPA persistence to [Yahoo Elide] so that the API of Astraios help developers use it correctly.
+```curl
+curl -X POST "http://localhost:8080/v1/data" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"  \
+    -d '{ "query" : "mutation { book(op: UPSERT, data:{title: \"Pride & Prejudice\"}) { edges { node { id title } } } }" }'
+```
 
-Start Using Astraios
---------------------
+### Reading Data
 
-- [Documentation]
-- [Javadoc]
+<!-- markdown-link-check-disable -->
+Simply open up our favorite browser and hit http://localhost:8080/v1/data/book
+<!-- markdown-link-check-enable -->
+
+Deploying the API in 5 Minutes
+------------------------------
+
+![GitHub Actions Badge][GitHub Actions Badge]
+![HashiCorp Packer Badge][HashiCorp Packer Badge]
+![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
+[![AWS EC2 min size][AWS EC2 min size]](https://aws.amazon.com/ec2/instance-types/)
+
+TBA
+
+Documentation
+-------------
+
+Comprehensive documentation is viewable on our [website][Documentation]
 
 Contributors <sup>[![Update Link Missing!](https://img.shields.io/badge/Click%20To%20Update-00AA00.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/paion-data/astraios/actions/workflows/contributors.yml)</sup>
 ------------
@@ -112,6 +134,7 @@ The use and distribution terms for [Astraios] are covered by the
 [AWS EC2 min size]: https://img.shields.io/badge/EC2-%E2%89%A5t2.small-FF9902?style=for-the-badge&logo=amazonec2&logoColor=white
 
 [Documentation]: https://paion-data.github.io/astraios/
+[Docker Compose Badge]: https://img.shields.io/badge/Docker%20Compose-2596EC?style=for-the-badge&logo=docker&logoColor=white
 
 [GitHub Actions Badge]: https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white
 [GitHub Workflow Status]: https://img.shields.io/github/actions/workflow/status/paion-data/astraios/ci-cd.yml?branch=master&logo=github&style=for-the-badge
@@ -120,8 +143,9 @@ The use and distribution terms for [Astraios] are covered by the
 [HashiCorp Packer Badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
 [HashiCorp Terraform Badge]: https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white
 
+[Maven Badge]: https://img.shields.io/badge/Maven-DF5931?style=for-the-badge&logo=apachemaven&logoColor=white
+
 [Java Version Badge]: https://img.shields.io/badge/Java-17-brightgreen?style=for-the-badge&logo=OpenJDK&logoColor=white
-[Javadoc]: https://paion-data.github.io/astraios/apidocs/
 
 [JSR 370]: https://jcp.org/en/jsr/detail?id=370
 

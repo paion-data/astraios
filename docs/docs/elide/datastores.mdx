@@ -13,14 +13,13 @@ A data store is responsible for:
 3. Implementing filtering, sorting, and pagination.
 4. Declaring the entities it manages persistence for.
 
-If a data store is unable to fully implement filtering, sorting, or pagination, it can instead rely on the Astraios
-framework to perform these functions in memory.  By default, however, Astraios pushes these responsibilities to the
-store.
+If a data store is unable to fully implement filtering, sorting, or pagination, it can instead rely on the Elide
+framework to perform these functions in memory.  By default, however, Elide pushes these responsibilities to the store.
 
 Included Stores
 ---------------
 
-Astraios comes bundled with a number of data stores:
+Elide comes bundled with a number of data stores:
 
 1. Hashmap Data Store - Data is persisted in a hash table on the JVM heap.
 2. JPA Data Store - A data store that can map operations on a data model to an underlying relational database (ORM) or
@@ -32,7 +31,7 @@ Astraios comes bundled with a number of data stores:
 5. [Search Data Store](https://github.com/yahoo/elide/tree/master/elide-datastore/elide-datastore-search) - A store
    which provides full text search on text fields while delegating other requests to another provided store.
 6. [Aggregation Data Store](analytics) - A store which provides computation of groupable measures (similar to SQL group
-   by). The aggregation store has custom annotations that map an Astraios model to native SQL queries against a JDBC
+   by). The aggregation store has custom annotations that map an Elide model to native SQL queries against a JDBC
    database.
 
 The Hashmap Data Store is included as part of `elide-core` while other data stores can be included through the

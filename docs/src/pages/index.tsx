@@ -20,7 +20,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Astraios Documentation
+            Start Improving the Velocity and Quality of Your Team's Work.
           </Link>
         </div>
       </div>

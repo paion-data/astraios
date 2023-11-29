@@ -29,41 +29,44 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'Powered by Jetty',
-    Svg: require('@site/static/img/jetty-logo.svg').default,
+    title: 'Production Quality',
+    Svg: require('@site/static/img/high-quality.svg').default,
     description: (
       <>
-        Astraios runs in standalone Jetty container, which standardize webservice runtime.
+        Quickly build and deploy production quality web services that expose organization data as a service. Our APIs
+        support complex filtering rules, sorting, pagination, subscriptions, and text search.
       </>
     ),
   },
   {
-    title: 'Swagger Documentation',
-    Svg: require('@site/static/img/swagger-logo.svg').default,
+    title: 'Security Comes Standard',
+    Svg: require('@site/static/img/security.svg').default,
     description: (
       <>
-
+        Controlling access to our data is as simple as defining our rules and annotating our models.
       </>
     ),
   },
   {
-    title: 'Docker-based Dev Environment & Integration Tests',
-    Svg: require('@site/static/img/docker.svg').default,
+    title: 'Caring for Developers',
+    Svg: require('@site/static/img/developer.svg').default,
     description: (
       <>
-
+        We understand a good business product is backed by developers who love their works. We let them free to do what
+        they want to: add business value by writing code.
       </>
     ),
   },
   {
-    title: 'Easy Config Environment',
-    Svg: require('@site/static/img/config.svg').default,
+    title: 'Open API',
+    Svg: require('@site/static/img/openapi-logo.svg').default,
     description: (
       <>
-
+        Explore, understand, and compose queries against our CRUD API through generated OpenAPI documentation or GraphQL
+        schema.
       </>
     ),
-  },
+  }
 ];
 
 function Feature({title, Svg, description}: FeatureItem) {
