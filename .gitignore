@@ -20,6 +20,7 @@ crash.log
 # subject to change depending on the environment.
 #
 *.pkrvars.hcl
+!hashicorp/images/example.pkrvars.hcl
 
 # For built boxes
 *.box
@@ -45,6 +46,7 @@ crash.*.log
 # to change depending on the environment.
 *.tfvars
 *.tfvars.json
+!hashicorp/instances/example.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
