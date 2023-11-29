@@ -21,7 +21,7 @@ cd jersey-webservice-template-jpa-data-models
 mvn clean install
 cd ../
 
-cat >~/.m2/settings.xml <<'EOT'
+cat >settings.xml <<'EOT'
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
@@ -46,6 +46,6 @@ EOT
 
 git clone https://github.com/paion-data/astraios.git
 cd astraios
-mvn clean package
+mvn --settings ../settings.xml clean package
 MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
 cd ../
