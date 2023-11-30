@@ -37,6 +37,18 @@ runs:
     - name: Load test Packer variable file
       shell: bash
       run: cp hashicorp/images/example.pkrvars.hcl ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
+    - name: Load test SSL certificates
+      run: |
+        cp hashicorp/images/ssl-cert-file.example ../hashicorp-aws/hashicorp/webservice/images/ssl-cert-file.example
+        cp hashicorp/images/ssl-cert-key-file.example ../hashicorp-aws/hashicorp/webservice/images/ssl-cert-key-file.example
+      shell: bash
+    - name: Load Nginx config file (SSL)
+      run: cp hashicorp/images/nginx.config.example ../hashicorp-aws/hashicorp/webservice/images/nginx.config.example
+      shell: bash
+    - name: Load Filebeat config file
+      run: cp hashicorp/images/filebeat.yml.example ../hashicorp-aws/hashicorp/webservice/images/filebeat.yml.example
+      shell: bash
+
     - name: Load Terraform variable file
       shell: bash
       run: cp hashicorp/instances/example.tfvars ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars

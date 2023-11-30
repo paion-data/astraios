@@ -19,6 +19,20 @@ inputs:
   aws-ws-pkrvars-hcl:
     description: 'HashiCorp Packer variable file'
     required: true
+  ssl-certificate:
+    description: 'SSL certificate file content'
+    required: true
+  ssl-certificate-key:
+    description: 'SSL certificate key file content'
+    required: true
+  nginx-config-file:
+    description: 'Nginx config (for SSL) file content'
+    required: true
+  filebeat-config-file:
+    description: 'This will be gone soon'
+    required: true
+
+
   aws-ws-tfvars:
     description: 'HashiCorp Terraform variable file'
     required: true
@@ -58,9 +72,22 @@ runs:
     - name: Load Packer variable file
       run: echo '${{ inputs.aws-ws-pkrvars-hcl }}' > ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
       shell: bash
+    - name: Load SSL certificates
+      run: |
+        echo '${{ inputs.ssl-certificate }}' > ../hashicorp-aws/hashicorp/webservice/images/ssl.crt
+        echo '${{ inputs.ssl-certificate-key }}' > ../hashicorp-aws/hashicorp/webservice/images/ssl.key
+      shell: bash
+    - name: Load Nginx config file (SSL)
+      run: echo '${{ inputs.nginx-config-file }}' > ../hashicorp-aws/hashicorp/webservice/images/nginx.conf
+      shell: bash
+    - name: Load Filebeat config file
+      run: echo '${{ inputs.filebeat-config-file }}' > ../hashicorp-aws/hashicorp/webservice/images/filebeat.yml
+      shell: bash
+
     - name: Load Terraform variable file
       run: echo '${{ inputs.aws-ws-tfvars }}' > ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
       shell: bash
+
     - name: Load Maven settings.xml
       shell: bash
       run: echo '${{ inputs.maven-settings-xml }}' > ~/.m2/settings.xml
