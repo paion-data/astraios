@@ -105,7 +105,7 @@ jobs:
           runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
           data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
           data-models-repo-org: paion-data
-          data-models-repo-name: astraios-config
+          data-models-repo-name: astraios-data-models
       - name: Generate webservice WAR file
         run: mvn -B clean package
       - name: Move WAR file to a location for HashiCorp deployment to pickup
