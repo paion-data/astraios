@@ -121,7 +121,7 @@ with a corresponding `~/.m2/settings.xml`:
 
     <profiles>
         <profile>
-            <id>astraios-config-properties</id>
+            <id>astraios-data-models-properties</id>
             <properties>
                 <model.package.jar.group.id>com.mycompnay</model.package.jar.group.id>
                 <model.package.jar.artifact.id>my-model-package</model.package.jar.artifact.id>
@@ -136,7 +136,7 @@ with a corresponding `~/.m2/settings.xml`:
 
 
     <activeProfiles>
-        <activeProfile>astraios-config-properties</activeProfile>
+        <activeProfile>astraios-data-models-properties</activeProfile>
     </activeProfiles>
 
     <servers>
