@@ -1,7 +1,7 @@
 aws_image_region                 = "us-east-2"
 ami_name                         = "my-astraios-webservice"
 instance_type                    = "t2.small"
-ws_war_path                      = "../../../../WAR/astraios-1.0-SNAPSHOT.war"
+ws_war_path                      = "../../../../astraios/hashicorp/images/astraios-1.0-SNAPSHOT.war"
 aws_ws_ssl_cert_file_path        = "../../../../astraios/hashicorp/images/ssl-cert-file.example"
 aws_ws_ssl_cert_key_file_path    = "../../../../astraios/hashicorp/images/ssl-cert-key-file.example"
 aws_ws_nginx_config_file_path    = "../../../../astraios/hashicorp/images/nginx.config.example"
