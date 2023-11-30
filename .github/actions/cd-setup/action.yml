@@ -67,9 +67,9 @@ runs:
     - name: Load webservice properties files
       shell: bash
       run: |
-        echo '${{ inputs.oauth-properties }}' > src/main/resources/
-        echo '${{ inputs.application-properties }}' > src/main/resources/
-        echo '${{ inputs.jpadatastore-properties }}' > src/main/resources/
+        echo '${{ inputs.oauth-properties }}' > src/main/resources/oauth.properties
+        echo '${{ inputs.application-properties }}' > src/main/resources/application.properties
+        echo '${{ inputs.jpadatastore-properties }}' > src/main/resources/jpadatastore.properties
     - name: Install data models
       shell: bash
       run: |
