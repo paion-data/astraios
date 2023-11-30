@@ -102,7 +102,13 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: ./.github/actions/cd-setup
         with:
-          runbooks-repo-token: ${{ secrets.RUNBOOKS_REPO_TOKEN }}
+          aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
+          aws-ws-tfvars: ${{ secrets.AWS_WS_TFVARS }}
+          maven-settings-xml: ${{ secrets.MAVEN_SETTINGS_XML }}
+          oauth-properties: ${{ secrets.OAUTH_PROPERTIES }}
+          application-properties: ${{ secrets.APPLICATION_PROPERTIES }}
+          jpadatastore-properties: ${{ secrets.JPADATASTORE_PROPERTIES }}
+
           data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
           data-models-repo-org: paion-data
           data-models-repo-name: astraios-data-models

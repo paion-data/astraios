@@ -16,8 +16,23 @@ name: 'setup'
 description: 'CI/CD setup, such as installing JDK and fetch runbook'
 
 inputs:
-  runbooks-repo-token:
-    description: 'hashicorp-aws-runbooks fine-grained PAT token;'
+  aws-ws-pkrvars-hcl:
+    description: 'HashiCorp Packer variable file'
+    required: true
+  aws-ws-tfvars:
+    description: 'HashiCorp Terraform variable file'
+    required: true
+  maven-settings-xml:
+    description: 'Production Maven settings.xml'
+    required: true
+  oauth-properties:
+    description: 'WS config property file - https://paion-data.github.io/astraios/docs/configuration#oauth-2'
+    required: true
+  application-properties:
+    description: 'WS config property file - https://paion-data.github.io/astraios/docs/configuration#core-properties'
+    required: true
+  jpadatastore-properties:
+    description: 'WS config property file - https://paion-data.github.io/astraios/docs/configuration#elide-jpa-datastore'
     required: true
   data-models-repo-token:
     description: 'Astraios data models repo fine-grained PAT token;'
@@ -40,29 +55,21 @@ runs:
     - name: Checkout HashiCorp deployment tool
       shell: bash
       run: git clone https://github.com/QubitPi/hashicorp-aws.git ../hashicorp-aws
-    - name: Checkout HashiCorp deployment config files
-      shell: bash
-      run: git clone https://${{ inputs.runbooks-repo-token }}@github.com/QubitPi/hashicorp-aws-runbooks.git ../hashicorp-aws-runbooks
     - name: Load Packer variable file
+      run: echo '${{ inputs.aws-ws-pkrvars-hcl }}' > ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
       shell: bash
-      run: cp ../hashicorp-aws-runbooks/paion-data/astraios/aws-ws.pkrvars.hcl ../hashicorp-aws/hashicorp/webservice/images/aws-ws.auto.pkrvars.hcl
     - name: Load Terraform variable file
+      run: echo '${{ inputs.aws-ws-tfvars }}' > ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
       shell: bash
-      run: cp ../hashicorp-aws-runbooks/paion-data/astraios/aws-ws.tfvars ../hashicorp-aws/hashicorp/webservice/instances/aws-ws.auto.tfvars
     - name: Load Maven settings.xml
       shell: bash
-      run: |
-        if [[ ${{ inputs.data-models-repo-org }} == "QubitPi" ]]; then
-          cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.test.xml ~/.m2/settings.xml
-        else
-          cp ../hashicorp-aws-runbooks/paion-data/astraios/settings.xml ~/.m2/settings.xml
-        fi
+      run: echo '${{ inputs.maven-settings-xml }}' > ~/.m2/settings.xml
     - name: Load webservice properties files
       shell: bash
       run: |
-        cp ../hashicorp-aws-runbooks/paion-data/astraios/oauth.properties src/main/resources/
-        cp ../hashicorp-aws-runbooks/paion-data/astraios/application.properties src/main/resources/
-        cp ../hashicorp-aws-runbooks/paion-data/astraios/jpadatastore.properties src/main/resources/
+        echo '${{ inputs.oauth-properties }}' > src/main/resources/
+        echo '${{ inputs.application-properties }}' > src/main/resources/
+        echo '${{ inputs.jpadatastore-properties }}' > src/main/resources/
     - name: Install data models
       shell: bash
       run: |
