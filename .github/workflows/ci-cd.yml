@@ -119,6 +119,12 @@ jobs:
       - name: Move WAR file to a location for HashiCorp deployment to pickup
         run: mv target/astraios-1.0-SNAPSHOT.war ../hashicorp-aws/hashicorp/webservice/images/
       - name: QubitPi/hashicorp-aws
+        if: github.ref != 'refs/heads/master'
+        uses: QubitPi/hashicorp-aws@local-var-file
+        with:
+          hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
+      - name: QubitPi/hashicorp-aws
+        if: github.ref == 'refs/heads/master'
         uses: QubitPi/hashicorp-aws@master
         with:
           hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
