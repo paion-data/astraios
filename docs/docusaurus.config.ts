@@ -63,8 +63,9 @@ const config: Config = {
         },
         {
           href: 'https://github.com/paion-data/astraios',
-          label: 'GitHub',
+          label: ' ',
           position: 'right',
+          className: 'header-icon-link header-github-link',
         },
       ],
     },
