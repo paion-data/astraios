@@ -390,7 +390,6 @@ export class Client {
 
 ![Error loading graphiql-query-example.png](img/graphiql-query-example.png)
 
-
 [Astraios]: https://paion-data.github.io/astraios/
 
 [Elide]: https://elide.io/
