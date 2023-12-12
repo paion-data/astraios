@@ -7,8 +7,8 @@ const config: Config = {
   tagline: 'Instant Model driven {json:api} & GraphQL Web Services for CRUD in 1 Simple Step',
   favicon: 'img/favicon.ico',
 
-  url: 'https://paion-data.github.io',
-  baseUrl: '/astraios/',
+  url: 'https://astraios.io',
+  baseUrl: '/',
 
   organizationName: 'paion-data',
   projectName: 'astraios',
@@ -97,6 +97,11 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       additionalLanguages: ["java", "bash", "json"]
+    },
+    algolia: {
+      appId: '11324Y7IH1',
+      apiKey: '389a0e5d9d57695cf51d6348fdc9b00b',
+      indexName: 'astraios'
     },
   } satisfies Preset.ThemeConfig,
 };
