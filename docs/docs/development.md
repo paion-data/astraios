@@ -3,7 +3,45 @@ sidebar_position: 3
 title: Development
 ---
 
-The following guide is intended to help developers who maintain or want to make changes to the Astraios.
+[//]: # (Copyright Paion Data)
+
+[//]: # (Licensed under the Apache License, Version 2.0 &#40;the "License"&#41;;)
+[//]: # (you may not use this file except in compliance with the License.)
+[//]: # (You may obtain a copy of the License at)
+
+[//]: # (    http://www.apache.org/licenses/LICENSE-2.0)
+
+[//]: # (Unless required by applicable law or agreed to in writing, software)
+[//]: # (distributed under the License is distributed on an "AS IS" BASIS,)
+[//]: # (WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.)
+[//]: # (See the License for the specific language governing permissions and)
+[//]: # (limitations under the License.)
+
+The following guide is intended to help developers who maintain or want to make changes to the [Astraios].
+
+Overview
+--------
+
+[Astraios] delegates JPA capabilities to [Elide] and configures Elide through 2 required Elide
+[bindings][what is binding]:
+
+1. **[Elide][Elide instance class]**
+2. **[ElideSettings][ElideSettings instance class]** with 2 extra sub-bindings:
+
+   - **EntityDictionary**
+   - **DataStore**
+
+The binding is referencing [Elide Standalone] in the following way:
+
+:::danger
+
+Although the Jersey binder wraps HK2 binder, we
+[must pick the _Jersey binder_ for binding Elide resources](https://github.com/paion-data/astraios/pull/10/files#diff-7633fbf494dcb17a51964f179a341b02c328a7214fa3c2c01ba28b1f4cc4dc4aR39-R40),
+otherwise, dependency injection will flaky and not right.
+
+:::
+
+![Error loading resource-binding.png](img/resource-binding.png)
 
 Running Tests
 -------------
@@ -21,7 +59,7 @@ Next, download the [data model](elide/data-model) to _CLASSPATH_ by setting up t
 
 :::tip
 
-Astraios ships with an example `settings.xml` which contains exactly the same settings as the one below. As an
+[Astraios] ships with an example `settings.xml` which contains exactly the same settings as the one below. As an
 alternative, we could simply run
 
 ```bash
@@ -42,7 +80,9 @@ cp settings.xml.example ~/.m2/settings.xml
             <id>astraios-models</id>
             <properties>
                 <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
+                <model.package.jar.artifact.id>
+                   jersey-webservice-template-jpa-data-models
+                </model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
@@ -71,7 +111,7 @@ mvn clean package
 ```
 
 A [WAR file](https://en.wikipedia.org/wiki/WAR_(file_format)) named **astraios-1.0-SNAPSHOT.war** will
-be generated under _target_ directory for [running in Jetty](#running-in-standalone-jetty)
+be generated under _target_ directory for running in Jetty.
 
 Running Webservice in Docker Compose
 ------------------------------------
@@ -85,7 +125,6 @@ visible publicly, either make the astraios project private or public with model 
 
 ```xml
 <project>
-
     ...
 
     <dependencies>
@@ -97,17 +136,6 @@ visible publicly, either make the astraios project private or public with model 
     </dependencies>
 
     ...
-
-    <repositories>
-        <repository>
-            <id>${astraios.model.package.repo.id}</id>
-            <name>Astraios model pacakge JAR repository</name>
-            <url>${astraios.model.package.repo.url}</url>
-        </repository>
-    </repositories>
-
-    ...
-
 </project>
 ```
 
@@ -126,10 +154,6 @@ with a corresponding `~/.m2/settings.xml`:
                 <model.package.jar.group.id>com.mycompnay</model.package.jar.group.id>
                 <model.package.jar.artifact.id>my-model-package</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.7</model.package.jar.version>
-                <astraios.model.package.repo.id>mycompany-maven-repo-id</astraios.model.package.repo.id>
-                <astraios.model.package.repo.url>
-                    https://private.mvnrepository.com/artifact/com.company/my-model-package
-                </astraios.model.package.repo.url>
             </properties>
         </profile>
     </profiles>
@@ -145,7 +169,7 @@ with a corresponding `~/.m2/settings.xml`:
 </settings>
 ```
 
-Lastly, if IntelliJ IDE is used for developing Astraios, please make sure to let IDE pick up the `~/.m2/settings.xml` by
+Lastly, if IntelliJ IDE is used for developing [Astraios], please make sure to let IDE pick up the `~/.m2/settings.xml` by
 unchecking the _Use settings from .mvn/maven.config_:
 
 ![Error loading load-m2-settings.png](img/load-m2-settings.png)
@@ -179,7 +203,7 @@ where the value of `$ASTRAIOS_MODEL_PACKAGE_NAME` variable is the package in con
 [elide models](https://elide.io/pages/guide/v7/02-data-model.html). It can be set, for example, at command line with:
 
 ```bash
-export $TEST_MODEL_PACKAGE_NAME=com.mycompany.models
+export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.models
 ```
 
 The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
@@ -364,8 +388,18 @@ export class Client {
 }
 ```
 
+![Error loading graphiql-query-example.png](img/graphiql-query-example.png)
+
+[Astraios]: https://paion-data.github.io/astraios/
+
+[Elide]: https://elide.io/
+[Elide instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/Elide.java
+[Elide Standalone]: https://github.com/yahoo/elide/tree/master/elide-standalone
+[ElideSettings instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/ElideSettings.java
 [example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
 
 [jcabi-mysql]: https://mysql.jcabi.com/
 
 [Testcontainers]: https://qubitpi.github.io/testcontainers-java/
+
+[what is binding]: https://qubitpi.github.io/jersey/ioc.html
