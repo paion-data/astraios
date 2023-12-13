@@ -1,3 +1,19 @@
+/**
+ * Copyright Paion Data
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
@@ -7,8 +23,8 @@ const config: Config = {
   tagline: 'Instant Model driven {json:api} & GraphQL Web Services for CRUD in 1 Simple Step',
   favicon: 'img/favicon.ico',
 
-  url: 'https://paion-data.github.io',
-  baseUrl: '/astraios/',
+  url: 'https://astraios.io',
+  baseUrl: '/',
 
   organizationName: 'paion-data',
   projectName: 'astraios',
@@ -63,8 +79,9 @@ const config: Config = {
         },
         {
           href: 'https://github.com/paion-data/astraios',
-          label: 'GitHub',
+          label: ' ',
           position: 'right',
+          className: 'header-icon-link header-github-link',
         },
       ],
     },
@@ -96,6 +113,11 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       additionalLanguages: ["java", "bash", "json"]
+    },
+    algolia: {
+      appId: '11324Y7IH1',
+      apiKey: '389a0e5d9d57695cf51d6348fdc9b00b',
+      indexName: 'astraios'
     },
   } satisfies Preset.ThemeConfig,
 };

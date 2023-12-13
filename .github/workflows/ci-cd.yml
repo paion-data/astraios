@@ -74,6 +74,9 @@ jobs:
       - name: Move Javadoc into documentation directory
         if: github.ref == 'refs/heads/master'
         run: mv target/site/apidocs/ docs/build/apidocs/
+      - name: Load CNAME file
+        if: github.ref == 'refs/heads/master'
+        run: cp docs/CNAME docs/build
       - name: Deploy documentation (including Javadoc) to GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
@@ -86,6 +89,7 @@ jobs:
 
   hashicorp:
     name: Generated Webservice WAR in GitHub Action, and Publish Astraios AMI Image and Deploy it to EC2 through HashiCorp
+    if: github.ref == 'refs/heads/master'
     needs: tests
     runs-on: ubuntu-latest
     steps:
