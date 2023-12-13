@@ -101,11 +101,20 @@ const config: Config = {
           title: 'Community',
           items: [
             {
+              label: 'Discussions',
+              href: 'https://github.com/paion-data/astraios/discussions',
+            },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {
               label: 'GitHub',
               href: 'https://github.com/paion-data/astraios',
-            }
+            },
           ],
-        }
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Paion Data. Built with Docusaurus.`,
     },

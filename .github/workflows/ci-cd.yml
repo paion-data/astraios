@@ -95,14 +95,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Test environment setup
-        if: github.ref != 'refs/heads/master'
-        uses: ./.github/actions/ci-setup
-        with:
-          data-models-repo-org: QubitPi
-          data-models-repo-name: jersey-webservice-template-jpa-data-models
       - name: Deployment environment setup
-        if: github.ref == 'refs/heads/master'
         uses: ./.github/actions/cd-setup
         with:
           aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
