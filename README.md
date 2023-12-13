@@ -85,7 +85,7 @@ Deploying the API in 5 Minutes
 ![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
 [![AWS EC2 min size][AWS EC2 min size]](https://aws.amazon.com/ec2/instance-types/)
 
-TBA
+Coming Soon!
 
 Documentation
 -------------

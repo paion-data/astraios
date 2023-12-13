@@ -32,7 +32,7 @@ function HomepageHeader() {
           <img src="img/logo.svg" alt="Astraios Logo" width={200} />
         </h1>
         <p className="hero__subtitle">
-          Improving the <b><em>Quality</em></b> and <b><em>Velocity</em></b> of Your Team's Work.
+          Improving the <b><em>Quality</em></b> and <b><em>Velocity</em></b> of Team's CRUD Webservice Development
         </p>
         <div className={styles.buttons}>
           <Link
