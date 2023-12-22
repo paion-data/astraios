@@ -116,6 +116,20 @@ be generated under _target_ directory for running in Jetty.
 Running Webservice in Docker Compose
 ------------------------------------
 
+Astraios can run in [Docker Compose] for the following purposes
+
+1. Decoupling frontend and backend developments
+2. Making it easy to run E2E testing of Astraios-backed application in CI/CD
+
+:::caution
+
+Docker Compose designed here is intended for local development and testing purposes ONLY! _It is strongly discouraged
+to run this Docker Compose in production!_
+
+:::
+
+![Error Loading docker-compose.png](img/docker-compose.png)
+
 ### Step 1: Defining Data Models
 
 To inject [Elide model package](https://github.com/yahoo/elide/tree/master/elide-standalone#create-models), simply put
@@ -169,26 +183,12 @@ with a corresponding `~/.m2/settings.xml`:
 </settings>
 ```
 
-Lastly, if IntelliJ IDE is used for developing [Astraios], please make sure to let IDE pick up the `~/.m2/settings.xml` by
-unchecking the _Use settings from .mvn/maven.config_:
+Lastly, if IntelliJ IDE is used for developing [Astraios], please make sure to let IDE pick up the `~/.m2/settings.xml`
+by unchecking the _Use settings from .mvn/maven.config_:
 
 ![Error loading load-m2-settings.png](img/load-m2-settings.png)
 
 ### Step 2: Spinning Up Docker Compose
-
-Astraios can run in [Docker Compose] for the following purposes
-
-1. Decoupling frontend and backend developments
-2. Making it easy to run E2E testing of Astraios-backed application in CI/CD
-
-:::caution
-
-Docker Compose designed here is intended for local development and testing purposes ONLY! _It is strongly discouraged
-to run this Docker Compose in production!_
-
-:::
-
-![Error Loading docker-compose.png](img/docker-compose.png)
 
 Simply run:
 
@@ -207,6 +207,19 @@ export $ASTRAIOS_MODEL_PACKAGE_NAME=com.mycompany.models
 ```
 
 The variable will be [passed](https://stackoverflow.com/a/58900415) into Docker Compose file.
+
+:::tip
+
+Although not needed as in development, one can turn on OAuth feature in Docker Compose (for example in acceptance tests)
+by
+
+```bash
+export $OAUTH_ENABLED=com.mycompany.models
+```
+
+Note that OAuth feature is disabled by default in Docker Compose (i.e. OAUTH_ENABLED=false)
+
+:::
 
 :::tip
 
