@@ -214,7 +214,8 @@ Although not needed as in development, one can turn on OAuth feature in Docker C
 by
 
 ```bash
-export $OAUTH_ENABLED=com.mycompany.models
+export $OAUTH_ENABLED=true
+export $JWKS_URL=https://8is478.logto.app/oidc/jwks # this is an example URL :)
 ```
 
 Note that OAuth feature is disabled by default in Docker Compose (i.e. OAUTH_ENABLED=false)
