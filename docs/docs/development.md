@@ -128,7 +128,11 @@ to run this Docker Compose in production!_
 
 :::
 
-![Error Loading docker-compose.png](img/docker-compose.png)
+import DockerCompose from './img/docker-compose.png';
+
+<div align="center">
+   <img src={DockerCompose} width="50%" alt="Error Loading docker-compose.png" />
+</div>
 
 ### Step 1: Defining Data Models
 
@@ -405,6 +409,8 @@ export class Client {
 ![Error loading graphiql-query-example.png](img/graphiql-query-example.png)
 
 [Astraios]: https://paion-data.github.io/astraios/
+
+[Docker Compose]: https://github.com/paion-data/astraios/blob/master/docker-compose.yml
 
 [Elide]: https://elide.io/
 [Elide instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/Elide.java
