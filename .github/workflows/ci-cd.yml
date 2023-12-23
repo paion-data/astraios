@@ -20,7 +20,7 @@ name: Astraios CI/CD
     branches:
       - master
   repository_dispatch:
-    types: [runbook-changes]
+    types: [runbook-changes, data-model-changes]
 
 env:
   USER: QubitPi
