@@ -222,6 +222,6 @@ The `EntityTypeResolver` will map the `NodeContainer` to the appropriate `GraphQ
 Elide uses a custom scalar `DeferredID` instead of `ID`. This needs to be registered with the subgraph implementation.
 The following is the schema definition.
 
-```
+```graphql
 scalar DeferredID
 ```
