@@ -499,3 +499,32 @@ table schema for our _individual service's data store_ will likely be exactly th
 representing it. However, overall, the net effect is the same since only the relevant information delivered over the
 bus is stored in our service's schema. In fact, this model is arguably more robust in the sense that if one data
 store fails not all services necessarily fail.
+
+Miscellaneous
+-------------
+
+### Supporting Cascading Delete on Data Models
+
+Cascading delete is handled through JPA annotation which offers possibility to cascade operations (merge, persist,
+refresh, remove) to associated entities. Logic is in JPA and does not utilize database cascades. We can use
+
+```java
+@OneToMany(cascade=CascadeType.REMOVE)
+```
+
+For example:
+
+```java
+@Entity
+@Table(name = "author")
+@Include(rootLevel = true, name = "author", description = "author data", friendlyName = "author")
+public class Author {
+
+    ...
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    public List<Book> books;
+}
+```
+
+Deleting an author will also delet all of his/her published books in database.
