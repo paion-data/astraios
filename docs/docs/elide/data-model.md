@@ -505,7 +505,7 @@ Miscellaneous
 
 ### Supporting Cascading Delete on Data Models
 
-Cascading delete is handled through JPA annotation which offers possibility to cascade operations (merge, persist, 
+Cascading delete is handled through JPA annotation which offers possibility to cascade operations (merge, persist,
 refresh, remove) to associated entities. Logic is in JPA and does not utilize database cascades. We can use
 
 ```java
@@ -521,7 +521,7 @@ For example:
 public class Author {
 
     ...
-   
+
     @OneToMany(cascade = CascadeType.REMOVE)
     public List<Book> books;
 }
