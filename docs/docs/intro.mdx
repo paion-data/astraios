@@ -23,7 +23,9 @@ import TabItem from '@theme/TabItem';
 :::caution
 
 Before proceeding, it is important to note that **we DO NOT support Spring/Spring Boot paradigm**. [Astraios] runs as a
-**[Jetty]/[Jersey]** webservice ONLY.
+**[JAX-RS]** webservice ONLY backed by its reference implementation [Jetty] running as a WAR inside [Jetty] container.
+
+More info about difference between JAX-RS and Spring can be found in [this thread](https://stackoverflow.com/a/42955575)
 
 :::
 
@@ -310,6 +312,7 @@ our users is just as easy as it is to add new data. Let's update our model with 
 [Astraios]: https://astraios.io/
 [Astraios GitHub]: https://github.com/paion-data/astraios
 
+[JAX-RS]: https://jcp.org/en/jsr/detail?id=370
 [Jersey]: https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/index.html
 [jersey-webservice-template-jpa-data-models]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models
 [Jetty]: https://eclipse.dev/jetty/
