@@ -59,7 +59,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Book")
+@Table(name = "book")
 @Include(rootLevel = true, name = "book", description = "book entity", friendlyName = "book")
 public class Book {
 
@@ -129,8 +129,15 @@ With data models defined, can run _my-webservice_
 ```bash
 cd my-webservice
 mvn clean package
-MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
 ```
+
+:::info
+
+`com.qubitpi.ws.jersey.template.models` is the name of the model in the aforementioned
+[data model project][jersey-webservice-template-jpa-data-models]
+
+:::
 
 Writing Data
 ------------
