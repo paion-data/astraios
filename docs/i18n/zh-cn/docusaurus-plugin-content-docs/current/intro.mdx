@@ -20,8 +20,8 @@ title: 快速入门
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-想要一个API吗？
--------------------
+需要搭建一个 API ？
+----------------
 
 :::info 请确保已经安装 JDK 17, Maven, 和 Docker Engine 🤗
 
@@ -30,19 +30,19 @@ import TabItem from '@theme/TabItem';
 
 :::
 
-将模版实例化
---------------------------
+将仓库模版实例化
+--------------
 
 请访问[Astraios GitHub]，然后执行以下操作之一：
 
-1. 使用 `git clone https://github.com/paion-data/astraios.git` 克隆存储库，或者
+1. 使用 `git clone https://github.com/paion-data/astraios.git` 克隆代码仓库，或者
 2. 用我们自己的 Web 服务名称执行以下操作来将模版实例化：
 
   ![Error loading instantiation-1.png](./img/instantiation-1.png)
   ![Error loading instantiation-2.png](./img/instantiation-2.png)
 
-创建模型
----------------
+创建数据模型
+----------
 
 Astraios 模型是一个 Web 服务项目中最重要的代码之一。此模型是我们希望公开的数据视图。
 在这个例子中，我们将对 _book_ 进行建模，因为大多数人对生活中的书比较熟悉。
@@ -58,7 +58,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Book")
+@Table(name = "book")
 @Include(rootLevel = true, name = "book", description = "book entity", friendlyName = "book")
 public class Book {
 
@@ -92,7 +92,7 @@ mvn clean install
 :::
 
 加载数据模型
--------------------
+----------
 
 现在我们有了一些模型，但是如果没有 API 的话并不是很有用。
 需要让 _my-webservice_ 通过 Maven 配置文件来
@@ -122,18 +122,24 @@ mvn clean install
 ```
 
 运行
--------
+----
 
 有了定义的数据模型之后，我们可以运行 _my-webservice_
 
 ```bash
 cd my-webservice
 mvn clean package
-MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
 ```
 
+:::info
+
+`com.qubitpi.ws.jersey.template.models` 是之前提到的[数据模型包][jersey-webservice-template-jpa-data-models]名称
+
+:::
+
 写入数据
-------------
+--------
 
 ### 插入数据
 
@@ -172,7 +178,7 @@ MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreat
   </TabItem>
 </Tabs>
 
-当我们运行这个 cURL 调用时，应该会看到返回很多 JSON，这就是我们新插入的对象！
+当我们运行这个 cURL 调用时，应该会看到返回很多 JSON，这就是我们新创建的数据对象！
 
 <Tabs>
   <TabItem value="jsonapi" label="JSON-API" default>
@@ -213,13 +219,13 @@ MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreat
 <Tabs>
   <TabItem value="browser" label="Web Browser" default>
     <!-- markdown-link-check-disable -->
-    只需打开最喜欢的浏览器并访问 **http://localhost:8080/v1/data/book**
+    只需打开任意浏览器并访问 **http://localhost:8080/v1/data/book**
     <!-- markdown-link-check-enable -->
 
 :::tip
 
 建议使用一些[JSON格式化](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa)浏览器
-扩展来查看结果以获得更好的查看体验
+扩展来查看结果，数据内容更加易读
 
 :::
 
@@ -253,10 +259,10 @@ MODEL_PACKAGE_NAME=$MODEL_PACKAGE_NAME docker compose up --build --force-recreat
   </TabItem>
 </Tabs>
 
-### 修改数据
+### 更新数据
 
-请注意，我们创建它时并没有设置新书记录的任何属性。更新数据来帮助用户与添加新数据一样简单。
-使用以下 cURL 调用更新我们的模型。
+请注意，我们创建它时并没有设置新书记录的任何属性。用户更新数据和添加新数据一样简单。
+使用以下 cURL 调用更新我们的数据。
 
 <Tabs>
   <TabItem value="jsonapi" label="JSON-API" default>
