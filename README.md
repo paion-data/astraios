@@ -91,6 +91,13 @@ Contributors <sup>[![Update Link Missing!](https://img.shields.io/badge/Click%20
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/TristeOak">
+            <img src="https://avatars.githubusercontent.com/u/100420496?v=4" width="100;" alt="TristeOak"/>
+            <br />
+            <sub><b>TristeOak</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/github-actions[bot]">
             <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100;" alt="github-actions[bot]"/>
             <br />
