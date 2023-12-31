@@ -208,10 +208,9 @@
             <scope>test</scope>
         </dependency>
         <dependency> <!-- Enable mocking of non-interface types -->
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>3.3.0</version>
-            <scope>test</scope>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.14.11</version>
         </dependency>
         <dependency>
             <groupId>org.objenesis</groupId>
