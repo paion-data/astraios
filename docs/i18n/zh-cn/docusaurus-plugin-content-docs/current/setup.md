@@ -88,8 +88,11 @@ cd astraios
 ### 与 IntelliJ 同步 Astraios 的代码风格
 
 目前，我们已经提炼了与Astraios的代码相关的最重要的代码风格约定，作为IntelliJ的设置。如果IntelliJ用于IDE，我们可以通过导入repo根目录下的
-[Astraios-Project-intellij-code-style.xml][style config] 文件来导入这些代码风格设置。项目的设置将在IDE的 `编辑器->代码样式`
-部分下显示为名为 “Astraios-Project” 的新方案。
+[Astraios-Project-intellij-code-style.xml][style config] 文件来导入这些代码风格设置。项目的设置将在IDE的 **编辑器** ->
+**代码样式** 部分下显示为名为 “Astraios-Project” 的新方案。
+
+另外，还请通过 **Editor -> **General** -> **Auto Import** -> **Optimize Imports on the Fly** 开启自动无用 import
+移除功能。
 
 [Astraios]: https://paion-data.github.io/astraios/
 
