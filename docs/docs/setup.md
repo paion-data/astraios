@@ -93,7 +93,7 @@ IntelliJ settings. If IntelliJ is used for IDE, we may import these code style s
 [Astraios-Project-intellij-code-style.xml][style config] file in the root of the repo. The setting for the
 project will appear as a new Scheme named "Astraios-Project" under IDE's **Editor** -> **Code Style** section.
 
-Please also enable "remove unused imports" by **Editor -> **General** -> **Auto Import** -> **Optimize Imports on the
+Please also enable "remove unused imports" by **Editor** -> **General** -> **Auto Import** -> **Optimize Imports on the
 Fly**, which will automatically remove unused imports.
 
 [Astraios]: https://paion-data.github.io/astraios/
