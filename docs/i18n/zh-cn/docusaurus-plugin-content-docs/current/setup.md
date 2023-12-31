@@ -91,7 +91,7 @@ cd astraios
 [Astraios-Project-intellij-code-style.xml][style config] 文件来导入这些代码风格设置。项目的设置将在IDE的 **编辑器** ->
 **代码样式** 部分下显示为名为 “Astraios-Project” 的新方案。
 
-另外，还请通过 **Editor -> **General** -> **Auto Import** -> **Optimize Imports on the Fly** 开启自动无用 import
+另外，还请通过 **Editor** -> **General** -> **Auto Import** -> **Optimize Imports on the Fly** 开启自动无用 import
 移除功能。
 
 [Astraios]: https://paion-data.github.io/astraios/
