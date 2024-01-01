@@ -20,7 +20,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Astraios',
-  tagline: 'Instant Model driven {json:api} & GraphQL Web Services for CRUD in 1 Simple Step',
+  tagline: 'Improving the Quality and Velocity of Your Data API Project',
   favicon: 'img/favicon.ico',
 
   url: 'https://astraios.io',

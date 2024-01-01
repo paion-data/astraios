@@ -81,39 +81,3 @@ jobs:
           enable_jekyll: false
           user_name: ${{ env.USER }}
           user_email: ${{ env.EMAIL }}
-
-  hashicorp:
-    name: Generated Webservice WAR in GitHub Action, and Publish Astraios AMI Image and Deploy it to EC2 through HashiCorp
-    if: github.ref == 'refs/heads/master'
-    needs: tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Deployment environment setup
-        uses: ./.github/actions/cd-setup
-        with:
-          aws-ws-pkrvars-hcl: ${{ secrets.AWS_WS_PKRVARS_HCL }}
-          ssl-certificate: ${{ secrets.SSL_CERTIFICATE }}
-          ssl-certificate-key: ${{ secrets.SSL_CERTIFICATE_KEY }}
-          nginx-config-file: ${{ secrets.NGINX_CONFIG_FILE }}
-          filebeat-config-file: ${{ secrets.FILEBEAT_CONFIG_FILE }}
-          aws-ws-tfvars: ${{ secrets.AWS_WS_TFVARS }}
-          maven-settings-xml: ${{ secrets.MAVEN_SETTINGS_XML }}
-          oauth-properties: ${{ secrets.OAUTH_PROPERTIES }}
-          application-properties: ${{ secrets.APPLICATION_PROPERTIES }}
-          jpadatastore-properties: ${{ secrets.JPADATASTORE_PROPERTIES }}
-          data-models-repo-token: ${{ secrets.ASTRAIOS_DATA_MODELS_REPO_TOKEN }}
-          data-models-repo-org: paion-data
-          data-models-repo-name: astraios-data-models
-      - name: Generate webservice WAR file
-        run: mvn -B clean package
-      - name: Move WAR file to a location for HashiCorp deployment to pickup
-        run: mv target/astraios-1.0-SNAPSHOT.war ../hashicorp-aws/hashicorp/webservice/images/
-      - name: QubitPi/hashicorp-aws
-        uses: QubitPi/hashicorp-aws@master
-        with:
-          hashicorp-dir: ../hashicorp-aws/hashicorp/webservice
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
