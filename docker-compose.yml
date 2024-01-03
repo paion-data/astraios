@@ -4,6 +4,9 @@ services:
     build: .
     ports:
       - "8080:8080"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
     environment:
       - MODEL_PACKAGE_NAME=${MODEL_PACKAGE_NAME}
       - DB_USER=root
@@ -20,7 +23,9 @@ services:
     image: "mysql:5.7.43"
     ports:
       - "3306:3306"
+    privileged: true
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
       - "./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
