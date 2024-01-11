@@ -123,7 +123,7 @@ Astraios can run in [Docker Compose] for the following purposes
 
 :::caution
 
-Docker Compose is intended for local development and testing purposes ONLY! _It is strongly discouraged to run it in 
+Docker Compose is intended for local development and testing purposes ONLY! _It is strongly discouraged to run it in
 production!_
 
 :::
@@ -204,7 +204,7 @@ MODEL_PACKAGE_NAME=com.mycompany.models docker compose up --build --force-recrea
 ```
 
 The following [Docker Compose environment variables] can be [passed](https://stackoverflow.com/a/58900415) into Docker
-Compose file: 
+Compose file:
 
 - (**required**) `MODEL_PACKAGE_NAME` is the package in config JAR that contains all
   [elide models](https://elide.io/pages/guide/v7/02-data-model.html). In the example above, we assign the package
@@ -216,7 +216,7 @@ Compose file:
   export $OAUTH_ENABLED=true
   export $JWKS_URL=https://8is478.logto.app/oidc/jwks # this is an example URL :)
   ```
-  
+
   _Note that OAuth feature is disabled by default in Docker Compose (i.e. OAUTH_ENABLED=false)_
 
 - (optional) `MYSQL_INIT_SCRIPT_PATH` is the path (absolute or relative) to the
