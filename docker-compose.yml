@@ -21,9 +21,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "${MYSQL_INIT_SCRIPT_PATH:-./mysql-init.sql}:/docker-entrypoint-initdb.d/mysql-init.sql"
+      - "${MYSQL_INIT_SCRIPT_PATH}:/docker-entrypoint-initdb.d/mysql-init.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_INIT_SCRIPT_PATH: ${MYSQL_INIT_SCRIPT_PATH:-./mysql-init.sql}
     command: --character-set-server=utf8 --collation-server=utf8_general_ci
     healthcheck:
       test: mysqladmin ping -h localhost -u root -proot
