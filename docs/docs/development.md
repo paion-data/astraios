@@ -220,10 +220,10 @@ Compose file:
   _Note that OAuth feature is disabled by default in Docker Compose (i.e. OAUTH_ENABLED=false)_
 
 - (optional) `MYSQL_INIT_SCRIPT_PATH` is the path (absolute or relative) to the
-  [MySQL init script](https://github.com/paion-data/astraios/blob/master/mysql-init.sql). _By default, its value is
-  `./mysql-init.sql`_. This option is very useful when Docker Compose is running inside Docker (Docker-in-Docker), in
-  which case `MYSQL_INIT_SCRIPT_PATH` is not the path in Docker but the path on the host machine. Exposing this mount
-  source allows Docker Compose to successfully pick up the MySQL init script from within the Docker-in-Docker.
+  [MySQL init script][database init script]. _By default, its value is `./mysql-init.sql`_. This option is very useful
+  when Docker Compose is running inside Docker (Docker-in-Docker), in which case `MYSQL_INIT_SCRIPT_PATH` is not the
+  path in Docker but the path on the host machine. Exposing this mount source allows Docker Compose to successfully
+  pick up the MySQL init script from within the Docker-in-Docker.
 
 :::tip
 
@@ -272,6 +272,17 @@ To optionally disable GraphQL endpoints, exclude corresponding dependencies in P
             </exclusions>
         </dependency>
 ```
+
+### Unknown database 'elide'
+
+![Error loading unknown-database.png](img/unknown-database.png)
+
+Docker Compose mounts a [database init script] which creates a database named "elide". The Docker Compose uses the
+official MySQL Docker image, which would pick up this script to initialize database. All should happen automatically
+when we "docker compose up".
+
+Given that, one possibility we still see this error is some problematic Docker volume from previous runs is corrupting
+our current database. [**We should clear database volume and try again**](https://stackoverflow.com/a/39765233)
 
 Querying Webservice
 -------------------
@@ -409,6 +420,7 @@ export class Client {
 
 [Astraios]: https://paion-data.github.io/astraios/
 
+[database init script]: https://github.com/paion-data/astraios/blob/master/mysql-init.sql
 [Docker Compose]: https://github.com/paion-data/astraios/blob/master/docker-compose.yml
 [Docker Compose environment variables]: https://docs.docker.com/compose/environment-variables/
 
