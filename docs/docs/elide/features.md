@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: Features
+description: An overview of Elide features and links to their respective documentations.
 ---
 
 [//]: # (Copyright Paion Data)

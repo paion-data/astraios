@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 title: OpenAPI
+description: JSON API documentations
 ---
 
 [//]: # (Copyright Paion Data)
