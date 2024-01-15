@@ -1,6 +1,7 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: GraphQL Federation
+description: Beta support for GraphQL Federation
 ---
 
 [//]: # (Copyright Paion Data)
