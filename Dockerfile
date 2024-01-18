@@ -43,7 +43,5 @@ RUN cd jetty-base && java -jar $JETTY_HOME/start.jar --add-module=annotations,se
 
 COPY ./target/astraios-$WS_VERSION.war $JETTY_WEBAPPS_DIR/ROOT.war
 
-ENV OAUTH_ENABLED false
-
 COPY ./Dockerfile-startup.sh /Dockerfile-startup.sh
 CMD [ "/Dockerfile-startup.sh" ]

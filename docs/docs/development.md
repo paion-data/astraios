@@ -209,16 +209,6 @@ Compose file:
 - (**required**) `MODEL_PACKAGE_NAME` is the package in config JAR that contains all
   [elide models](https://elide.io/pages/guide/v7/02-data-model.html). In the example above, we assign the package
   `com.mycompany.models` to it
-- (optional) `OAUTH_ENABLED` & `JWKS_URL` allow us to turn on OAuth feature in Docker Compose. For example, we might
-  need it in acceptance tests. The two variables are set in pair:
-
-  ```bash
-  export $OAUTH_ENABLED=true
-  export $JWKS_URL=https://8is478.logto.app/oidc/jwks # this is an example URL :)
-  ```
-
-  _Note that OAuth feature is disabled by default in Docker Compose (i.e. OAUTH_ENABLED=false)_
-
 - (optional) `MYSQL_INIT_SCRIPT_PATH` is the path (absolute or relative) to the
   [MySQL init script][database init script]. _By default, its value is `./mysql-init.sql`_. This option is very useful
   when Docker Compose is running inside Docker (Docker-in-Docker), in which case `MYSQL_INIT_SCRIPT_PATH` is not the

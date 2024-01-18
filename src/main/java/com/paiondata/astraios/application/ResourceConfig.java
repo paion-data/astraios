@@ -17,11 +17,8 @@ package com.paiondata.astraios.application;
 
 import com.yahoo.elide.Elide;
 
-import com.paiondata.astraios.config.OAuthConfig;
 import com.paiondata.astraios.web.filters.CorsFilter;
-import com.paiondata.astraios.web.filters.OAuthFilter;
 
-import org.aeonbits.owner.ConfigFactory;
 import org.glassfish.hk2.api.ServiceLocator;
 
 import jakarta.inject.Inject;
@@ -40,7 +37,6 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
 
     private static final String GRAPHQL_ENDPOINT_PACKAGE = "com.yahoo.elide.graphql";
     private static final String JAON_API_ENDPOINT_PACKAGE = "com.yahoo.elide.jsonapi.resources";
-    private static final OAuthConfig OAUTH_CONFIG = ConfigFactory.create(OAuthConfig.class);
 
     /**
      * DI Constructor.
@@ -49,7 +45,7 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      */
     @Inject
     public ResourceConfig(@NotNull final ServiceLocator injector) {
-        this(injector, new BinderFactory(), OAUTH_CONFIG.authEnabled());
+        this(injector, new BinderFactory());
     }
 
     /**
@@ -57,20 +53,11 @@ public class ResourceConfig extends org.glassfish.jersey.server.ResourceConfig {
      *
      * @param injector  A standard HK2 service locator
      * @param binderFactory  An object that produces resource binder
-     * @param oauthEnabled  Flag on whether or not to enable auth feature, mainly for differentiating dev/test and prod
      */
-    private ResourceConfig(
-            @NotNull final ServiceLocator injector,
-            @NotNull final BinderFactory binderFactory,
-            final boolean oauthEnabled
-    ) {
+    private ResourceConfig(@NotNull final ServiceLocator injector, @NotNull final BinderFactory binderFactory) {
         packages(JAON_API_ENDPOINT_PACKAGE, GRAPHQL_ENDPOINT_PACKAGE);
 
         register(CorsFilter.class);
-
-        if (oauthEnabled) {
-            register(OAuthFilter.class);
-        }
 
         register(binderFactory.buildBinder(injector));
 

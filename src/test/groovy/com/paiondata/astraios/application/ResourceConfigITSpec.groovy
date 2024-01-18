@@ -15,8 +15,6 @@
  */
 package com.paiondata.astraios.application
 
-import com.paiondata.astraios.web.filters.OAuthFilter
-
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.servlet.ServletContextHandler
 import org.eclipse.jetty.servlet.ServletHolder
@@ -24,8 +22,6 @@ import org.glassfish.jersey.servlet.ServletContainer
 import org.testcontainers.containers.MySQLContainer
 import org.testcontainers.spock.Testcontainers
 
-import io.restassured.RestAssured
-import io.restassured.builder.RequestSpecBuilder
 import spock.lang.Shared
 
 @Testcontainers
@@ -38,13 +34,6 @@ class ResourceConfigITSpec extends AbstractITSpec {
 
     @Override
     def childSetupSpec() {
-        RestAssured.requestSpecification = new RequestSpecBuilder()
-                .addHeader(OAuthFilter.AUTHORIZATION_HEADER, OAuthFilter.AUTHORIZATION_SCHEME + " " + VALID_TOKEN)
-                .build()
-
-        System.setProperty("OAUTH_ENABLED", "true")
-        System.setProperty("JWKS_URL", "https://u4v5ne.logto.app/oidc/jwks")
-
         System.setProperty(
                 "DB_URL",
                 String.format("jdbc:mysql://localhost:%s/elide?serverTimezone=UTC", MYSQL.firstMappedPort)
@@ -54,8 +43,6 @@ class ResourceConfigITSpec extends AbstractITSpec {
     @Override
     def childCleanupSpec() {
         System.clearProperty("DB_URL")
-        System.clearProperty("JWKS_URL")
-        System.clearProperty("OAUTH_ENABLED")
     }
 
 
