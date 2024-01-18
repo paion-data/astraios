@@ -29,14 +29,4 @@ class DockerComposeITSpec extends AbstractITSpec {
                     WS_PORT,
                     Wait.forHttp("/v1/data/book").forStatusCode(200)
             )
-
-    @Override
-    def childSetupSpec() {
-        System.setProperty("OAUTH_ENABLED", "false")
-    }
-
-    @Override
-    def childCleanupSpec() {
-        System.clearProperty("OAUTH_ENABLED")
-    }
 }

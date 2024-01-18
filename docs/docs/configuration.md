@@ -20,11 +20,11 @@ title: Configuration
 The configurations in this page can be set from several sources in the following order:
 
 1. the [operating system's environment variables]; for instance, an environment variable can be set with
-   `export OAUTH_ENABLED="true"`
+   `export DB_URL="jdbc:mysql://db/elide?serverTimezone=UTC"`
 2. the [Java system properties]; for example, a Java system property can be set using
-   `System.setProperty("OAUTH_ENABLED", "true")`
+   `System.setProperty("DB_URL", "jdbc:mysql://db/elide?serverTimezone=UTC")`
 3. a **.properties** file placed under CLASSPATH. This file can be put under `src/main/resources` source directory with
-   contents, for example, `OAUTH_ENABLED=true`
+   contents, for example, `DB_URL=jdbc:mysql://db/elide?serverTimezone=UTC`
 
 Core Properties
 ---------------
@@ -36,35 +36,6 @@ The following configurations can be placed in the properties file called **appli
 :::
 
 - **MODEL_PACKAGE_NAME**: The fully qualified package name that contains a set of Elide JPA models
-
-OAuth 2
--------
-
-:::note
-
-The following configurations can be placed in the properties file called **oauth.properties**
-
-:::
-
-- **OAUTH_ENABLED**: Whether or not to enable [OAuthFilter] container request filter.
-- **JWKS_URL**: (**Required if `OAUTH_ENABLED` is set to `true`**) A standard [JWKS] URL that, on GET, returns a json
-  object such as
-
-  ```json
-  {
-      "keys": [
-          {
-              "kty": "EC",
-              "use": "sig",
-              "kid": "eTERknhur9q8gisdaf_dfrqrgdfsg",
-              "alg": "ES384",
-              "crv": "P-384",
-              "x": "sdfrgHGYF...",
-              "y": "sdfuUIG&8..."
-          }
-      ]
-  }
-  ```
 
 (Elide) JPA DataStore
 ---------------------
@@ -82,7 +53,5 @@ The following configurations can be placed in the properties file called **jpada
 - **DB_DIALECT**: The SQL DB dialect name, such as "org.hibernate.dialect.MySQLDialect".
 
 [Java system properties]: https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
-[JWKS]: https://datatracker.ietf.org/doc/html/rfc7517
 
-[OAuthFilter]: https://paion-data.github.io/astraios/apidocs/com/paiondata/astraios/web/filters/OAuthFilter.html
 [operating system's environment variables]: https://docs.oracle.com/javase/tutorial/essential/environment/env.html

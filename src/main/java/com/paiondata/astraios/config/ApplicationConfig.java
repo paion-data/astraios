@@ -33,7 +33,7 @@ import net.jcip.annotations.ThreadSafe;
  *     <li> the <a href="https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html">
  *          Java system properties</a>; for example, a Java system property can
  *          be set using {@code System.setProperty("EXAMPLE_CONFIG_KEY_NAME", "foo")}
- *     <li> a file named <b>oauth.properties</b> placed under CLASSPATH. This file can be put under
+ *     <li> a file named <b>application.properties</b> placed under CLASSPATH. This file can be put under
  *          {@code src/main/resources} source directory with contents, for example, {@code EXAMPLE_CONFIG_KEY_NAME=foo}
  * </ol>
  * Note that environment config has higher priority than Java system properties. Java system properties have higher
