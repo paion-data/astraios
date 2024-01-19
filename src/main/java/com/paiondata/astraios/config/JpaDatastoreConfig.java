@@ -88,4 +88,26 @@ public interface JpaDatastoreConfig extends Config {
     @NotNull
     @Key("DB_DIALECT")
     String dbDialect();
+
+    /**
+     * What to do with existing JPA database when webservice starts.
+     * <p>
+     * Can be one of the 4 values:
+     * <ol>
+     *     <li> validate - validate that the schema matches, make no changes to the schema of the database. This is the
+     *     default value
+     *     <li> update - update the schema to reflect the entities being persisted
+     *     <li> create - creates the schema necessary for your entities, destroying any previous data.
+     *     <li> create-drop - create the schema as in create above, but also drop the schema at the end of the session.
+     *          This is great in development or for testing.
+     * </ol>
+     * See https://stackoverflow.com/questions/18077327/hibernate-hbm2ddl-auto-possible-values-and-what-they-do for more
+     * details.
+     *
+     * @return a DB config string
+     */
+    @NotNull
+    @DefaultValue("validate")
+    @Key("HIBERNATE_HBM2DDL_AUTO")
+    String hibernateMbm2ddlAuto();
 }
