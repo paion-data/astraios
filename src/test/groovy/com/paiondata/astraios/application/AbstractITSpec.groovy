@@ -61,6 +61,8 @@ abstract class AbstractITSpec extends Specification {
         RestAssured.port = WS_PORT
         RestAssured.basePath = "/v1/data/"
 
+        System.setProperty("HIBERNATE_HBM2DDL_AUTO", "create")
+
         childSetupSpec()
     }
 
@@ -68,6 +70,8 @@ abstract class AbstractITSpec extends Specification {
         RestAssured.reset()
 
         childCleanupSpec()
+
+        System.clearProperty("HIBERNATE_HBM2DDL_AUTO")
     }
 
     def "JSON API allows for POSTing, GETing, PATCHing, and DELETing a book"() {

@@ -11,6 +11,7 @@ services:
       - DB_DRIVER=com.mysql.jdbc.Driver
       - DB_DIALECT=org.hibernate.dialect.MySQLDialect
       - DB_URL=jdbc:mysql://db/elide?serverTimezone=UTC
+      - HIBERNATE_HBM2DDL_AUTO=create
     depends_on:
       db:
         condition: service_healthy
