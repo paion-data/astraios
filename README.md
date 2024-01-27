@@ -10,12 +10,12 @@
 
 </div>
 
-Astraios <sup>![Java Version Badge][Java Version Badge]</sup>
+Astraios <sup>![Java Version badge][Java Version badge]</sup>
 ========
 
-[![GitHub Workflow Status][GitHub Workflow Status]](https://github.com/paion-data/astraios/actions/workflows/ci-cd.yml)
-![Last Commit](https://img.shields.io/github/last-commit/paion-data/astraios/master?logo=github&style=for-the-badge)
-[![Apache License Badge]](https://www.apache.org/licenses/LICENSE-2.0)
+[![GitHub Workflow Status][GitHub Workflow Status badge]][GitHub Workflow Status URL]
+[![Last Commit][GitHub Last Commit badge]][GitHub Last Commit URL]
+[![Apache License Badge]][Apache License, Version 2.0]
 
 [Astraios] is a [JSR 370] web service **template** that lets us _spin up_ and _deploy_ model driven GraphQL or JSON API
 web service with minimal effort.
@@ -34,7 +34,7 @@ At the end of the day, Astraios helps organization to **improve the velocity and
 Spinning Up the API in 1 Minute
 -------------------------------
 
-### Running API From Template <sup>[![Java Version Badge][Java Version Badge]](https://paion-data.github.io/astraios/docs/setup#installing-java--maven-on-mac) ![Maven Badge][Maven Badge] [![Docker Compose Badge][Docker Compose Badge]](https://docs.docker.com/engine/install/)</sup>
+### Running API From Template <sup>[![Java Version badge][Java Version badge]](https://paion-data.github.io/astraios/docs/setup#installing-java--maven-on-mac) ![Maven badge][Maven badge] [![Docker Compose badge][Docker Compose badge]](https://docs.docker.com/engine/install/)</sup>
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/paion-data/astraios/master/quickstart.sh)"
@@ -58,15 +58,17 @@ Simply open up our favorite browser and hit http://localhost:8080/v1/data/book
 Deploying the API in 5 Minutes
 ------------------------------
 
-![GitHub Actions Badge][GitHub Actions Badge]
-![HashiCorp Packer Badge][HashiCorp Packer Badge]
-![HashiCorp Terraform Badge][HashiCorp Terraform Badge]
+![GitHub Actions badge][GitHub Actions badge]
+![HashiCorp Packer badge][HashiCorp Packer badge]
+![HashiCorp Terraform badge][HashiCorp Terraform badge]
 [![AWS EC2 min size][AWS EC2 min size]](https://aws.amazon.com/ec2/instance-types/)
 
 Coming Soon!
 
 Documentation
 -------------
+
+[![upptime][upptime badge]][upptime url]
 
 Comprehensive documentation is viewable on our [website][Documentation]
 
@@ -110,32 +112,34 @@ Contributors <sup>[![Update Link Missing!](https://img.shields.io/badge/Click%20
 License
 -------
 
-The use and distribution terms for [Astraios] are covered by the
-[Apache License, Version 2.0][Apache License, Version 2.0].
+The use and distribution terms for [Astraios] are covered by the [Apache License, Version 2.0].
 
 [Apache License Badge]: https://img.shields.io/badge/Apache%202.0-F25910.svg?style=for-the-badge&logo=Apache&logoColor=white
 [Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0.html
-[Astraios]: https://paion-data.github.io/astraios/
+[Astraios]: https://astraios.io
 [AWS EC2 min size]: https://img.shields.io/badge/EC2-%E2%89%A5t2.small-FF9902?style=for-the-badge&logo=amazonec2&logoColor=white
 
 [Documentation]: https://paion-data.github.io/astraios/
-[Docker Compose Badge]: https://img.shields.io/badge/Docker%20Compose-2596EC?style=for-the-badge&logo=docker&logoColor=white
+[Docker Compose badge]: https://img.shields.io/badge/Docker%20Compose-2596EC?style=for-the-badge&logo=docker&logoColor=white
 
-[GitHub Actions Badge]: https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white
-[GitHub Workflow Status]: https://img.shields.io/github/actions/workflow/status/paion-data/astraios/ci-cd.yml?branch=master&logo=github&style=for-the-badge
-[Golden paths]: https://engineering.atspotify.com/2020/08/how-we-use-golden-paths-to-solve-fragmentation-in-our-software-ecosystem/
+[GitHub Actions badge]: https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white
+[GitHub Last Commit badge]: https://img.shields.io/github/last-commit/paion-data/astraios/master?logo=github&style=for-the-badge
+[GitHub Last Commit URL]: https://github.com/paion-data/astraios/commits/master/
+[GitHub Workflow Status badge]: https://img.shields.io/github/actions/workflow/status/paion-data/astraios/ci-cd.yml?branch=master&logo=github&style=for-the-badge
+[GitHub Workflow Status URL]: https://github.com/paion-data/astraios/actions/workflows/ci-cd.yml
 
-[HashiCorp Packer Badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
-[HashiCorp Terraform Badge]: https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white
+[HashiCorp Packer badge]: https://img.shields.io/badge/Packer-02A8EF?style=for-the-badge&logo=Packer&logoColor=white
+[HashiCorp Terraform badge]: https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white
 
-[Maven Badge]: https://img.shields.io/badge/Maven-DF5931?style=for-the-badge&logo=apachemaven&logoColor=white
+[Maven badge]: https://img.shields.io/badge/Maven-DF5931?style=for-the-badge&logo=apachemaven&logoColor=white
 
-[Java Version Badge]: https://img.shields.io/badge/Java-17-brightgreen?style=for-the-badge&logo=OpenJDK&logoColor=white
+[Java Version badge]: https://img.shields.io/badge/Java-17-brightgreen?style=for-the-badge&logo=OpenJDK&logoColor=white
 
 [JSR 370]: https://jcp.org/en/jsr/detail?id=370
 
-[Pareto Principle]: https://en.wikipedia.org/wiki/Pareto_principle
+<!-- markdown-link-check-disable -->
 
-[The Technology Acceptance Model (TAM)]: https://open.ncl.ac.uk/theories/1/technology-acceptance-model/
+[upptime badge]: https://img.shields.io/endpoint?style=for-the-badge&url=https://raw.githubusercontent.com/paion-data/paion-data-service-status/master/api/astraios/uptime.json
+[upptime url]: https://paion-data.github.io/paion-data-service-status/history/astraios
 
-[Yahoo Elide]: https://elide.io/
+<!-- markdown-link-check-enable -->
