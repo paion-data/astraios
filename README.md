@@ -137,5 +137,9 @@ The use and distribution terms for [Astraios] are covered by the [Apache License
 
 [JSR 370]: https://jcp.org/en/jsr/detail?id=370
 
+<!-- markdown-link-check-disable -->
+
 [upptime badge]: https://img.shields.io/endpoint?style=for-the-badge&url=https://raw.githubusercontent.com/paion-data/paion-data-service-status/master/api/astraios/uptime.json
 [upptime url]: https://paion-data.github.io/paion-data-service-status/history/astraios
+
+<!-- markdown-link-check-enable -->
