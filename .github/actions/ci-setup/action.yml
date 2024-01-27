@@ -27,7 +27,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up JDK
-      uses: QubitPi/hashicorp-aws/hashicorp/webservice/auxiliary/github/actions/jdk-setup@master
+      uses: QubitPi/hashicorp-aws/.github/actions/jdk-setup@master
     - name: Load Maven settings.xml
       shell: bash
       run: cp settings.xml.example ~/.m2/settings.xml
