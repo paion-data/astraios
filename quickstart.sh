@@ -16,8 +16,8 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-rm -rf jersey-webservice-template-jpa-data-models
-git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git
+rm -rf astraios-data-models-example
+git clone https://github.com/paion-data/astraios-data-models-example.git
 cd jersey-webservice-template-jpa-data-models
 mvn clean install
 cd ../
