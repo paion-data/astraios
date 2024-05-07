@@ -16,7 +16,8 @@ set -e
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git
+rm -rf astraios-data-models-example
+git clone https://github.com/paion-data/astraios-data-models-example.git
 cd jersey-webservice-template-jpa-data-models
 mvn clean install
 cd ../
@@ -44,6 +45,7 @@ cat >settings.xml <<'EOT'
 </settings>
 EOT
 
+rm -rf astraios
 git clone https://github.com/paion-data/astraios.git
 cd astraios
 mvn --settings ../settings.xml clean package

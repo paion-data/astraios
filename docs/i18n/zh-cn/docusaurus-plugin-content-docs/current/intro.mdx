@@ -82,7 +82,7 @@ public class Book {
 :::tip
 
 模型通常打包为一个单独 Maven 项目中的 **JAR** 文件。以下是一个
-完整的[示例](https://github.com/QubitPi/jersey-webservice-template-jpa-data-models)
+完整的[示例](https://github.com/paion-data/astraios-data-models-example)
 
 :::
 
@@ -90,11 +90,11 @@ public class Book {
 
 :::info
 
-在这之后，我们使用[这个示例数据模型][jersey-webservice-template-jpa-data-models]
+在这之后，我们使用[这个示例数据模型][astraios-data-models-example]
 
 ```bash
-git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git
-cd jersey-webservice-template-jpa-data-models
+git clone https://github.com/paion-data/astraios-data-models-example.git
+cd astraios-data-models-example.git
 mvn clean install
 ```
 
@@ -117,8 +117,8 @@ mvn clean install
         <profile>
             <id>astraios-data-models</id>
             <properties>
-                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
+                <model.package.jar.group.id>com.paiondata</model.package.jar.group.id>
+                <model.package.jar.artifact.id>astraios-data-models-example</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
@@ -138,12 +138,12 @@ mvn clean install
 ```bash
 cd my-webservice
 mvn clean package
-MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=com.paiondata.astraios.data.models docker compose up --build --force-recreate
 ```
 
 :::info
 
-`com.qubitpi.ws.jersey.template.models` 是之前提到的[数据模型包][jersey-webservice-template-jpa-data-models]名称
+`com.paiondata.astraios.data.models` 是之前提到的[数据模型包][astraios-data-models-example]名称
 
 :::
 
@@ -311,5 +311,5 @@ MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --bui
 
 [JAX-RS]: https://jcp.org/en/jsr/detail?id=370
 [Jersey]: https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/index.html
-[jersey-webservice-template-jpa-data-models]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models
+[astraios-data-models-example]: https://github.com/paion-data/astraios-data-models-example
 [Jetty]: https://eclipse.dev/jetty/

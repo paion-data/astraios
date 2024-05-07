@@ -83,7 +83,7 @@ public class Book {
 :::tip
 
 Models are usually packaged as **JAR** file in a separate Maven project. Here is a complete
-[example](https://github.com/QubitPi/jersey-webservice-template-jpa-data-models)
+[example](https://github.com/paion-data/astraios-data-models-example)
 
 :::
 
@@ -91,11 +91,11 @@ In the end, run `mvn clean install` to install our model
 
 :::info
 
-From this point on, we assume [this example data model][jersey-webservice-template-jpa-data-models] is used
+From this point on, we assume [this example data model][astraios-data-models-example] is used
 
 ```bash
-git clone https://github.com/QubitPi/jersey-webservice-template-jpa-data-models.git
-cd jersey-webservice-template-jpa-data-models
+git clone https://github.com/paion-data/astraios-data-models-example.git
+cd astraios-data-models-example.git
 mvn clean install
 ```
 
@@ -117,8 +117,8 @@ load [data models](#creating-models) via Maven config file, i.e. **~/.m2/setting
         <profile>
             <id>astraios-data-models</id>
             <properties>
-                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
+                <model.package.jar.group.id>com.paiondata</model.package.jar.group.id>
+                <model.package.jar.artifact.id>astraios-data-models-example</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>
@@ -138,13 +138,13 @@ With data models defined, can run _my-webservice_
 ```bash
 cd my-webservice
 mvn clean package
-MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=com.paiondata.astraios.data.models docker compose up --build --force-recreate
 ```
 
 :::info
 
-`com.qubitpi.ws.jersey.template.models` is the name of the model in the aforementioned
-[data model project][jersey-webservice-template-jpa-data-models]
+`com.paiondata.astraios.data.models` is the name of the model in the aforementioned
+[data model project][astraios-data-models-example]
 
 :::
 
@@ -314,5 +314,5 @@ our users is just as easy as it is to add new data. Let's update our model with 
 
 [JAX-RS]: https://jcp.org/en/jsr/detail?id=370
 [Jersey]: https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/index.html
-[jersey-webservice-template-jpa-data-models]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models
+[astraios-data-models-example]: https://github.com/paion-data/astraios-data-models-example
 [Jetty]: https://eclipse.dev/jetty/
