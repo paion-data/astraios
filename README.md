@@ -93,6 +93,13 @@ Contributors <sup>[![Update Link Missing!](https://img.shields.io/badge/Click%20
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/Doom9527">
+            <img src="https://avatars.githubusercontent.com/u/164460473?v=4" width="100;" alt="Doom9527"/>
+            <br />
+            <sub><b>Doom9527</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/TristeOak">
             <img src="https://avatars.githubusercontent.com/u/100420496?v=4" width="100;" alt="TristeOak"/>
             <br />
