@@ -32,7 +32,7 @@ cat >settings.xml <<'EOT'
         <profile>
             <id>astraios-data-models</id>
             <properties>
-                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
+                <model.package.jar.group.id>io.github.qubitpi</model.package.jar.group.id>
                 <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
@@ -49,5 +49,5 @@ rm -rf astraios
 git clone https://github.com/paion-data/astraios.git
 cd astraios
 mvn --settings ../settings.xml clean package
-MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=io.github.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
 cd ../

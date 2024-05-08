@@ -25,15 +25,15 @@ name: Astraios CI/CD
 env:
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
-  TEST_MODEL_PACKAGE_NAME: com.qubitpi.ws.jersey.template.models
+  TEST_MODEL_PACKAGE_NAME: io.github.qubitpi.ws.jersey.template.models
 
 jobs:
-  yml-md-style:
-    uses: QubitPi/hashicorp-aws/.github/workflows/yml-and-md-style-checks.yml@master
+  yml-md-style-and-link-checks:
+    uses: paion-data/github-actions-core/.github/workflows/yml-md-style-and-link-checks.yml@master
 
   tests:
     name: Unit & Integration Tests
-    needs: yml-md-style
+    needs: yml-md-style-and-link-checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

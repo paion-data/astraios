@@ -50,7 +50,7 @@ The IT tests will run against an [example model] so make sure the following envi
 model:
 
 ```bash
-export TEST_MODEL_PACKAGE_NAME=com.qubitpi.ws.jersey.template.models
+export TEST_MODEL_PACKAGE_NAME=io.github.qubitpi.ws.jersey.template.models
 ```
 
 <!-- markdown-link-check-disable -->
@@ -79,7 +79,7 @@ cp settings.xml.example ~/.m2/settings.xml
         <profile>
             <id>astraios-models</id>
             <properties>
-                <model.package.jar.group.id>com.qubitpi</model.package.jar.group.id>
+                <model.package.jar.group.id>io.github.qubitpi</model.package.jar.group.id>
                 <model.package.jar.artifact.id>
                    jersey-webservice-template-jpa-data-models
                 </model.package.jar.artifact.id>
@@ -418,7 +418,7 @@ export class Client {
 [Elide instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/Elide.java
 [Elide Standalone]: https://github.com/yahoo/elide/tree/master/elide-standalone
 [ElideSettings instance class]: https://github.com/yahoo/elide/blob/master/elide-core/src/main/java/com/yahoo/elide/ElideSettings.java
-[example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models/blob/master/src/main/java/com/qubitpi/ws/jersey/template/models/Book.java
+[example model]: https://github.com/QubitPi/jersey-webservice-template-jpa-data-models/blob/master/src/main/java/io/github/qubitpi/ws/jersey/template/models/Book.java
 
 [jcabi-mysql]: https://mysql.jcabi.com/
 
