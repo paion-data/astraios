@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.paiondata.astraios.config;
+package com.paiondata.astraios.settings;
 
 import org.aeonbits.owner.Config;
 
@@ -72,7 +72,7 @@ public interface JpaDatastoreConfig extends Config {
     String dbUrl();
 
     /**
-     * The SQL DB driver class name, such as "com.mysql.jdbc.Driver".
+     * The SQL DB driver class name, such as "com.mysql.cj.jdbc.Driver".
      *
      * @return a DB config string
      */
@@ -107,7 +107,7 @@ public interface JpaDatastoreConfig extends Config {
      * @return a DB config string
      */
     @NotNull
-    @DefaultValue("validate")
+    @DefaultValue("create")
     @Key("HIBERNATE_HBM2DDL_AUTO")
     String hibernateMbm2ddlAuto();
 }

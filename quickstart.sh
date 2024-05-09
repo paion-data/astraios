@@ -18,7 +18,7 @@ set -e
 
 rm -rf astraios-data-models-example
 git clone https://github.com/paion-data/astraios-data-models-example.git
-cd jersey-webservice-template-jpa-data-models
+cd astraios-data-models-example
 mvn clean install
 cd ../
 
@@ -49,5 +49,5 @@ rm -rf astraios
 git clone https://github.com/paion-data/astraios.git
 cd astraios
 mvn --settings ../settings.xml clean package
-MODEL_PACKAGE_NAME=io.github.qubitpi.ws.jersey.template.models docker compose up --build --force-recreate
+MODEL_PACKAGE_NAME=com.paiondata.astraios.data.models docker compose up --build --force-recreate
 cd ../

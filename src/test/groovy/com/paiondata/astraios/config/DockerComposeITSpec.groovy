@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.paiondata.astraios.application
+package com.paiondata.astraios.config
 
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.spock.Testcontainers
 
+import java.time.Duration
+
 @Testcontainers
 class DockerComposeITSpec extends AbstractITSpec {
-
-    final DockerComposeContainer COMPOSE = new DockerComposeContainer(new File("docker-compose.yml"))
+    def DockerComposeContainer COMPOSE = new DockerComposeContainer(new File("docker-compose.yml"))
             .withEnv("MODEL_PACKAGE_NAME", System.getenv().get("TEST_MODEL_PACKAGE_NAME"))
             .withExposedService(
                     "web",
                     WS_PORT,
                     Wait.forHttp("/v1/data/book").forStatusCode(200)
-            )
+            ).withStartupTimeout(Duration.ofMinutes(10))
 }

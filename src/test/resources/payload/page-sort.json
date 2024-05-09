@@ -1,0 +1,3 @@
+{
+  "query": "{\n  book(sort: \"-id\", first: \"1\", after: \"0\") {\n    edges {\n      node {\n        id\n        title\n      }\n    }\n    pageInfo {\n      totalRecords\n      startCursor\n      endCursor\n      hasNextPage\n    }\n  }\n}"
+}
