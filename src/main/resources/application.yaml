@@ -28,7 +28,7 @@ elide:
       enabled: false
       path: /subscription
     federation:
-      enabled: true
+      enabled: false
   api-docs:
     enabled: false
     path: /doc
@@ -42,7 +42,7 @@ elide:
     export:
       enabled: false
   aggregation-store:
-    enabled: true
+    enabled: false
     default-dialect: h2
     metadata-store:
       enabled: false
