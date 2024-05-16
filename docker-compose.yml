@@ -8,7 +8,7 @@ services:
       - MODEL_PACKAGE_NAME=${MODEL_PACKAGE_NAME}
       - DB_USER=root
       - DB_PASSWORD=root
-      - DB_DRIVER=com.mysql.jdbc.Driver
+      - DB_DRIVER=com.mysql.cj.jdbc.Driver
       - DB_DIALECT=org.hibernate.dialect.MySQLDialect
       - DB_URL=jdbc:mysql://db/elide?serverTimezone=UTC
       - HIBERNATE_HBM2DDL_AUTO=create
@@ -16,7 +16,7 @@ services:
       db:
         condition: service_healthy
   db:
-    image: "mysql:5.7.43"
+    image: "mysql:8.0.26"
     ports:
       - "3306:3306"
     volumes:

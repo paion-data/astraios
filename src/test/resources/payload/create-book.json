@@ -1,0 +1,3 @@
+{
+  "query": "mutation {\n  book(op: UPSERT, data: { title : \"%s\"}) {\n    edges {\n      node {\n        id\n        title\n      }\n    }\n  }\n}"
+}

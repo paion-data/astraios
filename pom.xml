@@ -7,7 +7,7 @@
     <groupId>com.paiondata</groupId>
     <artifactId>astraios</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>Astraios</name>
     <description>Template project for building Jersey webservice running in Jetty</description>
@@ -28,36 +28,37 @@
         </license>
     </licenses>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.3</version>
+    </parent>
+
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <jar.finalName>astraios</jar.finalName>
+        <java.version>17</java.version>
 
-        <version.elide>7.0.0-pr6</version.elide>
-        <version.validation.api>3.0.1</version.validation.api>
-        <version.jersey>3.1.1</version.jersey>
-        <hibernate.version>6.2.4.Final</hibernate.version>
-        <version.jcip.annotations>1.0</version.jcip.annotations>
-        <version.slf4j>2.0.7</version.slf4j>
-        <version.logback>1.4.7</version.logback>
-        <version.owner>1.0.12</version.owner>
+        <elide.version>7.0.0</elide.version>
+
+        <logback-access-spring-boot-starter.version>4.0.0</logback-access-spring-boot-starter.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
+
+        <!-- Jetty 11 uses servlet-api 5 and not 6 -->
+        <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+
+        <!-- see https://github.com/graalvm/native-build-tools/issues/358 -->
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+
         <version.groovy>4.0.6</version.groovy>
-        <version.jetty>11.0.15</version.jetty>
-
-        <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
+        <mysql-connector-java.version>8.0.26</mysql-connector-java.version>
         <version.maven.javadoc.plugin>3.5.0</version.maven.javadoc.plugin>
-        <version.maven.jar.plugin>3.1.1</version.maven.jar.plugin>
         <version.maven.surefire.plugin>3.0.0-M5</version.maven.surefire.plugin>
-        <version.maven.compiler.plugin>3.7.0</version.maven.compiler.plugin>
         <version.maven.failsafe.plugin>3.0.0-M4</version.maven.failsafe.plugin>
-        <version.maven.checkstyle.plugin>3.1.2</version.maven.checkstyle.plugin>
         <version.maven.surefire.report.plugin>${version.maven.surefire.plugin}</version.maven.surefire.report.plugin>
-
-        <checkstyle.skip>false</checkstyle.skip>
+        <version.maven.checkstyle.plugin>3.1.2</version.maven.checkstyle.plugin>
         <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
-        <checkstyle.suppressions.location>checkstyle-suppressions.xml</checkstyle.suppressions.location>
         <checkstyle.version>8.30</checkstyle.version>
-        <checkstyle.resourceIncludes>**/*.properties*</checkstyle.resourceIncludes>
+        <checkstyle.suppressions.location>checkstyle-suppressions.xml</checkstyle.suppressions.location>
     </properties>
 
     <dependencyManagement>
@@ -71,9 +72,15 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-bom</artifactId>
-                <version>${version.jetty}</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yahoo.elide</groupId>
+                <artifactId>elide-bom</artifactId>
+                <version>${elide.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -86,101 +93,144 @@
             <artifactId>${model.package.jar.artifact.id}</artifactId>
             <version>${model.package.jar.version}</version>
         </dependency>
-
-        <!-- Logging -->
+        <!-- Runtime -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${version.slf4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>4.11</version>
-        </dependency>
-        <dependency>
-            <groupId>io.sentry</groupId>
-            <artifactId>sentry-logback</artifactId>
-            <version>6.25.2</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- Elide -->
         <dependency>
-            <groupId>com.yahoo.elide</groupId>
-            <artifactId>elide-core</artifactId>
-            <version>${version.elide}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yahoo.elide</groupId>
-            <artifactId>elide-datastore-jpa</artifactId>
-            <version>${version.elide}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yahoo.elide</groupId>
-            <artifactId>elide-graphql</artifactId>
-            <version>${version.elide}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.yahoo.elide</groupId>
-            <artifactId>elide-test-helpers</artifactId>
-            <version>${version.elide}</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.49</version>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>${version.validation.api}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet</artifactId>
-            <version>${version.jersey}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>3.0.0</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- Hibernate -->
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-hikaricp</artifactId>
-            <version>${hibernate.version}</version>
+            <groupId>com.yahoo.elide</groupId>
+            <artifactId>elide-spring-boot-starter</artifactId>
+            <!-- Remove Tomcat -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+                <!-- Remove commons-logging as it conflicts with spring-jcl -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- Concurrency -->
+        <!-- Use Jetty -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-artemis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
+        <!-- Request/Response logging -->
+        <dependency>
+            <groupId>dev.akkinoc.spring.boot</groupId>
+            <artifactId>logback-access-spring-boot-starter</artifactId>
+            <version>${logback-access-spring-boot-starter.version}</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>com.yahoo.elide</groupId>
+            <artifactId>elide-test-helpers</artifactId>
+            <version>${elide.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <!-- Remove commons-logging as it conflicts with spring-jcl -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- For hot reloads in Intellij/Eclipse -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>${version.jcip.annotations}</version>
+            <version>1.0</version>
         </dependency>
-
-        <!-- Configurations -->
         <dependency>
             <groupId>org.aeonbits.owner</groupId>
             <artifactId>owner</artifactId>
-            <version>${version.owner}</version>
+            <version>1.0.12</version>
         </dependency>
 
         <!-- Testing -->
@@ -207,23 +257,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Jetty-->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -236,41 +269,56 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!-- Testcontainers for integration tests with Docker -->
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>spock</artifactId>
-            <version>1.19.0</version>
+            <artifactId>testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mysql</artifactId>
-            <version>1.19.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>spock</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-
         <plugins>
-            <!-- Use Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${version.maven.compiler.plugin}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.paiondata.astraios.App</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Java Checkstyle -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -379,71 +427,6 @@
                     </includes>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${version.maven.war.plugin}</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${version.maven.jar.plugin}</version>
-            </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <id>aggregate-checkstyle</id>
-                        <inherited>false</inherited>
-                        <reports>
-                            <report>checkstyle-aggregate</report>
-                        </reports>
-                    </reportSet>
-                    <reportSet>
-                        <id>checkstyle</id>
-                        <reports>
-                            <report>checkstyle</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <id>default</id>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <charset>UTF-8</charset>
-                    <docencoding>UTF-8</docencoding>
-                    <doclint>none</doclint>
-                    <javadocDirectory>${basedir}/src/main/javadoc/resources</javadocDirectory>
-                    <docfilessubdirs>true</docfilessubdirs>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>

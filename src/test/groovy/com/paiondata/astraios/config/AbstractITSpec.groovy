@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.paiondata.astraios.application
+package com.paiondata.astraios.config
+
+import com.yahoo.elide.jsonapi.JsonApi
+
+import com.paiondata.astraios.models.Book
+
+import org.apache.http.HttpStatus
 
 import static com.yahoo.elide.test.graphql.GraphQLDSL.argument
 import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
@@ -29,19 +35,12 @@ import static com.yahoo.elide.test.jsonapi.JsonApiDSL.datum
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
-import static org.hamcrest.Matchers.equalTo
-
-import com.yahoo.elide.jsonapi.JsonApi
-
-import com.paiondata.astraios.models.Book
-
-import org.apache.http.HttpStatus
-
 import groovy.json.JsonBuilder
 import io.restassured.RestAssured
 import io.restassured.response.Response
 import jakarta.validation.constraints.NotNull
 import jakarta.ws.rs.core.MediaType
+import static org.hamcrest.Matchers.equalTo
 import spock.lang.Specification
 
 abstract class AbstractITSpec extends Specification {
@@ -57,13 +56,13 @@ abstract class AbstractITSpec extends Specification {
     }
 
     def setupSpec() {
+        childSetupSpec()
+
         RestAssured.baseURI = "http://localhost"
         RestAssured.port = WS_PORT
         RestAssured.basePath = "/v1/data/"
 
         System.setProperty("HIBERNATE_HBM2DDL_AUTO", "create")
-
-        childSetupSpec()
     }
 
     def cleanupSpec() {
