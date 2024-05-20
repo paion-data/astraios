@@ -124,6 +124,6 @@ If tabs still come out at 2 spaces when hitting TAB or Enter, not 4 spaces, try:
 
 [Astraios]: https://paion-data.github.io/astraios/
 
-[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/application/ResourceConfigITSpec.groovy
+[Docker-based integration tests]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/config/DockerComposeITSpec.groovy
 
 [style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml

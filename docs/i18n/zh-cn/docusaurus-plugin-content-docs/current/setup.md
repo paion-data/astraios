@@ -96,6 +96,6 @@ cd astraios
 
 [Astraios]: https://paion-data.github.io/astraios/
 
-[Docker 的集成测试]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/application/ResourceConfigITSpec.groovy
+[Docker 的集成测试]: https://github.com/paion-data/astraios/blob/master/src/test/groovy/com/paiondata/astraios/config/DockerComposeITSpec.groovy
 
 [style config]: https://github.com/paion-data/astraios/blob/master/Astraios-Project-intellij-code-style.xml

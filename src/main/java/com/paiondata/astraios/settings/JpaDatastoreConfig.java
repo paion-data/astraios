@@ -107,7 +107,7 @@ public interface JpaDatastoreConfig extends Config {
      * @return a DB config string
      */
     @NotNull
-    @DefaultValue("create")
+    @DefaultValue("validate")
     @Key("HIBERNATE_HBM2DDL_AUTO")
     String hibernateMbm2ddlAuto();
 }
