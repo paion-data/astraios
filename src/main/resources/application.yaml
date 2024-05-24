@@ -50,6 +50,8 @@ elide:
       enabled: true
       path: analytics
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration
   cloud:
     refresh:
       enabled: false
