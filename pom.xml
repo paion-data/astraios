@@ -38,7 +38,7 @@
         <jar.finalName>astraios</jar.finalName>
         <java.version>17</java.version>
 
-        <elide.version>7.0.5</elide.version>
+        <elide.version>1.0.9</elide.version>
 
         <logback-access-spring-boot-starter.version>4.0.0</logback-access-spring-boot-starter.version>
         <snakeyaml.version>2.2</snakeyaml.version>
@@ -78,9 +78,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.yahoo.elide</groupId>
+                <groupId>com.paiondata.elide</groupId>
                 <artifactId>elide-bom</artifactId>
-                <version>${elide.version}</version>
+                <version>1.0.9</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -111,7 +111,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.yahoo.elide</groupId>
+            <groupId>com.paiondata.elide</groupId>
             <artifactId>elide-spring-boot-starter</artifactId>
             <!-- Remove Tomcat -->
             <exclusions>
@@ -174,7 +174,7 @@
 
         <!-- Test -->
         <dependency>
-            <groupId>com.yahoo.elide</groupId>
+            <groupId>com.paiondata.elide</groupId>
             <artifactId>elide-test-helpers</artifactId>
             <version>${elide.version}</version>
             <scope>test</scope>
