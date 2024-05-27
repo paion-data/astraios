@@ -28,6 +28,6 @@ class DockerComposeITSpec extends AbstractITSpec {
             .withExposedService(
                     "web",
                     WS_PORT,
-                    Wait.forHttp("/v1/data/book").forStatusCode(200)
+                    Wait.forHttp("/v1/data/book").forStatusCode(200).withStartupTimeout(Duration.ofMinutes(5))
             ).withStartupTimeout(Duration.ofMinutes(10))
 }
