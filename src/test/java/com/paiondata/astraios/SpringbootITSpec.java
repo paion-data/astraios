@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.yahoo.elide.core.exceptions.HttpStatus;
 import com.yahoo.elide.jsonapi.JsonApi;
+import com.yahoo.elide.swagger.OpenApiDocument.MediaType;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +45,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import jakarta.validation.constraints.NotNull;
-import jakarta.ws.rs.core.MediaType;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
