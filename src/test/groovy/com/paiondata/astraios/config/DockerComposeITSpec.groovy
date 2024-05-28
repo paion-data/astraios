@@ -24,7 +24,7 @@ import java.time.Duration
 @Testcontainers
 class DockerComposeITSpec extends AbstractITSpec {
     def DockerComposeContainer COMPOSE = new DockerComposeContainer(new File("docker-compose.yml"))
-            .withEnv("MODEL_PACKAGE_NAME", System.getenv().get("TEST_MODEL_PACKAGE_NAME"))
+            .withEnv("MODEL_PACKAGE_NAME", "com.paiondata.astraios.models")
             .withExposedService(
                     "web",
                     WS_PORT,
