@@ -35,11 +35,13 @@ import static com.yahoo.elide.test.jsonapi.JsonApiDSL.datum
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
 import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
+
+import com.yahoo.elide.swagger.OpenApiDocument.MediaType
+
 import groovy.json.JsonBuilder
 import io.restassured.RestAssured
 import io.restassured.response.Response
 import jakarta.validation.constraints.NotNull
-import jakarta.ws.rs.core.MediaType
 import static org.hamcrest.Matchers.equalTo
 import spock.lang.Specification
 
