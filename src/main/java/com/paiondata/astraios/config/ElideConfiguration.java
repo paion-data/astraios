@@ -44,7 +44,6 @@ import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.hibernate.jpa.boot.internal.PersistenceUnitInfoDescriptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Description;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
@@ -207,12 +206,22 @@ public class ElideConfiguration {
         );
     }
 
+    /**
+     * Returns a customization of GraphQL support.
+     * <p>
+     * The customization includes supporting {@link GraphQLDescription} annotation for entity beans.
+     *
+     * @return a new instance
+     */
     @Bean
     GraphQLSettingsBuilderCustomizer graphqlSettingsBuilderCustomizer() {
         return graphqlSettings -> graphqlSettings.graphqlFieldDefinitionCustomizer(
                 ((fieldDefinition, parentClass, attributeClass, attribute, fetcher, entityDictionary) -> {
-                    GraphQLDescription description = entityDictionary.getAttributeOrRelationAnnotation(parentClass,
-                            GraphQLDescription.class, attribute);
+                    final GraphQLDescription description = entityDictionary.getAttributeOrRelationAnnotation(
+                            parentClass,
+                            GraphQLDescription.class,
+                            attribute
+                    );
                     if (description != null) {
                         fieldDefinition.description(description.value());
                     }
@@ -221,7 +230,10 @@ public class ElideConfiguration {
 
     /**
      * Initializes the Elide {@link Elide} service with the specified {@link ElideConfigProperties}.
+     *
      * @param settings ElideConfigProperties
+     * @param entityDictionary  The entity bean configurations
+     *
      * @return Elide
      */
     @Bean
