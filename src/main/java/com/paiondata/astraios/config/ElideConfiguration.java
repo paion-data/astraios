@@ -28,6 +28,10 @@ import com.yahoo.elide.core.utils.coerce.CoerceUtil;
 import com.yahoo.elide.datastores.jpa.JpaDataStore;
 import com.yahoo.elide.datastores.jpa.PersistenceUnitInfoImpl;
 import com.yahoo.elide.datastores.jpa.transaction.NonJtaTransaction;
+import com.yahoo.elide.graphql.DefaultGraphQLFieldDefinitionCustomizer;
+import com.yahoo.elide.graphql.GraphQLSettings;
+import com.yahoo.elide.graphql.GraphQLSettingsBuilderCustomizer;
+import com.yahoo.elide.graphql.annotation.GraphQLDescription;
 import com.yahoo.elide.jsonapi.JsonApiSettings;
 import com.yahoo.elide.spring.config.ElideConfigProperties;
 
@@ -203,21 +207,53 @@ public class ElideConfiguration {
     }
 
     /**
+     * Returns a customization of GraphQL support.
+     * <p>
+     * The customization includes supporting {@link GraphQLDescription} annotation for entity beans.
+     *
+     * @return a new instance
+     */
+    @Bean
+    GraphQLSettingsBuilderCustomizer graphqlSettingsBuilderCustomizer() {
+        return graphqlSettings -> graphqlSettings.graphqlFieldDefinitionCustomizer(
+                ((fieldDefinition, parentClass, attributeClass, attribute, fetcher, entityDictionary) -> {
+                    final GraphQLDescription description = entityDictionary.getAttributeOrRelationAnnotation(
+                            parentClass,
+                            GraphQLDescription.class,
+                            attribute
+                    );
+                    if (description != null) {
+                        fieldDefinition.description(description.value());
+                    }
+                }));
+    }
+
+    /**
      * Initializes the Elide {@link Elide} service with the specified {@link ElideConfigProperties}.
+     *
      * @param settings ElideConfigProperties
+     * @param entityDictionary  The entity bean configurations
+     *
      * @return Elide
      */
     @Bean
-    Elide elide(final ElideConfigProperties settings) {
+    Elide elide(final ElideConfigProperties settings, final EntityDictionary entityDictionary) {
         final ElideSettings.ElideSettingsBuilder builder = ElideSettings.builder()
                 .dataStore(buildDataStore(entityManagerFactory()))
-                .entityDictionary(buildEntityDictionary())
+                .entityDictionary(entityDictionary)
                 .maxPageSize(settings.getMaxPageSize())
                 .defaultPageSize(settings.getDefaultPageSize())
                 .auditLogger(new Slf4jLogger())
-                .settings(JsonApiSettings.builder()
-                        .joinFilterDialect(RSQLFilterDialect.builder().dictionary(buildEntityDictionary()).build())
-                        .subqueryFilterDialect(RSQLFilterDialect.builder().dictionary(buildEntityDictionary()).build()))
+                .settings(
+                        JsonApiSettings.builder()
+                                .joinFilterDialect(RSQLFilterDialect.builder().dictionary(entityDictionary).build())
+                                .subqueryFilterDialect(
+                                        RSQLFilterDialect.builder().dictionary(entityDictionary).build()
+                                ),
+                        GraphQLSettings.GraphQLSettingsBuilder
+                                .withDefaults(entityDictionary)
+                                .graphqlFieldDefinitionCustomizer(DefaultGraphQLFieldDefinitionCustomizer.INSTANCE)
+                )
                 .serdes(serdes -> serdes.withISO8601Dates("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC")));
         return new Elide(builder.build());
     }
