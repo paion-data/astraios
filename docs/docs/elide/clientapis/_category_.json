@@ -1,8 +1,0 @@
-{
-  "label": "Client APIs",
-  "position": 7,
-  "link": {
-    "type": "generated-index",
-    "description": "JSON API and GraphQL Client APIs"
-  }
-}
