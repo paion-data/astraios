@@ -28,6 +28,10 @@ import com.paiondata.elide.core.utils.coerce.CoerceUtil;
 import com.paiondata.elide.datastores.jpa.JpaDataStore;
 import com.paiondata.elide.datastores.jpa.PersistenceUnitInfoImpl;
 import com.paiondata.elide.datastores.jpa.transaction.NonJtaTransaction;
+import com.paiondata.elide.graphql.DefaultGraphQLFieldDefinitionCustomizer;
+import com.paiondata.elide.graphql.GraphQLSettings;
+import com.paiondata.elide.graphql.GraphQLSettingsBuilderCustomizer;
+import com.paiondata.elide.graphql.annotation.GraphQLDescription;
 import com.paiondata.elide.jsonapi.JsonApiSettings;
 import com.paiondata.elide.spring.config.ElideConfigProperties;
 

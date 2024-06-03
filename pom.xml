@@ -38,7 +38,7 @@
         <jar.finalName>astraios</jar.finalName>
         <java.version>17</java.version>
 
-        <elide.version>1.0.9</elide.version>
+        <elide.version>1.0.11</elide.version>
 
         <logback-access-spring-boot-starter.version>4.0.0</logback-access-spring-boot-starter.version>
         <snakeyaml.version>2.2</snakeyaml.version>
