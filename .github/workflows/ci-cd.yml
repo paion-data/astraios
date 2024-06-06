@@ -1,4 +1,4 @@
-# Copyright Paion Data
+# Copyright 2024 Paion Data
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ env:
 
 jobs:
   yml-md-style-and-link-checks:
-    uses: paion-data/github-actions-core/.github/workflows/yml-md-style-and-link-checks.yml@master
+    uses: paion-data/ci-cd-core/.github/workflows/yml-md-style-and-link-checks.yml@master
 
   tests:
     name: Unit & Integration Tests
