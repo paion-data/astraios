@@ -15,28 +15,28 @@
  */
 package com.paiondata.astraios.config
 
-import com.yahoo.elide.jsonapi.JsonApi
+import com.paiondata.elide.jsonapi.JsonApi
 
 import com.paiondata.astraios.models.Book
 
 import org.apache.http.HttpStatus
 
-import static com.yahoo.elide.test.graphql.GraphQLDSL.argument
-import static com.yahoo.elide.test.graphql.GraphQLDSL.arguments
-import static com.yahoo.elide.test.graphql.GraphQLDSL.document
-import static com.yahoo.elide.test.graphql.GraphQLDSL.field
-import static com.yahoo.elide.test.graphql.GraphQLDSL.mutation
-import static com.yahoo.elide.test.graphql.GraphQLDSL.selection
-import static com.yahoo.elide.test.graphql.GraphQLDSL.selections
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attr
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.attributes
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.data
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.datum
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.id
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.resource
-import static com.yahoo.elide.test.jsonapi.JsonApiDSL.type
+import static com.paiondata.elide.test.graphql.GraphQLDSL.argument
+import static com.paiondata.elide.test.graphql.GraphQLDSL.arguments
+import static com.paiondata.elide.test.graphql.GraphQLDSL.document
+import static com.paiondata.elide.test.graphql.GraphQLDSL.field
+import static com.paiondata.elide.test.graphql.GraphQLDSL.mutation
+import static com.paiondata.elide.test.graphql.GraphQLDSL.selection
+import static com.paiondata.elide.test.graphql.GraphQLDSL.selections
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.attr
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.attributes
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.data
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.datum
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.id
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.resource
+import static com.paiondata.elide.test.jsonapi.JsonApiDSL.type
 
-import com.yahoo.elide.swagger.OpenApiDocument.MediaType
+import com.paiondata.elide.swagger.OpenApiDocument.MediaType
 
 import groovy.json.JsonBuilder
 import io.restassured.RestAssured

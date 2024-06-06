@@ -32,8 +32,8 @@ cat >settings.xml <<'EOT'
         <profile>
             <id>astraios-data-models</id>
             <properties>
-                <model.package.jar.group.id>io.github.qubitpi</model.package.jar.group.id>
-                <model.package.jar.artifact.id>jersey-webservice-template-jpa-data-models</model.package.jar.artifact.id>
+                <model.package.jar.group.id>com.paiondata</model.package.jar.group.id>
+                <model.package.jar.artifact.id>astraios-data-models-example</model.package.jar.artifact.id>
                 <model.package.jar.version>1.0.0</model.package.jar.version>
             </properties>
         </profile>

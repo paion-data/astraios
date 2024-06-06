@@ -25,7 +25,7 @@ name: Astraios CI/CD
 env:
   USER: QubitPi
   EMAIL: jack20220723@gmail.com
-  TEST_MODEL_PACKAGE_NAME: io.github.qubitpi.ws.jersey.template.models
+  TEST_MODEL_PACKAGE_NAME: com.paiondata.astraios.data.models
 
 jobs:
   yml-md-style-and-link-checks:
@@ -40,8 +40,8 @@ jobs:
       - name: Test environment setup
         uses: ./.github/actions/ci-setup
         with:
-          data-models-repo-org: QubitPi
-          data-models-repo-name: jersey-webservice-template-jpa-data-models
+          data-models-repo-org: paion-data
+          data-models-repo-name: astraios-data-models-example
       - name: Set up Docker for Integration Tests
         uses: docker-practice/actions-setup-docker@master
       - name: Run unit & integration tests
@@ -56,8 +56,8 @@ jobs:
       - name: Test environment setup
         uses: ./.github/actions/ci-setup
         with:
-          data-models-repo-org: QubitPi
-          data-models-repo-name: jersey-webservice-template-jpa-data-models
+          data-models-repo-org: paion-data
+          data-models-repo-name: astraios-data-models-example
       - name: Install dependencies
         working-directory: docs
         run: yarn

@@ -26,14 +26,14 @@
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
 
     <!-- Log JPA Datastore HQL Statements -->
-    <logger name="com.yahoo.elide.datastores.jpql.query.DefaultQueryLogger" level="DEBUG" />
+    <logger name="com.paiondata.elide.datastores.jpql.query.DefaultQueryLogger" level="DEBUG" />
 
     <!-- Log SQL/JPQL Timings -->
-    <logger name="com.yahoo.elide.core.utils.TimedFunction" level="DEBUG" />
+    <logger name="com.paiondata.elide.core.utils.TimedFunction" level="DEBUG" />
 
     <!-- Log HTTP Error Explanations -->
-    <logger name="com.yahoo.elide.graphql.QueryRunner" level="DEBUG" />
-    <logger name="com.yahoo.elide.Elide" level="DEBUG" />
+    <logger name="com.paiondata.elide.graphql.QueryRunner" level="DEBUG" />
+    <logger name="com.paiondata.elide.Elide" level="DEBUG" />
 
     <root level="info">
         <appender-ref ref="STDOUT" />

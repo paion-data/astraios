@@ -15,25 +15,25 @@
  */
 package com.paiondata.astraios.config;
 
-import com.yahoo.elide.Elide;
-import com.yahoo.elide.ElideSettings;
-import com.yahoo.elide.core.audit.Slf4jLogger;
-import com.yahoo.elide.core.datastore.DataStore;
-import com.yahoo.elide.core.dictionary.EntityDictionary;
-import com.yahoo.elide.core.dictionary.Injector;
-import com.yahoo.elide.core.filter.dialect.RSQLFilterDialect;
-import com.yahoo.elide.core.utils.ClassScanner;
-import com.yahoo.elide.core.utils.DefaultClassScanner;
-import com.yahoo.elide.core.utils.coerce.CoerceUtil;
-import com.yahoo.elide.datastores.jpa.JpaDataStore;
-import com.yahoo.elide.datastores.jpa.PersistenceUnitInfoImpl;
-import com.yahoo.elide.datastores.jpa.transaction.NonJtaTransaction;
-import com.yahoo.elide.graphql.DefaultGraphQLFieldDefinitionCustomizer;
-import com.yahoo.elide.graphql.GraphQLSettings;
-import com.yahoo.elide.graphql.GraphQLSettingsBuilderCustomizer;
-import com.yahoo.elide.graphql.annotation.GraphQLDescription;
-import com.yahoo.elide.jsonapi.JsonApiSettings;
-import com.yahoo.elide.spring.config.ElideConfigProperties;
+import com.paiondata.elide.Elide;
+import com.paiondata.elide.ElideSettings;
+import com.paiondata.elide.core.audit.Slf4jLogger;
+import com.paiondata.elide.core.datastore.DataStore;
+import com.paiondata.elide.core.dictionary.EntityDictionary;
+import com.paiondata.elide.core.dictionary.Injector;
+import com.paiondata.elide.core.filter.dialect.RSQLFilterDialect;
+import com.paiondata.elide.core.utils.ClassScanner;
+import com.paiondata.elide.core.utils.DefaultClassScanner;
+import com.paiondata.elide.core.utils.coerce.CoerceUtil;
+import com.paiondata.elide.datastores.jpa.JpaDataStore;
+import com.paiondata.elide.datastores.jpa.PersistenceUnitInfoImpl;
+import com.paiondata.elide.datastores.jpa.transaction.NonJtaTransaction;
+import com.paiondata.elide.graphql.DefaultGraphQLFieldDefinitionCustomizer;
+import com.paiondata.elide.graphql.GraphQLSettings;
+import com.paiondata.elide.graphql.GraphQLSettingsBuilderCustomizer;
+import com.paiondata.elide.graphql.annotation.GraphQLDescription;
+import com.paiondata.elide.jsonapi.JsonApiSettings;
+import com.paiondata.elide.spring.config.ElideConfigProperties;
 
 import com.paiondata.astraios.settings.ApplicationConfig;
 import com.paiondata.astraios.settings.JpaDatastoreConfig;
