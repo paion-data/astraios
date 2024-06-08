@@ -1,0 +1,16 @@
+{
+  book(sort: "-id", first: "1", after: "0") {
+    edges {
+      node {
+        id
+        title
+      }
+    }
+    pageInfo {
+      totalRecords
+      startCursor
+      endCursor
+      hasNextPage
+    }
+  }
+}
