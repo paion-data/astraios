@@ -127,8 +127,46 @@ Note that the `settings.xml` is the [Maven config file for loading the data mode
 
 :::
 
+If everything runs successfully, we should be able to see the following output at end of the command line output:
+
+```console
+web-1  | 25-06-2024 04:41:53.654 [main] [Elide, ] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+web-1  | 25-06-2024 04:41:53.676 [main] [Elide, ] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
+web-1  | 25-06-2024 04:41:53.709 [main] [Elide, ] INFO  com.paiondata.astraios.App.logStarted - Started App in 14.755 seconds (process running for 16.004)
+```
+
+A MySQL database container has also started alongside and is accessible via
+
+```console
+mysql -h localhost -D elide -P 3306 --protocol=tcp -u root -proot
+```
+
+All data is persisted in a database called __elide__
+
 Writing Data
 ------------
+
+:::tip[Installing GraphiQL]
+
+GraphiQL offers a user-friendly UI for issuing GraphQL queries and displaying query responses. We can use it for the
+API call below.
+
+- __Mac__ uses [Homebrew](https://formulae.brew.sh/cask/graphiql)
+
+  ```console
+  brew install --cask graphiql
+  ```
+
+- __Windows__ binary can be downloaded from the [release page](https://github.com/skevy/graphiql-app/releases).
+  Then install the downloaded `.exe` file
+- __Linux__ users can follow the
+  [official documentation](https://github.com/skevy/graphiql-app?tab=readme-ov-file#linux-installation)
+
+When installed, the GraphiQL user interface looks like the following:
+
+![Error loading graphiql.png](./img/graphiql.png)
+
+:::
 
 ### Inserting Data
 
