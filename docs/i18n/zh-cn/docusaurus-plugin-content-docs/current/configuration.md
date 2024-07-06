@@ -34,21 +34,35 @@ title: 配置
 
 - **MODEL_PACKAGE_NAME**: 包含了所有 Elide JPA data model 的完全限定 Java 包路径名
 
-(Elide) JPA DataStore
+(Elide) JPA数据存储
 ---------------------
 
 :::note
 
-以下配置可以放置在名为 **jpadatastore.properties** 的配置文件中
+以下配置可以放置在名为**jpadatastore.properties**的属性文件中
 
 :::
 
-- **DB_USER**: 持久化数据库用户名（需要具有读写权限）。
-- **DB_PASSWORD**: 持久化数据库用户密码。
-- **DB_URL**: 持久化数据库 URL，比如 "jdbc:mysql://localhost/elide?serverTimezone=UTC"。
-- **DB_DRIVER**: SQL 数据库驱动类名，例如 "com.mysql.jdbc.Driver"。
-- **DB_DIALECT**: SQL 数据库语法类名，例如 "org.hibernate.dialect.MySQLDialect"。
+- **DB_USER**: 持久性数据库用户名（需要有读写权限）。
+- **DB_PASSWORD**: 持久性数据库用户密码。
+- **DB_URL**: 持久性数据库URL，如"jdbc:mysql://localhost/elide?serverTimezone=UTC"。
+- **DB_DRIVER**: SQL数据库驱动类名，如"com.mysql.jdbc.Driver"。
+- **DB_DIALECT**: SQL数据库方言名称，如"org.hibernate.dialect.MySQLDialect"。
+- **HIBERNATE_HBM2DDL_AUTO**: Web服务启动时对现有JPA数据库的处理方式；可以是四个值之一：
 
-[Java 系统属性]: https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+    1. _validate_: 验证模式是否匹配，不对数据库的模式做任何更改。_这是**HIBERNATE_HBM2DDL_AUTO**的默认值_
+    2. _update_: 更新模式以反映要持久化的实体
+    3. _create_: 为您的实体创建必要的模式，销毁以前的任何数据。
+    4. _create-drop_: 如同在create中一样创建模式，但在会话结束时也删除模式。这非常适合开发或测试。
 
-[操作系统的环境变量]: https://docs.oracle.com/javase/tutorial/essential/environment/env.html
+  :::note
+
+  此属性与[Hibernate `hibernate.hbm2ddl.auto`属性]完全相同。
+
+  :::
+
+[Hibernate `hibernate.hbm2ddl.auto`属性]: https://stackoverflow.com/questions/18077327/hibernate-hbm2ddl-auto-possible-values-and-what-they-do
+
+[Java系统属性]: https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+
+[操作系统环境变量]: https://docs.oracle.com/javase/tutorial/essential/environment/env.html
