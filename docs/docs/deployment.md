@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
-title: Production
+title: Deployment
+description: Astraios deployment guide
 ---
 
 [//]: # (Copyright 2024 Paion Data)
@@ -20,7 +21,7 @@ title: Production
 This section discusses deploying [Astraios] in production.
 
 Prepare for Production Development
------------------------------
+----------------------------------
 
 ### Installing Java (on Ubuntu)
 
@@ -91,6 +92,15 @@ Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "5.4.0-182-generic", arch: "amd64", family: "unix"
 ```
 
+In the example, Maven is obviously using the correct JDK, so there is no need to set the JAVA_HOME environment variable
+extra. However, if you want to explicitly set JAVA_HOME, or in some cases (for example, when there are multiple JDK
+installations) make sure Maven always uses a specific JDK 17, You can add the following lines to your shell
+configuration file (such as.bashrc,.zshrc, or.profile) :
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+```
+
 ### Loading Data Models
 
 ```bash
@@ -99,8 +109,8 @@ cd astraios-data-models-example
 mvn clean install
 ```
 
-So now we have some models, but without an API it is not very useful. Now we need to instruct our _my-webservice_ to
-load data models via Maven config file, i.e. **~/.m2/settings.xml**:
+Now that we have the model installed locally, we need to get astraios to load the model through the maven configuration
+file, add the following configuration information via **~/.m2/settings.xml** ~/.m2/settings.xml:
 
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"

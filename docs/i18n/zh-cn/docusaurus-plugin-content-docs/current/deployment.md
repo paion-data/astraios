@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
-title: 生产
+title: 部署
+description: Astraios 部署指南
 ---
 
 [//]: # (Copyright 2024 Paion Data)
@@ -20,7 +21,7 @@ title: 生产
 本节讨论如何在生产环境中部署[Astraios]。
 
 准备在生产环境上开发
------------------------------
+-----------------
 
 ### 安装Java（在Ubuntu上）
 
@@ -91,6 +92,14 @@ Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "5.4.0-182-generic", arch: "amd64", family: "unix"
 ```
 
+在这个的例子中，Maven 显然正在使用正确的 JDK，因此不需要额外设置 JAVA_HOME 环境变量。然而，如果你希望明确设置 JAVA_HOME，或者在某些情况下
+（例如，当有多个 JDK 安装时）确保 Maven 总是使用特定的 JDK 17，你可以在你的 shell 配置文件（如 .bashrc, .zshrc 或 .profile）中添加以
+下行：
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+```
+
 ### 加载数据模型
 
 ```bash
@@ -99,9 +108,7 @@ cd astraios-data-models-example
 mvn clean install
 ```
 
-现在我们有了一些模型，但是如果没有 API 的话并不是很有用。
-需要让 _my-webservice_ 通过 Maven 配置文件来
-加载数据模型，即 **~/.m2/settings.xml**：
+现在我们已经将model安装到了本地，我们需要让astraios 通过maven配置文件来读取安装的model，在 **~/.m2/settings.xml** 下添加以下配置信息：
 
 ```xml
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
