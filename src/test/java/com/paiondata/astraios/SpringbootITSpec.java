@@ -442,7 +442,10 @@ public class SpringbootITSpec {
      */
     @NotNull
     private String payload(final @NotNull String resourceName) {
-        return toResource("payload", resourceName);
+        return toResource("payload", resourceName)
+                .replace("\n", "")
+                // Escape the double quotes and backslash in the input string
+                .replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     /**
