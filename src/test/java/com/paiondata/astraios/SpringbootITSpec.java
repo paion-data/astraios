@@ -66,9 +66,9 @@ public class SpringbootITSpec {
     private static final String BOOK_PATH = "book/";
     private static final String PRIDE_PREJUDICE = "Pride & Prejudice";
     private static final String PRIDE_AND_PREJUDICE = "Pride and Prejudice";
-    private static final String CREATE_BOOK_JSON = "create-book.json";
-    private static final String UPDATE_BOOK_JSON = "update-book.json";
-    private static final String PAGE_SORT_JSON = "page-sort.json";
+    private static final String CREATE_BOOK_GRAPHQL = "create-book.graphql";
+    private static final String UPDATE_BOOK_GRAPHQL = "update-book.graphql";
+    private static final String PAGE_SORT_GRAPHQL = "page-sort.graphql";
     private static final String BOOK_TITLE_01 = "Book Numero Dos";
     private static final String BOOK_TITLE_02 = "Book Numero Tres";
     private static final String BOOK_TITLE_04 = "Effective Java";
@@ -279,8 +279,8 @@ public class SpringbootITSpec {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(String.format(payload(UPDATE_BOOK_JSON),
-                        BOOK_TITLE_02))
+                .body(toQueryString(String.format(payload(UPDATE_BOOK_GRAPHQL),
+                        BOOK_TITLE_02)))
                 .when()
                 .post()
                 .then()
@@ -394,7 +394,7 @@ public class SpringbootITSpec {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(payload(PAGE_SORT_JSON))
+                .body(toQueryString(payload(PAGE_SORT_GRAPHQL)))
                 .when()
                 .post();
 
@@ -419,8 +419,8 @@ public class SpringbootITSpec {
                 .given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .body(String.format(payload(CREATE_BOOK_JSON),
-                        title))
+                .body(toQueryString(String.format(payload(CREATE_BOOK_GRAPHQL),
+                        title)))
                 .when()
                 .post();
     }
@@ -428,6 +428,8 @@ public class SpringbootITSpec {
     /**
      * Loads a resource file, under "payload" resource directory, as a {@code String} object given that resource file
      * name.
+     * <p>
+     * All new line characters ("\n") will be removed as well.
      *
      * @param resourceName  The specified resource file name
      *
@@ -440,7 +442,10 @@ public class SpringbootITSpec {
      */
     @NotNull
     private String payload(final @NotNull String resourceName) {
-        return toResource("payload", resourceName);
+        return toResource("payload", resourceName)
+                .replace("\n", "")
+                // Escape the double quotes and backslash in the input string
+                .replace("\\", "\\\\").replace("\"", "\\\"");
     }
 
     /**
